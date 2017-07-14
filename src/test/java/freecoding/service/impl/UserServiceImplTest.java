@@ -24,6 +24,9 @@ public class UserServiceImplTest {
         Assert.assertEquals((int)userService.search("zhujing").get(0).getAge(),21);
 
 
+
+
+        
     }
 
 }
