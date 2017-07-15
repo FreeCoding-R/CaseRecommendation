@@ -1,7 +1,6 @@
 package freecoding.service.impl;
 
 import freecoding.dao.DocumentRepository;
-import freecoding.entity.Document;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,9 +25,12 @@ public class DocumentTest {
 
     @Test
     public void test(){
-        documentRepository.save(new Document("案例文书","连环杀人案"));
-        documentRepository.save(new Document("案例文书","连环杀人案2"));
+//        documentRepository.save(new Document("案例文书","连环杀人案"));
+//        documentRepository.save(new Document("案例文书","连环杀人案2"));
+//
+//        Assert.assertEquals(2, documentRepository.findAll().size());
 
-        Assert.assertEquals(2, documentRepository.findAll().size());
+        Assert.assertEquals(documentRepository.findDocumentByCharacter("连环杀人案2").getInfo(),"案例文书");
     }
+
 }
