@@ -21,7 +21,7 @@ public class UserServiceImplTest {
 
     @Test
     public void search() throws Exception {
-        Assert.assertEquals((int)userService.search("zhujing").get(0).getAge(),21);
+//        Assert.assertEquals((int)userService.search("zhujing").get(0).getAge(),21);
 
 
 
