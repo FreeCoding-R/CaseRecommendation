@@ -3,6 +3,7 @@ package freecoding.service.impl;
 import freecoding.dao.DocumentRepository;
 import freecoding.entity.Document;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class DocumentTest {
     @Autowired
     private DocumentRepository documentRepository;
+
+    @Before
+    public void SetUp(){
+        documentRepository.deleteAll();
+    }
 
     @Test
     public void test(){
