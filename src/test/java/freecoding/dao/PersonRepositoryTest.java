@@ -1,7 +1,5 @@
 package freecoding.dao;
 
-import freecoding.entity.Person;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,7 @@ public class PersonRepositoryTest {
 
     @Test
     public void findByName() throws Exception {
-        personRepository.save(new Person(2,"zhujunyi",22));
-        personRepository.save(new Person(3,"tianguison",20));
-
+        
     }
 
     @Test
@@ -33,7 +29,7 @@ public class PersonRepositoryTest {
 
     @Test
     public void findByAge() throws Exception {
-        Assert.assertEquals(personRepository.findByAge(21).get(0).getName(),"zhujing");
+
 
     }
 
