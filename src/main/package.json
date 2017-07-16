@@ -1,0 +1,37 @@
+{
+  "name": "CaseRecommendation",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node www"
+  },
+  "dependencies": {
+    "async": "latest",
+    "body-parser": "~1.16.0",
+    "chai": "^3.5.0",
+    "cheerio": "^0.22.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.0",
+    "echarts": "^3.5.3",
+    "ejs": "~2.5.5",
+    "vue": "latest",
+    "eventproxy": "^0.3.5",
+    "express": "^4.15.3",
+    "express-session": "latest",
+    "gzippo": "^0.2.0",
+    "iconv-lite": "latest",
+    "jquery": "latest",
+    "md5": "latest",
+    "mocha": "^3.3.0",
+    "mongoose": "^4.9.7",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.2",
+    "session-file-store": "latest",
+    "superagent": "^3.5.2",
+    "http-proxy-middleware": "latest"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0"
+  }
+}
