@@ -1,6 +1,8 @@
 package freecoding.service.impl;
 
 import freecoding.dao.JDocumentRepository;
+import freecoding.entity.JDocument;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class DocumentTest {
+public class JDocumentTest {
     @Autowired
     private JDocumentRepository documentRepository;
 
@@ -24,10 +26,10 @@ public class DocumentTest {
 
     @Test
     public void test(){
-//        documentRepository.save(new Document("案例文书","连环杀人案"));
-//        documentRepository.save(new Document("案例文书","连环杀人案2"));
-//
-//        Assert.assertEquals(2, documentRepository.findAll().size());
+        documentRepository.save(new JDocument("案例文书","连环杀人案"));
+        documentRepository.save(new JDocument("案例文书","连环杀人案2"));
+
+        Assert.assertEquals(2, documentRepository.findAll().size());
 
  //       Assert.assertEquals(documentRepository.findDocumentByCharacter("连环杀人案2").getInfo(),"案例文书");
     }
