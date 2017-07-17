@@ -1,8 +1,6 @@
 package freecoding.service.impl;
 
 import freecoding.dao.JDocumentRepository;
-import freecoding.entity.JDocument;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,10 +24,13 @@ public class JDocumentTest {
 
     @Test
     public void test(){
-        documentRepository.save(new JDocument("案例文书","连环杀人案"));
-        documentRepository.save(new JDocument("案例文书","连环杀人案2"));
-
-        Assert.assertEquals(2, documentRepository.findAll().size());
+//        MongoDatabase database = MongoData.getDataBase();
+//
+//        MongoDatabase mongoDatabase = MongoData.getDataBase();
+//
+//        MongoCollection<DBObject> collection = mongoDatabase.getCollection("dangerDrive",DBObject.class);
+//
+//        Assert.assertEquals("596b23daec393fc7033044ab", collection.find().first().get("_id"));
 
  //       Assert.assertEquals(documentRepository.findDocumentByCharacter("连环杀人案2").getInfo(),"案例文书");
     }

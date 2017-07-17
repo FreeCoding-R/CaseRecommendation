@@ -2,8 +2,6 @@ package preData;
 
 
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
@@ -24,13 +22,7 @@ public class Xml2mongodb {
 
         if(files.length != 0){
 
-           // MongoClient mongoClient = new MongoClient( "139.224.233.63" , 27017 );
-
-            String sURI = String.format("mongodb://%s:%s@%s:%d/%s", "freecoding", "freecoding", "139.224.233.63", 27017, "freecoding");
-            MongoClientURI uri = new MongoClientURI(sURI);
-            MongoClient mongoClient = new MongoClient(uri);
-
-            MongoDatabase mongoDatabase = mongoClient.getDatabase("freecoding");
+            MongoDatabase mongoDatabase = MongoData.getDataBase();
 
             MongoCollection<DBObject> collection = mongoDatabase.getCollection("dangerDrive",DBObject.class);
 
