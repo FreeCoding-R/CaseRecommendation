@@ -1,5 +1,6 @@
-package freecoding.dao;
+package freecoding.dao.impl;
 
+import freecoding.dao.test;
 import org.springframework.stereotype.Repository;
 import freecoding.util.MongoData;
 
