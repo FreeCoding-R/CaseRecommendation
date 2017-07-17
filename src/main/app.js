@@ -56,6 +56,7 @@ var options = {
     changeOrigin: true,               // 需要虚拟主机站点
 };
 var exampleProxy = proxy(options);  //开启代理功能，并加载配置app.use(‘/‘, exampleProxy);//对地址为’/‘的请求全部转发
+app.use('/', exampleProxy);
 
 // 404 ERROR
 app.use((req, res, next) => {
