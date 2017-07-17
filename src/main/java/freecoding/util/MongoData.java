@@ -1,4 +1,4 @@
-package preData;
+package freecoding.util;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;

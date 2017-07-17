@@ -1,12 +1,12 @@
 package freecoding.dao;
 
-import org.springframework.stereotype.Service;
-import preData.MongoData;
+import org.springframework.stereotype.Repository;
+import freecoding.util.MongoData;
 
 /**
  * Created by zhujing on 2017/7/17.
  */
-@Service
+@Repository
 public class testImpl implements test {
 
     @Override
