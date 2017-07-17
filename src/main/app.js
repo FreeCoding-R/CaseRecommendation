@@ -20,7 +20,7 @@ app.set('views', path.join(__dirname, 'resources/static/views'));
 app.set('view engine', 'ejs');
 
 // 把项目小图标放在 '/static' 目录下
-app.use(favicon(path.join(__dirname, 'resources/static', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'resources/static/img', 'favicon.ico')));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -56,7 +56,6 @@ var options = {
     changeOrigin: true,               // 需要虚拟主机站点
 };
 var exampleProxy = proxy(options);  //开启代理功能，并加载配置app.use(‘/‘, exampleProxy);//对地址为’/‘的请求全部转发
-app.use('/user', exampleProxy);
 
 // 404 ERROR
 app.use((req, res, next) => {
