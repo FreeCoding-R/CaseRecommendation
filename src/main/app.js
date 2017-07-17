@@ -20,7 +20,7 @@ app.set('views', path.join(__dirname, 'resources/static/views'));
 app.set('view engine', 'ejs');
 
 // 把项目小图标放在 '/static' 目录下
-app.use(favicon(path.join(__dirname, 'resources/static', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'resources/static/img', 'favicon.ico')));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

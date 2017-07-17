@@ -5,6 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
+import freecoding.util.MongoData;
 import net.sf.json.xml.XMLSerializer;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
