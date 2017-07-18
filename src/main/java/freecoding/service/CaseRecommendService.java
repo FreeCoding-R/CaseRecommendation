@@ -26,10 +26,17 @@ public interface CaseRecommendService {
 
     /**
      * 处理用户上传文书
-     * @param keyword
+     * @param
      * @return 处理结果
      */
-    JSON handle(String keyword) throws DocumentException;
+    JSON handle() throws DocumentException;
+
+
+    /**
+     * @param keywoed
+     * @return
+     */
+    JSON detail(String keywoed) throws DocumentException;
 
 
     /**

@@ -61,16 +61,48 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 
     @Override
-    public JSON handle(String keyword) throws DocumentException {
+    public JSON handle() throws DocumentException {
         //xml指定节点遍历，获取信息，转为string，再转为json
-
         String result="{";
         SAXReader sr = new SAXReader();
         org.dom4j.Document document = null;
         document = sr.read(this.file.get());
+        Element root = document.getRootElement();
 
+        result+="\""+"原文"+"\""+":"+"\""+root.attribute("value").getText()+"\",";
 
-        Element root = document.getRootElement().element(keyword);
+        result+="\""+root.element("WS").element("JBFY").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("JBFY").attribute("value").getText()+"\",";
+        result+="\""+root.element("WS").element("WSMC").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("WSMC").attribute("value").getText()+"\",";
+        result+="\""+root.element("WS").element("AH").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("AH").attribute("value").getText()+"\",";
+
+        Iterator it = root.element("SSCYRQJ").elementIterator();
+        while (it.hasNext()) {
+            Element i = (Element) it.next();
+            if(i.attribute("value")==null){
+                continue;
+            }
+            result+="\""+"诉讼参与人"+"\""+":"+"\""+i.element("SSCYRMC").attribute("value").getText()+"\",";
+        }
+
+        result+="\""+root.element("SSJL").attribute("nameCN").getText()+"\""+":"+"\""+root.element("SSJL").attribute("value").getText()+"\",";
+        result+="\""+root.element("CPFXGC").attribute("nameCN").getText()+"\""+":"+"\""+root.element("CPFXGC").attribute("value").getText()+"\",";
+        result+="\""+root.element("PJJG").attribute("nameCN").getText()+"\""+":"+"\""+root.element("PJJG").attribute("value").getText()+"\",";
+        result+="\""+root.element("WW").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WW").attribute("value").getText()+"\",";
+
+        result=result.substring(0,result.length()-1)+"}";
+        JSONObject jsonObject=JSONObject.fromObject(result);
+
+        return (JSON) jsonObject;
+    }
+
+    @Override
+    public JSON detail(String keywoed) throws DocumentException {
+        String result="{";
+        SAXReader sr = new SAXReader();
+        org.dom4j.Document document = null;
+        document = sr.read(this.file.get());
+        Element root = getNode(document.getRootElement(),keywoed);
+
         Iterator it = root.elementIterator();
         while (it.hasNext()) {
             Element i = (Element) it.next();
@@ -117,11 +149,11 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         return cl;
     }
 
+
     @Override
     public List<Law> getLawDistribution() {
         List ll=this.lawDistribution.get();
         List rl=this.recommendCases.get();
-
         //去重复操作
         if(ll.size()!=0){
             return ll;
@@ -156,7 +188,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         return ll;
     }
 
-
     private void distinct(Law law){
         List ll=this.lawDistribution.get();
         Iterator iterator=ll.iterator();
@@ -174,4 +205,23 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 
 
+    //递归遍历xml
+    public Element getNode(Element node,String keyword){
+
+        Element result = null;
+        if(node.attribute("value")!=null){
+            if(node.attribute("value").toString().contains(keyword.split("/")[1])&&node.attribute("nameCN").toString().equals(keyword.split("/")[0])){
+                result=node;
+            }
+        }
+
+        //递归遍历当前节点所有的子节点
+        if(result==null) {
+            List<Element> listElement = node.elements();//所有一级子节点的list
+            for (Element e : listElement) {//遍历所有一级子节点
+                this.getNode(e, keyword);//递归
+            }
+        }
+        return result;
+    }
 }
