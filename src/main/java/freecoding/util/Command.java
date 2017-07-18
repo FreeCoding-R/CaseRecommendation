@@ -32,8 +32,7 @@ public class Command {
         }
         finally
         {
-            if (br != null)
-            {
+            if (br != null) {
                 try {
                     br.close();
                 } catch (Exception e) {
