@@ -14,7 +14,7 @@ import java.util.List;
  * Created by loick on 17/07/2017.
  */
 @Repository
-public class CaseRecommendImpl implements CaseRecommendDao {
+public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
     @Override
     public List<Document> getRandomCases() {
