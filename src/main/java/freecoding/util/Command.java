@@ -25,7 +25,6 @@ public class Command {
             while ((line = br.readLine()) != null) {
                 sb.append(line + "\n");
             }
-            System.out.println(sb.toString());
             return sb.toString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,11 +40,5 @@ public class Command {
             }
         }
         return "no output";
-    }
-
-    public static void main(String[] args) {
-        String commandStr = "pwd";
-        //String commandStr = "ipconfig";
-        Command.exeCmd(commandStr);
     }
 }

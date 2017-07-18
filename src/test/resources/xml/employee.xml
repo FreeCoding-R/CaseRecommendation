@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scores value="60">
+<employee>
+<name>wangchenyang</name>
+<sex>male</sex>
+<age>26</age>
+</employee>
+<employee>
+<name>xuxin</name>
+<sex>female</sex>
+<age>25</age>
+</employee>
+</scores>
