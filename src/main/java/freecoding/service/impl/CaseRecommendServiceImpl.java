@@ -37,7 +37,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         if(file==null){
             return false;
         }
-        
+
         //后缀
         String fileName = file.getName();
         if(!fileName.endsWith(".xml")){
