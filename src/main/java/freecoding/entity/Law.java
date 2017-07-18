@@ -7,8 +7,9 @@ public class Law {
 
     private String name;
 
-    private String num;
+    private String detail;
 
+    private int num;
 
     public String getName() {
         return name;
@@ -18,11 +19,19 @@ public class Law {
         this.name = name;
     }
 
-    public String getNum() {
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public int getNum() {
         return num;
     }
 
-    public void setNum(String num) {
+    public void setNum(int num) {
         this.num = num;
     }
 }
