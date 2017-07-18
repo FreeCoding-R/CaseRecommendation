@@ -12,7 +12,8 @@ public class CommandTest {
      */
     @Test
     public void normalCommandTest(){
-        String output=Command.exeCmd("ping www.baidu.com");
+        String cmd = System.getProperty("os.name").startsWith("Windows")? "ping www.baidu.com":"ping -c 5 www.baidu.com";
+        String output=Command.exeCmd(cmd);
         Assert.assertTrue(output.length()>0);
     }
 
