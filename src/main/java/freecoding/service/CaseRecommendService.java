@@ -20,6 +20,10 @@ public interface CaseRecommendService {
     boolean upload(File file);
 
 
+
+    boolean init(String id);
+
+
     /**
      * 处理用户上传文书
      * @param keyword

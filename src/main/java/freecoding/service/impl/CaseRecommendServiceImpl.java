@@ -27,20 +27,10 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     @Autowired
     private CaseRecommendDao caseRecommendDao;
 
-    private File file;
-
-    private List<Document> recommendCases;
-
-    private List<Law> lawDistribution;
-
-    private List<Case> caseInfo;
-
-    public CaseRecommendServiceImpl() {
-        recommendCases=new ArrayList<>();
-        lawDistribution=new ArrayList<>();
-        caseInfo=new ArrayList<>();
-
-    }
+    private ThreadLocal <File> file = new ThreadLocal();
+    private ThreadLocal <List<Document>> recommendCases = new ThreadLocal();
+    private ThreadLocal <List<Law>> lawDistribution = new ThreadLocal();
+    private ThreadLocal <List<Case>> caseInfo = new ThreadLocal();
 
     @Override
     public boolean upload(File file) {
@@ -49,6 +39,20 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         if(!fileName.endsWith(".xml")){
             return false;
         }
+        this.file.set(file);
+        this.recommendCases.set(new ArrayList<>());
+        this.lawDistribution.set(new ArrayList<>());
+        this.caseInfo.set(new ArrayList<>());
+        return true;
+    }
+
+    @Override
+    public boolean init(String id) {
+
+//        this.file.set(file);
+        this.recommendCases.set(new ArrayList<>());
+        this.lawDistribution.set(new ArrayList<>());
+        this.caseInfo.set(new ArrayList<>());
         return true;
     }
 
@@ -59,7 +63,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         String result="{";
         SAXReader sr = new SAXReader();
         org.dom4j.Document document = null;
-        document = sr.read(file);
+        document = sr.read(this.file.get());
 
 
         Element root = document.getRootElement().element(keyword);
@@ -80,40 +84,49 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     @Override
     public List<Case> getCaseRecommendation() {
+        List cl = this.caseInfo.get();
+        List rl = this.recommendCases.get();
         //去重复操作
-        if(caseInfo.size()!=0){
-            return caseInfo;
+
+        if(cl.size()!=0){
+            return cl;
         }
 
-        if (recommendCases.size()==0){
-            recommendCases=caseRecommendDao.getRandomCases();
+        if (rl.size()==0){
+            rl=caseRecommendDao.getRandomCases();
+            this.recommendCases.set(rl);
         }
 
         //获取推荐案例的简要信息
-        for (int i=0;i<recommendCases.size();i++){
+        for (int i=0;i<rl.size();i++){
 
-            Document document=recommendCases.get(i);
+            Document document= (Document) rl.get(i);
 
             Case c=new Case();
             c.setId((String) document.get("_id"));
             c.setName((String) ((Document)document.get("WS")).get("@value"));
-            caseInfo.add(c);
+            cl.add(c);
 
         }
-        return caseInfo;
+
+        this.caseInfo.set(cl);
+        return cl;
     }
 
     @Override
     public List<Law> getLawDistribution() {
+        List ll=this.lawDistribution.get();
+        List rl=this.recommendCases.get();
+
         //去重复操作
-        if(lawDistribution.size()!=0){
-            return this.lawDistribution;
+        if(ll.size()!=0){
+            return ll;
         }
 
         //推荐案例遍历
-        for (int i = 0; i < recommendCases.size(); i++) {
+        for (int i = 0; i < rl.size(); i++) {
 
-            Document document=recommendCases.get(i);
+            Document document= (Document) rl.get(i);
             Document cpfxgc=(Document) document.get("CPFXGC");
 
             //CPFXGC下子节点FLFTMC遍历
@@ -136,21 +149,23 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             }
         }
 
-        return lawDistribution;
+        return ll;
     }
 
 
     private void distinct(Law law){
-        Iterator iterator=lawDistribution.iterator();
+        List ll=this.lawDistribution.get();
+        Iterator iterator=ll.iterator();
         while (iterator.hasNext()){
             Law l= (Law) iterator.next();
             int num=l.getNum();
             if(l.getName().equals(law.getName())&&l.getDetail().equals(law.getDetail())){
                 ((Law) iterator.next()).setNum(num+1);
             }else {
-                lawDistribution.add(law);
+                ll.add(law);
             }
         }
+        this.lawDistribution.set(ll);
 
     }
 
