@@ -47,17 +47,24 @@ public class NormalFileUploadTest {
         Assert.assertEquals(caseRecommendService.upload(employee), true);
     }
 
+    @Test
+    @Ignore
+    public void handleTest() throws DocumentException {
+        JSON result = caseRecommendService.handle();
+        System.out.println(result.toString());
+    }
+
     @Test(expected=DocumentException.class)
     @Ignore
-    public void nullKeywordHandleTest() throws DocumentException {
-        caseRecommendService.handle(null);
+    public void nullKeywordDetailTest() throws DocumentException {
+        caseRecommendService.detail(null);
     }
 
     @Test
     @Ignore
-    public void normalKeywordHandleTest(){
+    public void normalKeywordDetailTest(){
         try {
-            JSON result = caseRecommendService.handle("employee");
+            JSON result = caseRecommendService.detail("employee");
             Assert.assertEquals(result.toString(), "");
         } catch (DocumentException e) {
             e.printStackTrace();
