@@ -2,7 +2,7 @@ package freecoding.service;
 
 import freecoding.entity.Case;
 import freecoding.entity.Law;
-import freecoding.service.impl.FileContentException;
+import freecoding.exception.FileContentException;
 import net.sf.json.JSON;
 import org.dom4j.DocumentException;
 

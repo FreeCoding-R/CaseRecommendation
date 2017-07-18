@@ -3,6 +3,7 @@ package freecoding.service.impl;
 import freecoding.dao.CaseRecommendDao;
 import freecoding.entity.Case;
 import freecoding.entity.Law;
+import freecoding.exception.FileContentException;
 import freecoding.service.CaseRecommendService;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
@@ -235,10 +236,4 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 }
 
-class FileContentException extends Exception
-{
-    public FileContentException(String msg)
-    {
-        super(msg);
-    }
-}
+//FileContentException类已经移到freecoding.exception包里  --by zjy

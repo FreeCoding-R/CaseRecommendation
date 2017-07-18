@@ -2,6 +2,7 @@ package freecoding.service;
 
 import freecoding.entity.Case;
 import freecoding.entity.Law;
+import freecoding.exception.FileContentException;
 import freecoding.service.impl.CaseRecommendServiceImpl;
 import net.sf.json.JSON;
 import org.dom4j.DocumentException;
@@ -49,26 +50,22 @@ public class NormalFileUploadTest {
 
     @Test
     @Ignore
-    public void handleTest() throws DocumentException {
+    public void handleTest() throws DocumentException, FileContentException {
         JSON result = caseRecommendService.handle();
         System.out.println(result.toString());
     }
 
     @Test(expected=DocumentException.class)
     @Ignore
-    public void nullKeywordDetailTest() throws DocumentException {
+    public void nullKeywordDetailTest() throws DocumentException, FileContentException {
         caseRecommendService.detail(null);
     }
 
     @Test
     @Ignore
-    public void normalKeywordDetailTest(){
-        try {
-            JSON result = caseRecommendService.detail("employee");
-            Assert.assertEquals(result.toString(), "");
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
+    public void normalKeywordDetailTest() throws FileContentException, DocumentException {
+        JSON result = caseRecommendService.detail("employee");
+        Assert.assertEquals(result.toString(), "");
     }
 
     @Test
