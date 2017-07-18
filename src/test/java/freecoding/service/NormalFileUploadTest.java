@@ -1,7 +1,10 @@
 package freecoding.service;
 
 import freecoding.service.impl.CaseRecommendServiceImpl;
+import net.sf.json.JSON;
+import org.dom4j.DocumentException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,54 +13,52 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 /**
  * Created by zjy on 2017/7/18.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UploadServiceTest {
+public class NormalFileUploadTest {
     @Autowired
     private CaseRecommendServiceImpl caseRecommendService;
 
     @Test
-    public void nullFileUploadTest(){
-        Assert.assertEquals(caseRecommendService.upload(null), false);
-    }
-
-    @Test
+    @Before
     public void normalFileUploadTest(){
         //getClass().getClassLoader().getResource("")可以获得运行时项目根路径，
         // 如在这里运行获得的就是"你的电脑的路径/CaseRecommendation/target/test-classes/"
-        File scores = new File(getClass().getClassLoader().getResource("xml/scores.xml").getPath());
-        System.out.println("use "+scores.getAbsolutePath()+" for test.");
-        Assert.assertEquals(caseRecommendService.upload(scores), true);
-
         File employee = new File(getClass().getClassLoader().getResource("xml/employee.xml").getPath());
         System.out.println("use "+employee.getAbsolutePath()+" for test.");
         Assert.assertEquals(caseRecommendService.upload(employee), true);
     }
 
+    @Test(expected=DocumentException.class)
+    @Ignore
+    public void nullKeywordloadTest() throws DocumentException {
+        caseRecommendService.handle(null);
+    }
+
     @Test
-    public void caseFileUploadTest(){
-        //getClass().getClassLoader().getResource("")可以获得运行时项目根路径，
-        // 如在这里运行获得的就是"你的电脑的路径/CaseRecommendation/target/test-classes/"
-        File caseFile = new File(getClass().getClassLoader().getResource("xml/(2016)津0225刑初747号刑事判决书(一审公诉案件适用简易程序用).doc.xml").getPath());
-        System.out.println("use "+caseFile.getAbsolutePath()+" for test.");
-        Assert.assertEquals(caseRecommendService.upload(caseFile), true);
+    @Ignore
+    public void normalKeywordloadTest(){
+        try {
+            JSON result = caseRecommendService.handle("name");
+            Assert.assertEquals(result.toString(), "");
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -65,7 +66,7 @@ public class UploadServiceTest {
      * @param fileName 文件路径（文件名），当前路径是项目根路径，
      *                 如"scores.xml"是"你的电脑的路径/CaseRecommendation/scores.xml"
      */
-    public void createXml(String fileName) {
+    private void createXml(String fileName) {
         Document document = null;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
