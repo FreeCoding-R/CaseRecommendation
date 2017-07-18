@@ -1,5 +1,7 @@
 package freecoding.service;
 
+import freecoding.entity.Case;
+import freecoding.entity.Law;
 import freecoding.service.impl.CaseRecommendServiceImpl;
 import net.sf.json.JSON;
 import org.dom4j.DocumentException;
@@ -24,6 +26,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Created by zjy on 2017/7/18.
@@ -46,19 +49,42 @@ public class NormalFileUploadTest {
 
     @Test(expected=DocumentException.class)
     @Ignore
-    public void nullKeywordloadTest() throws DocumentException {
+    public void nullKeywordHandleTest() throws DocumentException {
         caseRecommendService.handle(null);
     }
 
     @Test
     @Ignore
-    public void normalKeywordloadTest(){
+    public void normalKeywordHandleTest(){
         try {
-            JSON result = caseRecommendService.handle("name");
+            JSON result = caseRecommendService.handle("employee");
             Assert.assertEquals(result.toString(), "");
         } catch (DocumentException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    @Ignore
+    public void getCaseRecommendationTest(){
+        List<Case> result = caseRecommendService.getCaseRecommendation();
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.size()>0);
+        Assert.assertNotNull(result.get(0));
+        Assert.assertNotNull(result.get(0).getId());
+        Assert.assertNotNull(result.get(0).getName());
+    }
+
+    @Test
+    @Ignore
+    public void getLawDistributionTest(){
+        List<Law> result = caseRecommendService.getLawDistribution();
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.size()>0);
+        Assert.assertNotNull(result.get(0));
+        Assert.assertNotNull(result.get(0).getName());
+        Assert.assertNotNull(result.get(0).getDetail());
+        Assert.assertNotNull(result.get(0).getNum());
     }
 
     /**
