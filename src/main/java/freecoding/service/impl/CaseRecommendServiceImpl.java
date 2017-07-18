@@ -61,7 +61,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 
     @Override
-    public JSON handle() throws DocumentException {
+    public JSON handle() throws DocumentException, FileContentException {
         //xml指定节点遍历，获取信息，转为string，再转为json
         String result="{";
         SAXReader sr = new SAXReader();
@@ -90,18 +90,26 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         result+="\""+root.element("WW").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WW").attribute("value").getText()+"\",";
 
         result=result.substring(0,result.length()-1)+"}";
+
+        if(result.length()==2){
+            throw new FileContentException("文件内容不符合要求");
+        }
         JSONObject jsonObject=JSONObject.fromObject(result);
 
         return (JSON) jsonObject;
     }
 
     @Override
-    public JSON detail(String keywoed) throws DocumentException {
+    public JSON detail(String keywoed) throws DocumentException, FileContentException {
         String result="{";
         SAXReader sr = new SAXReader();
         org.dom4j.Document document = null;
         document = sr.read(this.file.get());
         Element root = getNode(document.getRootElement(),keywoed);
+
+        if(root==null||!root.elementIterator().hasNext()){
+            throw new FileContentException("未找到该关键字具体信息");
+        }
 
         Iterator it = root.elementIterator();
         while (it.hasNext()) {
@@ -114,6 +122,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         result=result.substring(0,result.length()-1)+"}";
         JSONObject jsonObject=JSONObject.fromObject(result);
+
 
         return (JSON) jsonObject;
     }
@@ -223,5 +232,13 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             }
         }
         return result;
+    }
+}
+
+class FileContentException extends Exception
+{
+    public FileContentException(String msg)
+    {
+        super(msg);
     }
 }

@@ -2,6 +2,7 @@ package freecoding.service;
 
 import freecoding.entity.Case;
 import freecoding.entity.Law;
+import freecoding.service.impl.FileContentException;
 import net.sf.json.JSON;
 import org.dom4j.DocumentException;
 
@@ -29,14 +30,14 @@ public interface CaseRecommendService {
      * @param
      * @return 处理结果
      */
-    JSON handle() throws DocumentException;
+    JSON handle() throws DocumentException, FileContentException;
 
 
     /**
      * @param keywoed
      * @return
      */
-    JSON detail(String keywoed) throws DocumentException;
+    JSON detail(String keywoed) throws DocumentException, FileContentException;
 
 
     /**

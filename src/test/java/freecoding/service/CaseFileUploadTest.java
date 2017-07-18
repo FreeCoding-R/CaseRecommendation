@@ -1,10 +1,7 @@
 package freecoding.service;
 
 import freecoding.service.impl.CaseRecommendServiceImpl;
-import net.sf.json.JSON;
-import org.dom4j.DocumentException;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
