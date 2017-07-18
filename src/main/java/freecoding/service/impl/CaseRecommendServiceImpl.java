@@ -33,6 +33,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     @Override
     public boolean upload(File file) {
+        if(file==null){
+            return false;
+        }
         String fileName = file.getName();
         if(!fileName.endsWith(".xml")){
             return false;
