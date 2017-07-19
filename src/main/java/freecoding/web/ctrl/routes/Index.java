@@ -17,9 +17,24 @@ import java.util.List;
 @Controller
 public class Index {
 
-    @RequestMapping(value="/", method= RequestMethod.GET)
+    @RequestMapping(value="/",method= RequestMethod.GET)
     public String home() {
         return "index";
+    }
+
+    @RequestMapping(value="/index", method= RequestMethod.GET)
+    public String home2() {
+        return "index";
+    }
+
+    @RequestMapping(value="/case", method= RequestMethod.GET)
+    public String toCase() {
+        return "case";
+    }
+
+    @RequestMapping(value="/user", method= RequestMethod.GET)
+    public String user() {
+        return "user";
     }
 
     @RequestMapping("/person")
