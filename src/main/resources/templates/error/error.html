@@ -1,5 +1,6 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="components/components :: head"/>
 <head>
     <title>错误</title>
 </head>
@@ -7,9 +8,11 @@
 <div >
 
     <h3 >
-        <strong>糟糕，服务器遇到了点麻烦</strong><br>请稍后再试
+        <strong>糟糕，服务器遇到了点麻烦</strong>
     </h3>
+    <h3><strong>请稍后再试</strong></h3>
 
 </div>
+<footer th:replace="components/components :: footer"></footer>
 </body>
 </html>

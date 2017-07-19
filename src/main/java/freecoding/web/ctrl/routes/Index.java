@@ -23,7 +23,7 @@ public class Index {
     }
 
     @RequestMapping(value="/index", method= RequestMethod.GET)
-    public String home2() {
+    public String index() {
         return "index";
     }
 
