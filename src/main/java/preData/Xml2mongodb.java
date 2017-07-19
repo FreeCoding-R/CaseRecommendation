@@ -24,6 +24,10 @@ public class Xml2mongodb {
         File files[] = direc.listFiles();
         if(files.length != 0){
 
+            MongoDatabase mongoDatabase = MongoData.getDataBase();
+            MongoCollection<DBObject> collection = mongoDatabase.getCollection("dangerDrive",DBObject.class);
+
+
             for(File file: files) {
                 SAXReader sr = new SAXReader();
                 Document document = (Document) sr.read(file);
