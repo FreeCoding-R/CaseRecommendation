@@ -2,17 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="components/components :: head"/>
 <head>
-    <title>错误</title>
+    <title>404错误</title>
+    <!--<style>-->
+        <!--.myFont{font-family: 华文细黑}-->
+    <!--</style>-->
 </head>
 <body>
-<div >
-
-    <h3 >
-        <strong>糟糕，服务器遇到了点麻烦</strong>
-    </h3>
-    <h3><strong>请稍后再试</strong></h3>
-
+<div>
+    <!-- Content Start -->
+    <div id="main">
+        <!-- Title, Breadcrumb Start-->
+        <div class="breadcrumb-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                        <h2 class="title">服务器遇到了点麻烦，请稍后再试</h2>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                        <div class="breadcrumbs pull-right">
+                            <ul>
+                                <li>当前路径:</li>
+                                <li>
+                                    <a th:href="index.html">主页</a>
+                                </li>
+                                <li><a href="#">法案</a></li>
+                                <li>错误代码404</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Title, Breadcrumb End-->
+        <!-- Main Content start-->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div id="not-found">
+                            <h2>404 <i class="icon-question-sign"></i></h2>
+                        </div>
+                        <div class="back-home">
+                            <p>你请求的页面未能找到，你可以<br/>
+                                Please <a th:href="index.html">点这里</a>回到之前的页面
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content end-->
+    </div>
+    <!-- Content End -->
 </div>
-<footer th:replace="components/components :: footer"></footer>
 </body>
+<footer th:replace="components/components :: footer"></footer>
 </html>
