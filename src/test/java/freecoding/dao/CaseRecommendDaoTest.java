@@ -1,11 +1,13 @@
 package freecoding.dao;
 
 import freecoding.dao.impl.CaseRecommendDaoImpl;
+import freecoding.util.MongoData;
 import net.sf.json.xml.XMLSerializer;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +43,11 @@ public class CaseRecommendDaoTest {
         String responseTextObj = document.asXML();
         XMLSerializer xmlSerializer = new XMLSerializer();
 
+    }
+
+    @Test
+    public void keyTest(){
+        int len = caseRecommend.getKeyCases(MongoData.getDataBase().getCollection("traffic").find().first()).size();
+        Assert.assertEquals(len, 6);
     }
 }
