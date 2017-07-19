@@ -34,9 +34,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     private ThreadLocal <File> file = new ThreadLocal();
     private ThreadLocal <org.dom4j.Document> dom4jd = new ThreadLocal();
     private ThreadLocal <List<Document>> recommendCases = new ThreadLocal();
-    private ThreadLocal <List<Law>> lawDistribution = new ThreadLocal();
     private ThreadLocal <List<Case>> caseInfo = new ThreadLocal();
     private ThreadLocal <Element> resultNode= new ThreadLocal();
+    private ThreadLocal <List<Law>> lawDistribution = new ThreadLocal();
 
     @Override
     public boolean upload(File file) {
@@ -54,8 +54,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         //线程变量初始化
         this.dom4jd.set(null);
         this.recommendCases.set(new ArrayList<>());
-        this.lawDistribution.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
+        this.lawDistribution.set(new ArrayList<>());
+
         return true;
     }
 
@@ -64,14 +65,15 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         Document document=null;
         try{
             document=caseRecommendDao.find(id);
-            this.dom4jd.set(DocumentHelper.parseText(Json2Xml.json2xml(document.toJson())));
+            this.dom4jd.set(DocumentHelper.parseText(Json2Xml.jsonFromM2xml(document.toJson())));
         }catch (Exception e){
             return false;
         }
 
+        this.file.set(null);
         this.recommendCases.set(new ArrayList<>());
-        this.lawDistribution.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
+        this.lawDistribution.set(new ArrayList<>());
         return true;
     }
 
@@ -187,19 +189,19 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 
     @Override
-    public List<Case> getCaseRecommendation() {
+    public List<Case> getCaseRecommendation() throws ServiceProcessException {
+
+        //调用顺序异常
+        if(this.file.get()==null&&this.dom4jd.get()==null){
+            throw new ServiceProcessException("未按顺序调用");
+        }
+
         List cl = this.caseInfo.get();
         List rl = this.recommendCases.get();
-        //去重复操作
 
-        if(cl.size()!=0){
-            return cl;
-        }
+        rl=caseRecommendDao.getRandomCases();
+        this.recommendCases.set(rl);
 
-        if (rl.size()==0){
-            rl=caseRecommendDao.getRandomCases();
-            this.recommendCases.set(rl);
-        }
 
         //获取推荐案例的简要信息
         for (int i=0;i<rl.size();i++){
@@ -207,8 +209,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             Document document= (Document) rl.get(i);
 
             Case c=new Case();
-            c.setId((String) document.get("_id"));
-            c.setName((String) ((Document)document.get("WS")).get("@value"));
+            c.setId(document.get("_id").toString());
+            c.setName( ((Document)document.get("WS")).get("@value").toString());
             cl.add(c);
         }
 
@@ -218,57 +220,72 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
 
     @Override
-    public List<Law> getLawDistribution() {
-        List ll=this.lawDistribution.get();
-        List rl=this.recommendCases.get();
-        //去重复操作
-        if(ll.size()!=0){
-            return ll;
+    public List<Law> getLawDistribution() throws ServiceProcessException, DocumentException {
+        //调用顺序异常
+        if(this.recommendCases.get()==null){
+            throw new ServiceProcessException("未按顺序调用");
         }
+
+        List rl=this.recommendCases.get();
 
         //推荐案例遍历
         for (int i = 0; i < rl.size(); i++) {
+            Document document = (Document) rl.get(i);
 
-            Document document= (Document) rl.get(i);
-            Document cpfxgc=(Document) document.get("CPFXGC");
+            Document cpfxgc = (Document) document.get("CPFXGC");
 
-            //CPFXGC下子节点FLFTMC遍历
-            List<Document> f= (List<Document>) cpfxgc.get("FLFTMC");
-            for(int k=0;k<f.size();k++) {
-                Document flftmc = f.get(k);
-                String name = (String) flftmc.get("@value");
+            org.dom4j.Document cpfxgcXml = DocumentHelper.parseText(Json2Xml.jsonPartOfM2xml(cpfxgc.toJson()));
+            Element root = cpfxgcXml.getRootElement();
+            Iterator it = root.elementIterator();
+            while (it.hasNext()) {
+                Element element = (Element) it.next();
+                String name = null;
+                if (element.attribute("value")!=null&&element.attribute("nameCN").getText().equals("法律法条名称")) {
+                    name = element.attribute("value").getText();
 
-                //FLFTMC下子节点TM遍历
-                List<Document> l = (List<Document>) flftmc.get("TM");
-                for (int j = 0; j < l.size(); j++) {
-                    Law law = new Law();
-                    law.setName(name);
-                    law.setDetail(l.get(j).getString("@value"));
-                    law.setNum(1);
-                    //list去重计数
-                    distinct(law);
+                    Iterator it2 = element.element("TM").elementIterator();
+                    while (it2.hasNext()) {
+                        Element element2 = (Element) it2.next();
+                        if (element2.attribute("value")!=null&&element2.attribute("nameCN").getText().equals("条目")) {
+                            String detail = element2.attribute("value").getText();
+                            Law law = new Law();
+                            law.setName(name);
+                            law.setDetail(detail);
+                            law.setNum(1);
+                            distinct(law);
+
+
+                        }
+
+                    }
+
 
                 }
+
             }
         }
 
-        return ll;
+        return this.lawDistribution.get();
     }
 
     private void distinct(Law law){
-        List ll=this.lawDistribution.get();
-        Iterator iterator=ll.iterator();
-        while (iterator.hasNext()){
-            Law l= (Law) iterator.next();
-            int num=l.getNum();
-            if(l.getName().equals(law.getName())&&l.getDetail().equals(law.getDetail())){
-                ((Law) iterator.next()).setNum(num+1);
-            }else {
-                ll.add(law);
+        List<Law> result=this.lawDistribution.get();
+        boolean tag=true;
+
+        for(int i=0;i<result.size();i++){
+            Law l=(Law) result.get(i);
+            if(l.toString().equals(law.toString())){
+                l.setNum(l.getNum()+1);
+                result.set(i,l);
+                tag=false;
             }
         }
-        this.lawDistribution.set(ll);
 
+        if(tag){
+            result.add(law);
+        }
+
+        this.lawDistribution.set(result);
     }
 
 

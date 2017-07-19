@@ -9,13 +9,7 @@ import net.sf.json.xml.XMLSerializer;
  */
 public class Json2Xml {
 
-    public static String json2xml(String json){
-
-//        Document document=caseRecommend.find("596b2195ec393fc6ed998155");
-//        String a=document.toJson();
-
-//        json = json.replace("\n", "\\n");
-//        json = json.replace("\r", "\\r");
+    public static String jsonFromM2xml(String json){
         json=json.substring(51);
         json="{\"QW\":{"+json+"}";
 
@@ -27,7 +21,20 @@ public class Json2Xml {
 
         return h;
 
-//        org.dom4j.Document d= DocumentHelper.parseText(h);
+    }
+
+
+    public static String jsonPartOfM2xml(String json){
+        json="{\"CPFXGC\":"+json+"}";
+        XMLSerializer serializer = new XMLSerializer();
+        JSON jsonObject = JSONSerializer.toJSON(json);
+        String h=serializer.write(jsonObject);
+        h=h.substring(43,h.length()-6);
+
+
+        return h;
 
     }
+
+
 }

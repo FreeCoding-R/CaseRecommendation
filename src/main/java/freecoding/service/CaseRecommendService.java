@@ -50,14 +50,14 @@ public interface CaseRecommendService {
      * 案例推荐
      * @return
      */
-    List<Case> getCaseRecommendation();
+    List<Case> getCaseRecommendation() throws ServiceProcessException;
 
 
     /**
      * 推荐案例法条分布
      * @return
      */
-    List<Law> getLawDistribution();
+    List<Law> getLawDistribution() throws ServiceProcessException, DocumentException;
 
 
 

@@ -71,7 +71,7 @@ public class NormalFileUploadTest {
 
     @Test
     @Ignore
-    public void getCaseRecommendationTest(){
+    public void getCaseRecommendationTest() throws ServiceProcessException {
         List<Case> result = caseRecommendService.getCaseRecommendation();
         Assert.assertNotNull(result);
         Assert.assertTrue(result.size()>0);
@@ -82,7 +82,7 @@ public class NormalFileUploadTest {
 
     @Test
     @Ignore
-    public void getLawDistributionTest(){
+    public void getLawDistributionTest() throws DocumentException, ServiceProcessException {
         List<Law> result = caseRecommendService.getLawDistribution();
         Assert.assertNotNull(result);
         Assert.assertTrue(result.size()>0);
