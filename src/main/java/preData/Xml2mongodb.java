@@ -18,7 +18,7 @@ import java.io.File;
 /**
  * Created by loick on 16/07/2017.
  */
-public class Xml2Mongodb {
+public class Xml2mongodb {
     public static void main(String[] args) throws DocumentException {
         File direc = new File("/Users/loick/Desktop/卓越工程师/天津/危险驾驶罪");
         File files[] = direc.listFiles();
