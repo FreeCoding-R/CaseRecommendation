@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--[if IE 8]>
-<html class="ie ie8"/> <![endif]-->
-<!--[if IE 9]>
-<html class="ie ie9"/> <![endif]-->
-<!--[if gt IE 9]><!-->
-<html/> <!--<![endif]-->
 <head th:include="components/components :: head">
 </head>
 <head >
     <title>CaseRecommendation First Page</title>
     <!-- Theme CSS -->
-    <link th:href="@{css/colors/blue.css}" rel="stylesheet"/>
 </head>
 <body class="home">
 <div class="wrap">
@@ -30,7 +23,7 @@
                 </div>
                 <!-- Logo End -->
                 <!-- Menu Start -->
-                <nav class="navbar collapse navbar-collapse menu">
+                <nav class="navbar collapse navbar-collapse menu" style="margin-bottom: 0;">
                     <div class="navbar-header navbar-right">
                         <button id="nav-toggle" type="button" class="ui-navbar-toggle navbar-toggle" data-toggle="collapse"
                                 data-target=".navbar-1">
