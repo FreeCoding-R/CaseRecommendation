@@ -2,6 +2,7 @@ package freecoding.service.impl;
 
 import freecoding.dao.CaseRecommendDao;
 import freecoding.exception.FileContentException;
+import freecoding.exception.ServiceProcessException;
 import freecoding.service.CaseRecommendService;
 import freecoding.util.Json2Xml;
 import freecoding.vo.Case;
@@ -35,6 +36,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     private ThreadLocal <List<Document>> recommendCases = new ThreadLocal();
     private ThreadLocal <List<Law>> lawDistribution = new ThreadLocal();
     private ThreadLocal <List<Case>> caseInfo = new ThreadLocal();
+    private ThreadLocal <Element> resultNode= new ThreadLocal();
 
     @Override
     public boolean upload(File file) {
@@ -74,35 +76,55 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 
     @Override
-    public JSON handle() throws DocumentException, FileContentException {
+    public JSON handle() throws DocumentException, FileContentException, ServiceProcessException {
         //xml指定节点遍历，获取信息，转为string，再转为json
         String result="{";
         org.dom4j.Document document = null;
-        if(dom4jd.get()==null){
+        boolean tag=true;
+
+        //调用顺序异常
+        if(this.file.get()==null&&this.dom4jd.get()==null){
+            throw new ServiceProcessException("未按顺序调用");
+        }
+        if(this.dom4jd.get()==null){
             SAXReader sr = new SAXReader();
             document = sr.read(this.file.get());
             dom4jd.set(document);
-
         }else {
+            tag=false;
             document = dom4jd.get();
         }
 
         Element root = document.getRootElement();
+        //关键词详细第一部分获取
         result+="\""+"原文"+"\""+":"+"\""+root.attribute("value").getText()+"\",";
 
+        //关键词详细第二部分获取
         result+="\""+root.element("WS").element("JBFY").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("JBFY").attribute("value").getText()+"\",";
         result+="\""+root.element("WS").element("WSMC").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("WSMC").attribute("value").getText()+"\",";
         result+="\""+root.element("WS").element("AH").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("AH").attribute("value").getText()+"\",";
 
-        Iterator it = root.element("SSCYRQJ").elementIterator();
+        //关键词详细第三部分获取
+
+        Element e=root.element("SSCYRQJ");
+        if(tag==false){
+            e=e.element("SSCYR");
+
+        }
+
+        Iterator it = e.elementIterator();
         while (it.hasNext()) {
-            Element i = (Element) it.next();
+            Element i=(Element) it.next() ;
+
+
             if(i.attribute("value")==null){
                 continue;
             }
             result+="\""+"诉讼参与人"+"\""+":"+"\""+i.element("SSCYRMC").attribute("value").getText()+"\",";
+
         }
 
+        //关键词详细第四部分获取
         result+="\""+root.element("SSJL").attribute("nameCN").getText()+"\""+":"+"\""+root.element("SSJL").attribute("value").getText()+"\",";
         result+="\""+root.element("CPFXGC").attribute("nameCN").getText()+"\""+":"+"\""+root.element("CPFXGC").attribute("value").getText()+"\",";
         result+="\""+root.element("PJJG").attribute("nameCN").getText()+"\""+":"+"\""+root.element("PJJG").attribute("value").getText()+"\",";
@@ -123,17 +145,32 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 
     @Override
-    public JSON detail(String keywoed) throws DocumentException, FileContentException {
-        String result="{";
-        SAXReader sr = new SAXReader();
-        org.dom4j.Document document = null;
-        document = sr.read(this.file.get());
-        Element root = getNode(document.getRootElement(),keywoed);
+    public JSON detail(String keyword) throws DocumentException, FileContentException, ServiceProcessException {
 
-        if(root==null||!root.elementIterator().hasNext()){
-            throw new FileContentException("未找到该关键字具体信息");
+        if(keyword==null){
+            throw new FileContentException("关键字为空");
         }
 
+        //同上
+        if(this.dom4jd.get()==null){
+            throw new ServiceProcessException("未按顺序调用");
+
+        }
+
+        String result="{";
+        org.dom4j.Document document = null;
+        document=this.dom4jd.get();
+
+        this.resultNode.set(null);
+        getNode(document.getRootElement(), keyword);
+        Element root =this.resultNode.get();
+        this.resultNode.set(null);
+
+        if(root==null||!root.elementIterator().hasNext()){
+            throw new FileContentException(root.attribute("value").getText());
+        }
+
+        //符合条件节点的子节点信息提取
         Iterator it = root.elementIterator();
         while (it.hasNext()) {
             Element i = (Element) it.next();
@@ -144,12 +181,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         }
 
         result=result.substring(0,result.length()-1)+"}";
-
-        result = result.replace("\n", "\\n");
-        result = result.replace("\r", "\\r");
-
         JSONObject jsonObject=JSONObject.fromObject(result);
-
 
         return (JSON) jsonObject;
     }
@@ -241,22 +273,22 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
 
     //递归遍历xml
-    private Element getNode(Element node,String keyword){
+    private void getNode(Element node,String keyword){
 
-        Element result = null;
         if(node.attribute("value")!=null){
-            if(node.attribute("value").toString().contains(keyword.split("/")[1])&&node.attribute("nameCN").toString().equals(keyword.split("/")[0])){
-                result=node;
+            if(node.attribute("value").getText().contains(keyword.split("/")[1])&&node.attribute("nameCN").getText().equals(keyword.split("/")[0])){
+                if(resultNode.get()==null||resultNode.get().attribute("value").getText().length()<node.attribute("value").getText().length()) {
+                    resultNode.set(node);
+                }
             }
         }
-        //递归遍历当前节点所有的子节点
-        if(result==null) {
-            List<Element> listElement = node.elements();//所有一级子节点的list
-            for (Element e : listElement) {//遍历所有一级子节点
-                this.getNode(e, keyword);//递归
-            }
+        //递归遍历当前节点所有的子节点,bool剪枝
+
+        List<Element> listElement = node.elements();//所有一级子节点的list
+        for (Element e : listElement) {//遍历所有一级子节点
+            this.getNode(e, keyword);//递归
         }
-        return result;
+
     }
 
 

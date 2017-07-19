@@ -1,5 +1,6 @@
 package freecoding.service;
 
+import freecoding.exception.ServiceProcessException;
 import freecoding.vo.Case;
 import freecoding.vo.Law;
 import freecoding.exception.FileContentException;
@@ -21,7 +22,12 @@ public interface CaseRecommendService {
     boolean upload(File file);
 
 
-
+    /**
+     * 用户选择文件传入id
+     * @param id
+     * @return
+     * @throws DocumentException
+     */
     boolean init(String id) throws DocumentException;
 
 
@@ -30,14 +36,14 @@ public interface CaseRecommendService {
      * @param
      * @return 处理结果
      */
-    JSON handle() throws DocumentException, FileContentException;
+    JSON handle() throws DocumentException, FileContentException, ServiceProcessException;
 
 
     /**
-     * @param keywoed
+     * @param keyword
      * @return
      */
-    JSON detail(String keywoed) throws DocumentException, FileContentException;
+    JSON detail(String keyword) throws DocumentException, FileContentException, ServiceProcessException;
 
 
     /**

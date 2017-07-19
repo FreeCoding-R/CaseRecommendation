@@ -14,8 +14,8 @@ public class Json2Xml {
 //        Document document=caseRecommend.find("596b2195ec393fc6ed998155");
 //        String a=document.toJson();
 
-        json = json.replace("\n", "\\n");
-        json = json.replace("\r", "\\r");
+//        json = json.replace("\n", "\\n");
+//        json = json.replace("\r", "\\r");
         json=json.substring(51);
         json="{\"QW\":{"+json+"}";
 
@@ -23,6 +23,7 @@ public class Json2Xml {
         JSON jsonObject = JSONSerializer.toJSON(json);
         String h=serializer.write(jsonObject);
         h=h.substring(43,h.length()-6);
+
 
         return h;
 

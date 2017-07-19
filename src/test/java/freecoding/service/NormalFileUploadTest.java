@@ -1,5 +1,6 @@
 package freecoding.service;
 
+import freecoding.exception.ServiceProcessException;
 import freecoding.vo.Case;
 import freecoding.vo.Law;
 import freecoding.exception.FileContentException;
@@ -50,20 +51,20 @@ public class NormalFileUploadTest {
 
     @Test
     @Ignore
-    public void handleTest() throws DocumentException, FileContentException {
+    public void handleTest() throws DocumentException, FileContentException, ServiceProcessException {
         JSON result = caseRecommendService.handle();
         System.out.println(result.toString());
     }
 
     @Test(expected=DocumentException.class)
     @Ignore
-    public void nullKeywordDetailTest() throws DocumentException, FileContentException {
+    public void nullKeywordDetailTest() throws DocumentException, FileContentException, ServiceProcessException {
         caseRecommendService.detail(null);
     }
 
     @Test
     @Ignore
-    public void normalKeywordDetailTest() throws FileContentException, DocumentException {
+    public void normalKeywordDetailTest() throws FileContentException, DocumentException, ServiceProcessException {
         JSON result = caseRecommendService.detail("employee");
         Assert.assertEquals(result.toString(), "");
     }
