@@ -18,7 +18,7 @@ public class MongoDataTest {
 
     @Test
     public void getDataBaseTest(){
-        Assert.assertEquals("com.mongodb.MongoDatabaseImpl@22ff4249",String.valueOf(mongoData.getDataBase()));
+        Assert.assertNotNull(mongoData.getDataBase());
     }
 
 }
