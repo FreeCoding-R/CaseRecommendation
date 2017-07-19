@@ -32,7 +32,6 @@
 
     </div>
 </div>
-<div th:include="components/components :: footer"></div>
 <script th:inline="javascript">
     var single=[[${singlePerson}]];
     console.log(single.name+"/"+single.age);
@@ -43,4 +42,5 @@
     }
 </script>
 </body>
+<div th:replace="components/components :: footer"></div>
 </html>
