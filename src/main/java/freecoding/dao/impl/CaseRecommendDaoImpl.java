@@ -20,9 +20,11 @@ import java.util.List;
 @Repository
 public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
+    private static String collectionName = "tianjin";
+
     @Override
     public Document find(String id) {
-        MongoCollection<Document> collection = MongoData.getDataBase().getCollection("traffic");
+        MongoCollection<Document> collection = MongoData.getDataBase().getCollection(collectionName);
         BasicDBObject query = new BasicDBObject();
         query.put("_id", new ObjectId(id));
         FindIterable<Document> cursor = collection.find(query);
@@ -33,7 +35,7 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
     @Override
     public List<Document> getRandomCases() {
-        MongoCollection<Document> collection = MongoData.getDataBase().getCollection("traffic");
+        MongoCollection<Document> collection = MongoData.getDataBase().getCollection(collectionName);
         List<Document> randomList = new ArrayList<>();
         collection.find().limit(6).forEach((Block<? super Document>) item->{
             randomList.add(item);
@@ -77,7 +79,7 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
         MongoDatabase database = MongoData.getDataBase();
 
 
-        MongoCollection<Document> collection = database.getCollection("traffic");
+        MongoCollection<Document> collection = database.getCollection(collectionName);
 
         List<Document> cases = new ArrayList<>();
 

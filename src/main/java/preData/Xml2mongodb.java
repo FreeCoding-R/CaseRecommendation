@@ -20,12 +20,12 @@ import java.io.File;
  */
 public class Xml2mongodb {
     public static void main(String[] args) throws DocumentException {
-        File direc = new File("/Users/loick/Desktop/卓越工程师/天津/危险驾驶罪");
+        File direc = new File("/Users/loick/Desktop/卓越工程师/天津/交通肇事罪");
         File files[] = direc.listFiles();
         if(files.length != 0){
 
             MongoDatabase mongoDatabase = MongoData.getDataBase();
-            MongoCollection<DBObject> collection = mongoDatabase.getCollection("dangerDrive",DBObject.class);
+            MongoCollection<DBObject> collection = mongoDatabase.getCollection("tianjin",DBObject.class);
 
 
             for(File file: files) {

@@ -48,16 +48,12 @@ public class CaseRecommendDaoTest {
     }
 
     @Test
+    public void getKeyTest(){
+        Assert.assertEquals(6, caseRecommendDao.getRandomCases().size());
+    }
+
+    @Test
     public void findTest() {
-        org.bson.Document document = caseRecommendDao.find("596b2195ec393fc6ed998155");
-        Assert.assertNotNull(document);
-        Assert.assertEquals("Document{{@value=天津市南开区人民法院 刑事判决书 (2001)南刑初字第125号, @nameCN=文首," +
-                " WSZZDW=Document{{@value=法院, @nameCN=文书制作单位}}, JBFY=Document{{@value=天津市南开区人民法院, " +
-                "@nameCN=经办法院, FYJB=Document{{@value=基层, @nameCN=法院级别}}, XZQH_P=Document{{@value=天津, @nameCN=行政区划(省)}}}}, " +
-                "WSMC=Document{{@value=刑事判决书, @nameCN=文书名称}}, AH=Document{{@value=(2001)南刑初字第125号, @nameCN=案号}}, " +
-                "LAND=Document{{@value=2001, @nameCN=立案年度}}, AJXZ=Document{{@value=刑事案件, @nameCN=案件性质}}, " +
-                "WSZL=Document{{@value=判决书, @nameCN=文书种类}}, SPCX=Document{{@value=一审案件, @nameCN=审判程序}}, " +
-                "AJLX=Document{{@value=刑事一审案件, @nameCN=案件类型}}}}",String.valueOf(document.get("WS")));
-        System.out.println(String.valueOf(document.get("WS")));
+
     }
 }
