@@ -25,21 +25,43 @@ public class Xml2mongodb {
 
         if(files.length != 0){
 
+//            SAXReader sr = new SAXReader();
+//            Document document = (Document) sr.read(files[0]);
+//
+//            String responseTextObj = document.asXML();
+//
+//            responseTextObj = responseTextObj.replace("\r\n", "\\r\\n");
+//
+//            XMLSerializer xmlSerializer = new XMLSerializer();
+//            net.sf.json.JSON jsonObj = xmlSerializer.read(responseTextObj);
+//
+//            String jsonStr = jsonObj.toString();
+//
+//
+//
+//
+//            DBObject object = (DBObject) JSON.parse(jsonStr);
+//
+//            System.out.println(object);
+
+
+
             MongoDatabase mongoDatabase = MongoData.getDataBase();
 
             MongoCollection<DBObject> collection = mongoDatabase.getCollection("dangerDrive",DBObject.class);
-
 
 
             for(File file: files) {
                 SAXReader sr = new SAXReader();
                 Document document = (Document) sr.read(file);
                 String responseTextObj = document.asXML();
+                responseTextObj = responseTextObj.replace("\r\n", "\\r\\n");
                 XMLSerializer xmlSerializer = new XMLSerializer();
                 net.sf.json.JSON jsonObj = xmlSerializer.read(responseTextObj);
                 String jsonStr = jsonObj.toString();
 
                 DBObject object = (DBObject) JSON.parse(jsonStr);
+
                 collection.insertOne(object);
             }
 
