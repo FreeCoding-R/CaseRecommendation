@@ -16,18 +16,35 @@ public class Command {
      * @apiNote 暂时还没处理编码格式的问题，默认按utf-8的格式读取输出
      */
     public static String exeCmd(String commandStr) {
+        String output="";
         BufferedReader br = null;
         try {
             Process p = Runtime.getRuntime().exec(commandStr);
-            br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            //不知道为什么windows下获取的系统默认编码格式是UTF-8，所以只能手动设置编码格式
+            br = new BufferedReader(new InputStreamReader(p.getInputStream(),
+                    System.getProperty("os.name").startsWith("Windows")?"GBK":"UTF-8"));
             String line = null;
             StringBuilder sb = new StringBuilder();
             while ((line = br.readLine()) != null) {
                 sb.append(line + "\n");
             }
-            return sb.toString();
+            output=sb.toString();
+
+            //如果从标准输入流中获取不到输入，就从标准错误流中获取
+            if("".equals(output)){
+                br = new BufferedReader(new InputStreamReader(p.getErrorStream(),
+                        System.getProperty("os.name").startsWith("Windows")?"GBK":"UTF-8"));
+                line = null;
+                sb = new StringBuilder();
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                output=sb.toString();
+            }
+
+            return output;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         finally
         {
@@ -39,6 +56,6 @@ public class Command {
                 }
             }
         }
-        return "no output";
+        return "Error";
     }
 }

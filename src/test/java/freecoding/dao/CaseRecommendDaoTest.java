@@ -1,8 +1,18 @@
 package freecoding.dao;
 
 import freecoding.dao.impl.CaseRecommendDaoImpl;
+<<<<<<< HEAD
+=======
+import freecoding.util.MongoData;
+import net.sf.json.xml.XMLSerializer;
+>>>>>>> origin/master
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
+<<<<<<< HEAD
+=======
+import org.dom4j.io.SAXReader;
+import org.junit.Assert;
+>>>>>>> origin/master
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +75,11 @@ public class CaseRecommendDaoTest {
 //        org.dom4j.Document d= DocumentHelper.parseText(h);
 //        System.out.println(d.getRootElement().attribute("value").getText());
 
+    }
+
+    @Test
+    public void keyTest(){
+        int len = caseRecommend.getKeyCases(MongoData.getDataBase().getCollection("traffic").find().first()).size();
+        Assert.assertEquals(len, 6);
     }
 }

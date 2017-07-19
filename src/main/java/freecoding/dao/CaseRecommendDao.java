@@ -12,4 +12,6 @@ public interface CaseRecommendDao {
     Document find(String id);
 
     List<Document> getRandomCases();
+
+    List<Document> getKeyCases(Document document);
 }
