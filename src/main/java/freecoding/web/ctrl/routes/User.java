@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class User {
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user")
     public String user(@RequestParam(value = "name", required = false) String name,
                        @RequestParam(value = "pwd", required = false) String pwd) {
         return "Hello " + name;

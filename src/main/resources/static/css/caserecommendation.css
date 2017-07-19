@@ -1,0 +1,7 @@
+/* CSS Document */
+@charset "UTF-8";
+
+.navbar-toggle .icon-bar {
+    background-color: rgba(172, 224, 247, 0.73);
+    width: 26px;
+}

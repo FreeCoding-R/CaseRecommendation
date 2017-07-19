@@ -32,11 +32,6 @@ public class Index {
         return "case";
     }
 
-    @RequestMapping(value="/user", method= RequestMethod.GET)
-    public String user() {
-        return "user";
-    }
-
     @RequestMapping("/person")
     public String index(Model model){
         Person single=new Person("aa",1);
