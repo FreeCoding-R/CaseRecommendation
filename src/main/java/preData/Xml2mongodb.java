@@ -18,18 +18,13 @@ import java.io.File;
 /**
  * Created by loick on 16/07/2017.
  */
-public class Xml2mongodb {
+public class Xml2Mongodb {
     public static void main(String[] args) throws DocumentException {
         File direc = new File("/Users/loick/Desktop/卓越工程师/天津/危险驾驶罪");
         File files[] = direc.listFiles();
-
         if(files.length != 0){
-
             MongoDatabase mongoDatabase = MongoData.getDataBase();
-
             MongoCollection<DBObject> collection = mongoDatabase.getCollection("dangerDrive",DBObject.class);
-
-
 
             for(File file: files) {
                 SAXReader sr = new SAXReader();
@@ -42,7 +37,6 @@ public class Xml2mongodb {
                 DBObject object = (DBObject) JSON.parse(jsonStr);
                 collection.insertOne(object);
             }
-
         }
     }
 }

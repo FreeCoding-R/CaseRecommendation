@@ -1,7 +1,7 @@
 package freecoding.service;
 
-import freecoding.entity.Case;
-import freecoding.entity.Law;
+import freecoding.vo.Case;
+import freecoding.vo.Law;
 import freecoding.exception.FileContentException;
 import net.sf.json.JSON;
 import org.dom4j.DocumentException;
@@ -22,7 +22,7 @@ public interface CaseRecommendService {
 
 
 
-    boolean init(String id);
+    boolean init(String id) throws DocumentException;
 
 
     /**

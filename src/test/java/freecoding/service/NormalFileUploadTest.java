@@ -1,7 +1,7 @@
 package freecoding.service;
 
-import freecoding.entity.Case;
-import freecoding.entity.Law;
+import freecoding.vo.Case;
+import freecoding.vo.Law;
 import freecoding.exception.FileContentException;
 import freecoding.service.impl.CaseRecommendServiceImpl;
 import net.sf.json.JSON;
