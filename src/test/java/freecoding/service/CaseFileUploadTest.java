@@ -1,7 +1,7 @@
 package freecoding.service;
 
-import freecoding.entity.Case;
-import freecoding.entity.Law;
+import freecoding.vo.Case;
+import freecoding.vo.Law;
 import freecoding.exception.FileContentException;
 import freecoding.service.impl.CaseRecommendServiceImpl;
 import net.sf.json.JSON;
@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
+
 
 /**
  * Created by zjy on 2017/7/18.
@@ -41,7 +42,7 @@ public class CaseFileUploadTest {
     }
 
     @Test
-    @Ignore
+//    @Ignore
     public void handleTest() throws DocumentException, FileContentException {
         JSON result = caseRecommendService.handle();
         System.out.println(result.toString());

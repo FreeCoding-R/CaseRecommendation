@@ -1,4 +1,4 @@
-package freecoding.entity;
+package freecoding.vo;
 
 /**
  * Created by zhujing on 2017/7/17.

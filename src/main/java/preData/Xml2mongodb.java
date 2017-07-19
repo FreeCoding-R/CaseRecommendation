@@ -22,34 +22,7 @@ public class Xml2mongodb {
     public static void main(String[] args) throws DocumentException {
         File direc = new File("/Users/loick/Desktop/卓越工程师/天津/危险驾驶罪");
         File files[] = direc.listFiles();
-
         if(files.length != 0){
-
-//            SAXReader sr = new SAXReader();
-//            Document document = (Document) sr.read(files[0]);
-//
-//            String responseTextObj = document.asXML();
-//
-//            responseTextObj = responseTextObj.replace("\r\n", "\\r\\n");
-//
-//            XMLSerializer xmlSerializer = new XMLSerializer();
-//            net.sf.json.JSON jsonObj = xmlSerializer.read(responseTextObj);
-//
-//            String jsonStr = jsonObj.toString();
-//
-//
-//
-//
-//            DBObject object = (DBObject) JSON.parse(jsonStr);
-//
-//            System.out.println(object);
-
-
-
-            MongoDatabase mongoDatabase = MongoData.getDataBase();
-
-            MongoCollection<DBObject> collection = mongoDatabase.getCollection("dangerDrive",DBObject.class);
-
 
             for(File file: files) {
                 SAXReader sr = new SAXReader();
@@ -64,7 +37,6 @@ public class Xml2mongodb {
 
                 collection.insertOne(object);
             }
-
         }
     }
 }

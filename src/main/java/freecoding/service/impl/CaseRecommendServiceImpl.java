@@ -1,14 +1,16 @@
 package freecoding.service.impl;
 
 import freecoding.dao.CaseRecommendDao;
-import freecoding.entity.Case;
-import freecoding.entity.Law;
 import freecoding.exception.FileContentException;
 import freecoding.service.CaseRecommendService;
+import freecoding.util.Json2Xml;
+import freecoding.vo.Case;
+import freecoding.vo.Law;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.bson.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     private CaseRecommendDao caseRecommendDao;
 
     private ThreadLocal <File> file = new ThreadLocal();
+    private ThreadLocal <org.dom4j.Document> dom4jd = new ThreadLocal();
     private ThreadLocal <List<Document>> recommendCases = new ThreadLocal();
     private ThreadLocal <List<Law>> lawDistribution = new ThreadLocal();
     private ThreadLocal <List<Case>> caseInfo = new ThreadLocal();
@@ -39,12 +42,15 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             return false;
         }
 
-        //后缀
+        //按后缀检测
         String fileName = file.getName();
         if(!fileName.endsWith(".xml")){
             return false;
         }
         this.file.set(file);
+
+        //线程变量初始化
+        this.dom4jd.set(null);
         this.recommendCases.set(new ArrayList<>());
         this.lawDistribution.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
@@ -53,8 +59,14 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     @Override
     public boolean init(String id) {
+        Document document=null;
+        try{
+            document=caseRecommendDao.find(id);
+            this.dom4jd.set(DocumentHelper.parseText(Json2Xml.json2xml(document.toJson())));
+        }catch (Exception e){
+            return false;
+        }
 
-//        this.file.set(file);
         this.recommendCases.set(new ArrayList<>());
         this.lawDistribution.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
@@ -65,11 +77,17 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     public JSON handle() throws DocumentException, FileContentException {
         //xml指定节点遍历，获取信息，转为string，再转为json
         String result="{";
-        SAXReader sr = new SAXReader();
         org.dom4j.Document document = null;
-        document = sr.read(this.file.get());
-        Element root = document.getRootElement();
+        if(dom4jd.get()==null){
+            SAXReader sr = new SAXReader();
+            document = sr.read(this.file.get());
+            dom4jd.set(document);
 
+        }else {
+            document = dom4jd.get();
+        }
+
+        Element root = document.getRootElement();
         result+="\""+"原文"+"\""+":"+"\""+root.attribute("value").getText()+"\",";
 
         result+="\""+root.element("WS").element("JBFY").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("JBFY").attribute("value").getText()+"\",";
@@ -95,6 +113,10 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         if(result.length()==2){
             throw new FileContentException("文件内容不符合要求");
         }
+
+        result = result.replace("\n", "\\n");
+        result = result.replace("\r", "\\r");
+
         JSONObject jsonObject=JSONObject.fromObject(result);
 
         return (JSON) jsonObject;
@@ -122,6 +144,10 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         }
 
         result=result.substring(0,result.length()-1)+"}";
+
+        result = result.replace("\n", "\\n");
+        result = result.replace("\r", "\\r");
+
         JSONObject jsonObject=JSONObject.fromObject(result);
 
 
@@ -152,7 +178,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             c.setId((String) document.get("_id"));
             c.setName((String) ((Document)document.get("WS")).get("@value"));
             cl.add(c);
-
         }
 
         this.caseInfo.set(cl);
@@ -216,7 +241,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
 
     //递归遍历xml
-    public Element getNode(Element node,String keyword){
+    private Element getNode(Element node,String keyword){
 
         Element result = null;
         if(node.attribute("value")!=null){
@@ -224,7 +249,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 result=node;
             }
         }
-
         //递归遍历当前节点所有的子节点
         if(result==null) {
             List<Element> listElement = node.elements();//所有一级子节点的list
@@ -234,6 +258,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         }
         return result;
     }
+
+
+
 }
 
 //FileContentException类已经移到freecoding.exception包里  --by zjy
