@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--/*@thymesVar id="people" type="java.lang.String"*/-->
 <head th:include="components/components :: head">
 </head>
 <head>
@@ -11,6 +10,28 @@
 <header th:replace="components/components :: header"/>
 
 <p th:text="${result}"></p>
+<p>文书内容：</p>
+<div class="panel-body">
+    <ul class="panel-group">
+        <li class="list-group-item" th:each="name:${content.keySet()}">
+            <h3 th:text="${name}"></h3>
+            <div th:if="${content.get(name).getClass() eq name.getClass()}">
+                <!--&lt;即小于，小于15个字的文本居中显示-->
+                <p th:each='line:${content.get(name).split("\n")}' th:text="${line}"
+                   th:class="${line.replaceAll(' ', '').length() &lt; 20}? 'text-center' : 'text-left'">
+                </p>
+            </div>
+            <div th:if="${content.get(name).getClass() ne name.getClass()}">
+                <p th:each="item:${content.get(name)}" th:text="${item}" class="text-center">
+                </p>
+            </div>
+        </li>
+    </ul>
+</div>
+<p>类案推荐：</p>
+<a th:each="item:${caseRecommendation}" th:text="${item.getName()}" th:href="'/case/' + ${item.getId()}"></a>
+<p>法律分布：</p>
+<p th:text="${lawDistribution}"></p>
 
 <!-- Footer -->
 <footer th:replace="components/components :: footer"></footer>

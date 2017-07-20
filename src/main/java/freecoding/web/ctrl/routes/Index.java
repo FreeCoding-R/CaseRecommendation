@@ -1,9 +1,16 @@
 package freecoding.web.ctrl.routes;
 
+import freecoding.exception.FileContentException;
+import freecoding.exception.ServiceProcessException;
+import freecoding.service.CaseRecommendService;
 import freecoding.web.data.model.Person;
+import net.sf.json.JSONObject;
+import org.dom4j.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +28,8 @@ import java.util.List;
 @EnableAutoConfiguration
 @Controller
 public class Index {
+    @Autowired
+    private CaseRecommendService caseRecommendService;
 
     @RequestMapping(value="/",method= RequestMethod.GET)
     public String home() {
@@ -61,14 +70,36 @@ public class Index {
                 }
                 file.transferTo(dest);
                 message+= "上传成功\n";
+
+                //开始处理文书
+                if(caseRecommendService.upload(dest)){
+                    model.addAttribute("content",(JSONObject)caseRecommendService.handle());
+                    model.addAttribute("caseRecommendation",caseRecommendService.getCaseRecommendation());
+                    model.addAttribute("lawDistribution",caseRecommendService.getLawDistribution().toString());
+                }else {
+                    message+= "文件格式不符合规范！\n";
+                }
             }
-            catch (Exception e) {
+            catch (IOException e) {
                 e.printStackTrace();
+            } catch (ServiceProcessException e) {
+                e.printStackTrace();
+            } catch (FileContentException e) {
+                message+= (e.getMessage()+"\n");
+            } catch (DocumentException e) {
+                message+= (e.getMessage()+"\n");
+            } catch (Exception e){
                 message+= "上传失败\n";
             }
         }
         model.addAttribute("result",message);
         return "result";
+    }
+
+    @RequestMapping(value="/case/{ID}",method=RequestMethod.GET)
+    public String addUser4(@PathVariable String ID) {
+        System.out.println("ID is:"+ID);
+        return "index";
     }
 
     @RequestMapping("/person")
