@@ -203,16 +203,11 @@
                         <div class="col-lg-3 col-md-3">
                             <div class="get-started">
                                 <button class="btn btn-special btn-color pull-right">Get Started Now</button>
-                                <form>
+                                <form method='post' target='_blank' action="/uploadXML" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="exampleInputFile">File input</label>
-                                        <input type="file" id="exampleInputFile"/>
+                                        <input type="file" name="file" id="exampleInputFile"/>
                                         <p class="help-block">Example block-level help text here.</p>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"/> Check me out
-                                        </label>
                                     </div>
                                     <button type="submit" class="btn btn-special btn-color pull-right">Submit</button>
                                 </form>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="people" type="java.lang.String"*/-->
+<head th:include="components/components :: head">
+</head>
+<head>
+    <title>result</title>
+</head>
+<body>
+<!-- Header -->
+<header th:replace="components/components :: header"/>
+
+<p th:text="${result}"></p>
+
+<!-- Footer -->
+<footer th:replace="components/components :: footer"></footer>
+</body>
+</html>
