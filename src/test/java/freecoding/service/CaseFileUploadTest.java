@@ -44,7 +44,6 @@ public class CaseFileUploadTest {
 //        caseRecommendService.handle();
         caseRecommendService.getCaseRecommendation();
 
-
     }
 
     @Test
@@ -82,7 +81,7 @@ public class CaseFileUploadTest {
     }
 
     @Test
-    @Ignore
+//    @Ignore
     public void getLawDistributionTest() throws DocumentException, ServiceProcessException {
         List<Law> result = caseRecommendService.getLawDistribution();
 //        Assert.assertNotNull(result);
