@@ -53,7 +53,7 @@ public class Index {
             // 文件上传后的路径
             try {
                 // 解决中文问题，liunx下中文路径，图片显示问题
-                String filePath = getClass().getClassLoader().getResource("").toURI().getPath()+"/userFiles/";
+                String filePath = System.getProperty("user.dir")+"/userFiles/";
                 File dest = new File(filePath + fileName);
                 // 检测是否存在目录
                 if (!dest.getParentFile().exists()) {
