@@ -43,7 +43,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         if(file==null){
             return false;
         }
-
         //按后缀检测
         String fileName = file.getName();
         if(!fileName.endsWith(".xml")){
@@ -118,7 +117,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         while (it.hasNext()) {
             Element i=(Element) it.next() ;
 
-
             if(i.attribute("value")==null){
                 continue;
             }
@@ -128,9 +126,13 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         //关键词详细第四部分获取
         result+="\""+root.element("SSJL").attribute("nameCN").getText()+"\""+":"+"\""+root.element("SSJL").attribute("value").getText()+"\",";
-        result+="\""+root.element("CPFXGC").attribute("nameCN").getText()+"\""+":"+"\""+root.element("CPFXGC").attribute("value").getText()+"\",";
+        String c=root.element("CPFXGC").attribute("value").getText();
+        c=c.replace("，判决如下：","。");
+
+        result+="\""+root.element("CPFXGC").attribute("nameCN").getText()+"\""+":"+"\""+c+"\",";
         result+="\""+root.element("PJJG").attribute("nameCN").getText()+"\""+":"+"\""+root.element("PJJG").attribute("value").getText()+"\",";
-        result+="\""+root.element("WW").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WW").attribute("value").getText()+"\",";
+        result+="\""+root.element("AJJBQK").attribute("nameCN").getText()+"\""+":"+"\""+root.element("AJJBQK").attribute("value").getText()+"\",";
+
 
         result=result.substring(0,result.length()-1)+"}";
 
@@ -173,6 +175,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         }
 
         //符合条件节点的子节点信息提取
+
+
         Iterator it = root.elementIterator();
         while (it.hasNext()) {
             Element i = (Element) it.next();
@@ -240,7 +244,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             org.dom4j.Document cpfxgcXml = DocumentHelper.parseText(Json2Xml.jsonPartOfM2xml(cpfxgc.toJson()));
 
             Element root = cpfxgcXml.getRootElement().element("FLFTMC");
-            System.out.println(root.attribute("class"));
 
             if(root.attribute("class").getText().equals("object")){
                 String name = root.attribute("value").getText();
@@ -271,7 +274,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                         law.setName(name2);
                         law.setDetail(detail);
                         law.setNum(1);
-
                         distinct(law);
 
                     }else{
@@ -283,7 +285,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                             law.setName(name2);
                             law.setDetail(detail);
                             law.setNum(1);
-                            System.out.println(law.toString());
                             distinct(law);
 
                         }
@@ -292,10 +293,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     }
 
                 }
-
-
-
-
             }
 
         }

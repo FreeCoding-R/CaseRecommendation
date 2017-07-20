@@ -27,7 +27,6 @@ public class Xml2mongodb {
             MongoDatabase mongoDatabase = MongoData.getDataBase();
             MongoCollection<DBObject> collection = mongoDatabase.getCollection("tianjin",DBObject.class);
 
-
             for(File file: files) {
                 SAXReader sr = new SAXReader();
                 Document document = (Document) sr.read(file);
