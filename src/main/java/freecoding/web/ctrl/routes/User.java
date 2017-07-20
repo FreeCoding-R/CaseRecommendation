@@ -17,6 +17,7 @@ public class User {
     @RequestMapping(value = "/user")
     public String user(@RequestParam(value = "name", required = false) String name,
                        @RequestParam(value = "pwd", required = false) String pwd) {
+        int i = 2/0;
         return "Hello " + name;
     }
 }

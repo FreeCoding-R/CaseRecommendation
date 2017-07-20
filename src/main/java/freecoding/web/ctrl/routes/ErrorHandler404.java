@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * http请求错误的返回控制
  */
 @Controller
-public class ErrorHandler implements ErrorController {
+public class ErrorHandler404 implements ErrorController {
 
     private static final String ERROR_PATH = "/error";
 
     @RequestMapping(value=ERROR_PATH)
     public String handleError(){
-        return "error/error";
+        return "error/error-404";
     }
 
     @Override
