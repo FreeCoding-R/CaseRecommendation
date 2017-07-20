@@ -38,22 +38,23 @@ public class CaseFileUploadTest {
         // 用.toURI()解决中文名乱码的问题
         File caseFile = new File(getClass().getClassLoader().getResource(
                 "xml/(2016)津0225刑初747号刑事判决书(一审公诉案件适用简易程序用).doc.xml").toURI().getPath());
-        System.out.println("use "+caseFile.getAbsolutePath()+" for test.");
+//        System.out.println("use "+caseFile.getAbsolutePath()+" for test.");
         Assert.assertEquals(caseRecommendService.upload(caseFile), true);
-//        Assert.assertEquals(caseRecommendService.init("596f05afec393fe8aab835ec"), true);
+//        Assert.assertEquals(caseRecommendService.init("596f05b0ec393fe8aab835ed"), true);
 //        caseRecommendService.handle();
-        caseRecommendService.getCaseRecommendation();
+//        caseRecommendService.getCaseRecommendation();
+
 
     }
 
     @Test
-    @Ignore
+//    @Ignore
     public void handleTest() throws DocumentException, FileContentException, ServiceProcessException {
         JSON result = caseRecommendService.handle();
         System.out.println(result.toString());
     }
 
-    @Test(expected=DocumentException.class)
+    @Test(expected=FileContentException.class)
     @Ignore
     public void nullKeywordDetailTest() throws DocumentException, FileContentException, ServiceProcessException {
         caseRecommendService.detail(null);
@@ -62,7 +63,7 @@ public class CaseFileUploadTest {
     @Test
     @Ignore
     public void normalKeywordDetailTest() throws FileContentException, DocumentException, ServiceProcessException {
-        JSON result = caseRecommendService.detail("诉讼参与人/王占双");
+        JSON result = caseRecommendService.detail("裁判分析过程/。");
         System.out.println(result.toString());
     }
 
@@ -81,7 +82,7 @@ public class CaseFileUploadTest {
     }
 
     @Test
-//    @Ignore
+    @Ignore
     public void getLawDistributionTest() throws DocumentException, ServiceProcessException {
         List<Law> result = caseRecommendService.getLawDistribution();
 //        Assert.assertNotNull(result);
