@@ -45,6 +45,7 @@ public class Index {
             message="文件为空";
         }else {
             // 获取文件名
+            String fileName = file.hashCode() + file.getOriginalFilename();
             message+=("上传的文件名为：" + fileName + "\n");
             // 获取文件的后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
