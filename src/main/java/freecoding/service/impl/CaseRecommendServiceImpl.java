@@ -231,38 +231,73 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         //推荐案例遍历
         for (int i = 0; i < rl.size(); i++) {
             Document document = (Document) rl.get(i);
-
             Document cpfxgc = (Document) document.get("CPFXGC");
+//            Document flftmc = (Document) cpfxgc.get("FLFTMC");
+
+            String id=document.get("_id").toString();
+            System.out.println(id);
 
             org.dom4j.Document cpfxgcXml = DocumentHelper.parseText(Json2Xml.jsonPartOfM2xml(cpfxgc.toJson()));
-            Element root = cpfxgcXml.getRootElement();
-            Iterator it = root.elementIterator();
-            while (it.hasNext()) {
-                Element element = (Element) it.next();
-                String name = null;
-                if (element.attribute("value")!=null&&element.attribute("nameCN").getText().equals("法律法条名称")) {
-                    name = element.attribute("value").getText();
 
-                    Iterator it2 = element.element("TM").elementIterator();
-                    while (it2.hasNext()) {
-                        Element element2 = (Element) it2.next();
-                        if (element2.attribute("value")!=null&&element2.attribute("nameCN").getText().equals("条目")) {
+            Element root = cpfxgcXml.getRootElement().element("FLFTMC");
+            System.out.println(root.attribute("class"));
+
+            if(root.attribute("class").getText().equals("object")){
+                String name = root.attribute("value").getText();
+                Iterator it = root.element("TM").elementIterator();
+                while (it.hasNext()) {
+                    Element element = (Element) it.next();
+                    String detail = element.attribute("value").getText();
+                    Law law = new Law();
+                    law.setName(name);
+                    law.setDetail(detail);
+                    law.setNum(1);
+                    distinct(law);
+
+                }
+            }else{
+                Iterator it = root.elementIterator("e");
+                while (it.hasNext()) {
+                    Element element = (Element) it.next();
+                    System.out.println(element.attribute("class"));
+                    String name2 = element.attribute("value").getText();
+//                    System.out.println(name2);
+
+                    Element tm = element.element("TM");
+
+                    if(tm.attribute("class").getText().equals("object")){
+                        String detail = tm.attribute("value").getText();
+                        Law law = new Law();
+                        law.setName(name2);
+                        law.setDetail(detail);
+                        law.setNum(1);
+
+                        distinct(law);
+
+                    }else{
+                        Iterator it2=tm.elementIterator("e");
+                        while (it2.hasNext()){
+                            Element element2 = (Element) it2.next();
                             String detail = element2.attribute("value").getText();
                             Law law = new Law();
-                            law.setName(name);
+                            law.setName(name2);
                             law.setDetail(detail);
                             law.setNum(1);
+                            System.out.println(law.toString());
                             distinct(law);
-
 
                         }
 
-                    }
 
+                    }
 
                 }
 
+
+
+
             }
+
         }
 
         return this.lawDistribution.get();
@@ -299,8 +334,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 }
             }
         }
-        //递归遍历当前节点所有的子节点,bool剪枝
 
+        //递归遍历当前节点所有的子节点,bool剪枝
         List<Element> listElement = node.elements();//所有一级子节点的list
         for (Element e : listElement) {//遍历所有一级子节点
             this.getNode(e, keyword);//递归
