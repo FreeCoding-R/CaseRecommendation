@@ -1,6 +1,7 @@
 package freecoding.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 /**
  * Created by zhujing on 2017/7/21.
@@ -10,6 +11,7 @@ public class User {
     @Id
     private String id;
 
+    @Indexed(unique = true)
     private String email;
 
     private String userName;

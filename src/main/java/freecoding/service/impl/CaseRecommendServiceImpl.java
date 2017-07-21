@@ -98,7 +98,10 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         Element root = document.getRootElement();
         //关键词详细第一部分获取
-        result+="\""+"原文"+"\""+":"+"\""+root.attribute("value").getText()+"\",";
+
+        String yw=root.attribute("value").getText();
+        yw=yw.split("PAGE")[0];
+        result+="\""+"原文"+"\""+":"+"\""+yw+"\",";
 
         //关键词详细第二部分获取
         result+="\""+root.element("WS").element("JBFY").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("JBFY").attribute("value").getText()+"\",";
