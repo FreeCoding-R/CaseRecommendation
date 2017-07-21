@@ -49,10 +49,10 @@ public class Index {
         return "index";
     }
 
-    @RequestMapping(value="/case", method= RequestMethod.GET)
-    public String toCase() {
-        return "case";
-    }
+//    @RequestMapping(value="/case", method= RequestMethod.GET)
+//    public String toCase() {
+//        return "case";
+//    }
 
     /**
      * 上传文书的路由
@@ -60,7 +60,7 @@ public class Index {
      * @param file
      * @return
      */
-    @RequestMapping(value="/uploadXML", method= RequestMethod.POST)
+    @RequestMapping(value="/showCase", method= RequestMethod.POST)
     public String uploadXML(Model model,
                             @RequestParam(value = "file", required = true) MultipartFile file) {
         String message="";
@@ -105,7 +105,7 @@ public class Index {
             }
         }
         model.addAttribute("result",message);
-        return "result";
+        return "case";
     }
 
     /**
@@ -160,5 +160,10 @@ public class Index {
         model.addAttribute("content",(JSONObject)caseRecommendService.handle());
         model.addAttribute("caseRecommendation",caseRecommendService.getCaseRecommendation());
         model.addAttribute("lawDistribution",caseRecommendService.getLawDistribution());
+    }
+
+    @RequestMapping("/chart")
+    public  String chart(Model model){
+        return "chart";
     }
 }
