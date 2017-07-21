@@ -31,11 +31,19 @@ public class Index {
     @Autowired
     private CaseRecommendService caseRecommendService;
 
+    /**
+     * 首页
+     * @return
+     */
     @RequestMapping(value="/",method= RequestMethod.GET)
     public String home() {
         return "index";
     }
 
+    /**
+     * 首页的另一个路由
+     * @return
+     */
     @RequestMapping(value="/index", method= RequestMethod.GET)
     public String index() {
         return "index";
@@ -46,6 +54,12 @@ public class Index {
         return "case";
     }
 
+    /**
+     * 上传文书的路由
+     * @param model
+     * @param file
+     * @return
+     */
     @RequestMapping(value="/uploadXML", method= RequestMethod.POST)
     public String uploadXML(Model model,
                             @RequestParam(value = "file", required = true) MultipartFile file) {
@@ -73,9 +87,7 @@ public class Index {
 
                 //开始处理文书
                 if(caseRecommendService.upload(dest)){
-                    model.addAttribute("content",(JSONObject)caseRecommendService.handle());
-                    model.addAttribute("caseRecommendation",caseRecommendService.getCaseRecommendation());
-                    model.addAttribute("lawDistribution",caseRecommendService.getLawDistribution().toString());
+                    handleFile(model);
                 }else {
                     message+= "文件格式不符合规范！\n";
                 }
@@ -96,12 +108,32 @@ public class Index {
         return "result";
     }
 
+    /**
+     * 通过文书ID获取文书信息的路由
+     * @param model
+     * @param ID
+     * @return
+     */
     @RequestMapping(value="/case/{ID}",method=RequestMethod.GET)
-    public String addUser4(@PathVariable String ID) {
-        System.out.println("ID is:"+ID);
-        return "index";
+    public String addUser4(Model model,@PathVariable String ID) {
+        try {
+            if(caseRecommendService.init(ID)){
+                handleFile(model);
+            }else {
+                //如果没有这个ID的文书返回404页面
+                return "error/error-404";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "result";
     }
 
+    /**
+     * 一个路由demo
+     * @param model
+     * @return
+     */
     @RequestMapping("/person")
     public String index(Model model){
         Person single=new Person("aa",1);
@@ -115,5 +147,18 @@ public class Index {
         model.addAttribute("singlePerson",single);
         model.addAttribute("people",people);
         return "person";
+    }
+
+    /**
+     * 得到目标文书后处理文书的代码复用
+     * @param model 传给thymeleaf模板渲染的数据模型
+     * @throws DocumentException XML格式不正确
+     * @throws ServiceProcessException 处理过程异常，会在方法调用顺序不正确时抛出
+     * @throws FileContentException  XML的内容不是文书的标准格式
+     */
+    private void handleFile(Model model) throws DocumentException, ServiceProcessException, FileContentException {
+        model.addAttribute("content",(JSONObject)caseRecommendService.handle());
+        model.addAttribute("caseRecommendation",caseRecommendService.getCaseRecommendation());
+        model.addAttribute("lawDistribution",caseRecommendService.getLawDistribution());
     }
 }

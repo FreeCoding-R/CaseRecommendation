@@ -37,6 +37,6 @@ public class Law {
 
     @Override
     public String toString() {
-        return name+detail;
+        return name+" 第"+detail+"条";
     }
 }
