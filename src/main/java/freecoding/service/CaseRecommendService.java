@@ -40,6 +40,7 @@ public interface CaseRecommendService {
 
 
     /**
+     * 用户上传文书细节摘取
      * @param keyword
      * @return
      */

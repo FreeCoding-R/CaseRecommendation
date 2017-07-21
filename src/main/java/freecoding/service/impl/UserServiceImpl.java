@@ -1,4 +1,4 @@
-package freecoding.dao.impl;
+package freecoding.service.impl;
 
 import freecoding.dao.RecordRepository;
 import freecoding.dao.UserRepository;
@@ -6,7 +6,6 @@ import freecoding.entity.Record;
 import freecoding.entity.User;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.UserService;
-import freecoding.vo.Case;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +81,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean insert() {
         return false;
+    }
+
+    @Override
+    public List<String> getNewestCaseList() {
+        return null;
     }
 }

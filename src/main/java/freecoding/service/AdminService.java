@@ -1,7 +1,8 @@
 package freecoding.service;
 
-import freecoding.vo.Case;
+import freecoding.entity.Record;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,8 +10,22 @@ import java.util.List;
  */
 public interface AdminService {
 
-    public boolean admin();
+    /**
+     * 管理员登录
+     * @param userName
+     * @param password
+     * @return
+     */
 
-    public List<Case> geCaseListByAdmin();
+    public boolean login(String userName,String password);
+
+
+    /**
+     * 管理员按日期查看用户上传记录
+     * @param start
+     * @param end
+     * @return
+     */
+    public List<Record> geRecordListByAdmin(Date start,Date end);
 
 }

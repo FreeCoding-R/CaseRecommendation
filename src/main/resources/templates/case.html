@@ -4,35 +4,36 @@
 </head>
 <head>
     <title>CaseRecommendation Case Page</title>
+    <script th:src="@{/js/echarts.min.js}" type="text/javascript"></script>
     <!--<link th:href="@{css/colors/blue.css}" rel="stylesheet" id="colors"/>-->
 </head>
 <body class="shortcodes">
 <div class="wrap">
     <!-- Header -->
-    <header th:replace="/components/components :: header"/>
+    <header th:replace="components/components :: header"/>
     <!-- Content Start -->
     <div id="main">
-        <!-- Title, Breadcrumb Start-->
-        <div class="breadcrumb-wrapper">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
-                        <h2 class="title">法案信息提取</h2>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
-                        <div class="breadcrumbs pull-right">
-                            <ul>
-                                <li>当前路径:</li>
-                                <li>
-                                    <a href="/">主页</a>
-                                </li>
-                                <li><a href="#">法案</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--&lt;!&ndash; Title, Breadcrumb Start&ndash;&gt;-->
+        <!--<div class="breadcrumb-wrapper">-->
+            <!--<div class="container">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">-->
+                        <!--<h2 class="title">法案信息提取</h2>-->
+                    <!--</div>-->
+                    <!--<div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">-->
+                        <!--<div class="breadcrumbs pull-right">-->
+                            <!--<ul>-->
+                                <!--<li>当前路径:</li>-->
+                                <!--<li>-->
+                                    <!--<a href="/">主页</a>-->
+                                <!--</li>-->
+                                <!--<li><a href="#">法案</a></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <!-- Title, Breadcrumb End-->
         <!-- Main Content start-->
         <div class="content">
@@ -41,271 +42,178 @@
                 <!--tap here-->
 
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6 ">
+                    <div class="col-lg-12 col-md-6 col-xs-12 col-sm-6 ">
                         <!-- Tab Start -->
                         <h3 class="title">案件信息</h3>
                         <div class="widget tabs">
                             <div id="horizontal-tabs">
                                 <ul class="tabs">
-                                    <li id="tab1" class="current">判决结果</li>
-                                    <li id="tab2">参与者</li>
-                                    <li id="tab3">原文</li>
+                                    <li th:each="name:${content.keySet()}" th:id="'tab'+${name}">
+                                        <h3 th:text="${name}"></h3>
+                                    </li>
                                 </ul>
                                 <div class="contents">
-                                    <div class="tabscontent" id="content1" style="display: block;">
-                                        <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged. Lorem
-                                            ipsum dolor color sit amet.
-                                        </p>
-                                    </div>
-                                    <div class="tabscontent" id="content2">
-                                        <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged. Lorem
-                                            ipsum dolor color sit amet.
-                                        </p>
-                                    </div>
-                                    <div class="tabscontent" id="content3">
-                                        <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged. Lorem
-                                            ipsum dolor color sit amet.
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged. Lorem
-                                            ipsum dolor color sit amet.
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged. Lorem
-                                            ipsum dolor color sit amet.
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged. Lorem
-                                            ipsum dolor color sit amet.
-                                        </p>
+                                    <div th:each="name:${content.keySet()}" th:id="'content'+${name}" class="tabscontent">
+                                        <div th:if="${content.get(name).getClass() eq name.getClass()}">
+                                            <!--&lt;即小于，小于15个字的文本居中显示-->
+                                            <p th:each='line:${content.get(name).split("\n")}' th:text="${line}"
+                                               th:class="${line.replaceAll(' ', '').length() &lt; 20}? 'text-center' : 'text-left'">
+                                            </p>
+                                        </div>
+                                        <div th:if="${content.get(name).getClass() ne name.getClass()}">
+                                            <p th:each="item:${content.get(name)}" th:text="${item}" class="text-center">
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- Tab End -->
                     </div>
+                </div>
+                <div class="divider"></div>
+                <div class="row">
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6 ">
                         <h3 class="title">类案推荐</h3>
                         <div class="accordionMod panel-group">
-                            <div class="accordion-item">
-                                <h4 class="accordion-toggle">南大碎尸案</h4>
+                            <div th:each="item:${caseRecommendation}" class="accordion-item">
+                                <h4 class="accordion-toggle" th:text="${item.getName()}"></h4>
                                 <section class="accordion-inner panel-body">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua.
-                                    </p>
+                                    <a th:text="'http://caseRecommendation.org:8080/case/' + ${item.getId()}" th:href="'/case/' + ${item.getId()}"
+                                       style="display: block" target="_blank"></a>
                                 </section>
                             </div>
-                            <div class="accordion-item">
-                                <h4 class="accordion-toggle">温州黄金案</h4>
-                                <section class="accordion-inner panel-body">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua.
-                                    </p>
-                                </section>
-                            </div>
-                            <div class="accordion-item">
-                                <h4 class="accordion-toggle">庐山坠崖案</h4>
-                                <section class="accordion-inner panel-body">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua.
-                                    </p>
-                                </section>
-                            </div>
+
                         </div>
                     </div>
-                </div>
-                <div class="divider"></div>
-                <!-- End Second Row -->
-            </div>
-        </div>
-        <!-- Features start -->
-        <div class="features bottom-pad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
                         <h3 class="title">相似案件引用法条分布</h3>
-                        <div class="row">
-                            <div class="circular-nav">
-                                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 animate_afl">
-                                    <div id="cn-tabs">
-                                        <div class="service service-1">
-                                            <div class="cn-content">
-                                                <h4>Premium Sliders</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="service service-2">
-                                            <div class="cn-content">
-                                                <h4>Unlimited Colors</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                        <div class="service service-3">
-                                            <div class="cn-content">
-                                                <h4>Shortcodes</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="service service-4">
-                                            <div class="cn-content">
-                                                <h4>300+ Icons</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="service service-5">
-                                            <div class="cn-content">
-                                                <h4>HTML5 / CSS3</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="service service-6">
-                                            <div class="cn-content">
-                                                <h4>After Sale Support</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="service service-7">
-                                            <div class="cn-content">
-                                                <h4>Google Fonts</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="service service-8">
-                                            <div class="cn-content">
-                                                <h4>Ajax Contact Form</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="service service-9">
-                                            <div class="cn-content">
-                                                <h4>Valid HTML Files</h4>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book.</p>
-                                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
-                                                        class="icon-angle-right"></i></a>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1 animate_afr">
-                                    <div class="cn-wrapper">
-                                        <ul>
-                                            <li class="circle-1 circle"><a class="active" href="#"><span
-                                                    class="icon-picture"></span></a></li>
-                                            <li class="circle-2 circle"><a href="#"><span
-                                                    class="icon-rocket"></span></a></li>
-                                            <li class="circle-3 circle"><a href="#"><span
-                                                    class="icon-puzzle-piece"></span> </a></li>
-                                            <li class="circle-4 circle"><a href="#"><span
-                                                    class="icon-thumbs-up-alt"></span></a></li>
-                                            <li class="circle-5 circle"><a href="#"><span class="icon-html5"></span></a>
-                                            </li>
-                                            <li class="circle-6 circle"><a href="#"><span class="icon-user"></span></a>
-                                            </li>
-                                            <li class="circle-7 circle"><a href="#"><span
-                                                    class="icon-google-plus"></span> </a></li>
-                                            <li class="circle-8 circle"><a href="#"><span
-                                                    class="icon-envelope-alt"></span></a></li>
-                                            <li class="circle-9 circle"><a href="#"><span
-                                                    class="icon-hand-right"></span></a></li>
-                                        </ul>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
+                        <div id="chart" style="width: 750px;height:500px;"></div>
+                        <script type="text/javascript">
+                            // 基于准备好的dom，初始化echarts实例
+                            var myChart = echarts.init(document.getElementById('chart'));
+
+                            option = {
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                },
+                                legend: {
+                                    orient: 'vertical',
+                                    x: 'left',
+                                    data:['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他']
+                                },
+                                series: [
+                                    {
+                                        name:'访问来源',
+                                        type:'pie',
+                                        selectedMode: 'single',
+                                        radius: [0, '30%'],
+
+                                        label: {
+                                            normal: {
+                                                position: 'inner'
+                                            }
+                                        },
+                                        labelLine: {
+                                            normal: {
+                                                show: false
+                                            }
+                                        },
+                                        data:[
+                                            {value:335, name:'直达', selected:true},
+                                            {value:679, name:'营销广告'},
+                                            {value:1548, name:'搜索引擎'}
+                                        ]
+                                    },
+                                    {
+                                        name:'访问来源',
+                                        type:'pie',
+                                        radius: ['40%', '55%'],
+
+                                        data:[
+                                            {value:335, name:'直达'},
+                                            {value:310, name:'邮件营销'},
+                                            {value:234, name:'联盟广告'},
+                                            {value:135, name:'视频广告'},
+                                            {value:1048, name:'百度'},
+                                            {value:251, name:'谷歌'},
+                                            {value:147, name:'必应'},
+                                            {value:102, name:'其他'}
+                                        ]
+                                    }
+                                ]
+                            };
+
+                            // 使用刚指定的配置项和数据显示图表。
+                            myChart.setOption(option);
+                        </script>
                     </div>
                 </div>
+                <!--<div class="divider"></div>-->
+                <!-- End Second Row -->
             </div>
         </div>
         <!-- Content End -->
     </div>
     <!-- Main Content end-->
     <!-- Footer -->
-    <footer th:replace="/components/components :: footer"></footer>
+    <footer th:replace="components/components :: footer"></footer>
     <!-- Scroll To Top -->
     <a href="#" class="scrollup"><i class="icon-angle-up"></i></a>
 </div>
 <!-- Wrap End -->
-<section th:replace="/components/components :: style-switcher"></section>
+<section id="style-switcher">
+    <h2>Style Switcher <a href="#"><i class="icon-cog"></i></a></h2>
+    <div>
+        <h3>Predefined Colors</h3>
+        <ul id="colors" class="colors">
+            <li><a title="Blue" class="blue" href="#"></a></li>
+            <li><a title="Green" class="green" href="#"></a></li>
+            <li><a title="Orange" class="orange" href="#"></a></li>
+            <li><a title="Purple" class="purple" href="#"></a></li>
+            <li><a title="Red" class="red" href="#"></a></li>
+            <li><a title="Magenta" class="magenta" href="#"></a></li>
+            <li><a title="Brown" class="brown" href="#"></a></li>
+            <li><a title="Gray" class="gray" href="#"></a></li>
+            <li><a title="Golden" class="golden" href="#"></a></li>
+            <li><a title="Teal" class="teal" href="#"></a></li>
+        </ul>
+        <h3>Layout Style</h3>
+        <div class="layout-style">
+            <select autocomplete="off" id="layout-style">
+                <option value="1">Wide</option>
+                <option value="2">Boxed</option>
+            </select>
+        </div>
+        <h3>Header Color</h3>
+        <div class="header-color">
+            <input type='text' class="header-bg"/>
+        </div>
+        <h3>Footer Top Color</h3>
+        <div class="header-color">
+            <input type='text' class="footer-bg"/>
+        </div>
+        <h3>Footer Bottom Color</h3>
+        <div class="header-color">
+            <input type='text' class="footer-bottom"/>
+        </div>
+        <h3>Background Image</h3>
+        <ul id="bg" class="colors bg">
+            <li><a class="bg1" href="#"></a></li>
+            <li><a class="bg2" href="#"></a></li>
+            <li><a class="bg3" href="#"></a></li>
+            <li><a class="bg4" href="#"></a></li>
+            <li><a class="bg5" href="#"></a></li>
+            <li><a class="bg6" href="#"></a></li>
+            <li><a class="bg7" href="#"></a></li>
+            <li><a class="bg8" href="#"></a></li>
+            <li><a class="bg9" href="#"></a></li>
+            <li><a class="bg10" href="#"></a></li>
+        </ul>
+    </div>
+</section>
 <!-- The Scripts -->
 <script th:src="@{js/circularnav.js}" type="text/javascript"></script>
 <script th:src="@{/js/custom.js}" type="text/javascript"></script>
