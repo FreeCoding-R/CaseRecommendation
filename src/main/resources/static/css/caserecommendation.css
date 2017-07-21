@@ -5,3 +5,53 @@
     background-color: rgba(172, 224, 247, 0.73);
     width: 26px;
 }
+
+/* = Full Screen Blocs
+-------------------------------------------------------------- */
+
+.bloc-fill-screen{
+    padding-top:0;
+    position: relative;
+    height: inherit;
+}
+.bloc-fill-screen > .container{
+    position:relative;
+    top:50%;
+    transform:translateY(-50%);
+    -webkit-transform:translateY(-50%);
+}
+.bloc-fill-screen.bloc-group .bloc{
+    vertical-align: middle!important;
+}
+.bloc-fill-screen .fill-bloc-top-edge, .bloc-fill-screen .fill-bloc-bottom-edge{
+    position: absolute;
+    margin: 20px auto;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    transform: none;
+}
+.bloc-fill-screen .fill-bloc-top-edge{
+    top:0;
+}
+.bloc-fill-screen .fill-bloc-bottom-edge{
+    top: initial;
+    bottom: 20px;
+}
+.blocs-hero-btn-dwn{
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin:0 auto;
+    line-height: 30px;
+    padding: 0;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 18px;
+    color: rgba(255,255,255,.8);
+    background: rgba(0,0,0,.6);
+    border:0;
+}
+.blocs-hero-btn-dwn:hover{
+    color: rgba(255,255,255,1);
+}
