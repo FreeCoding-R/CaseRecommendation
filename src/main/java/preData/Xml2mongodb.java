@@ -11,7 +11,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //import com.mongodb.util.JSON;
 
@@ -19,18 +21,28 @@ import java.io.File;
  * Created by loick on 16/07/2017.
  */
 public class Xml2mongodb {
+
+    static String path = "/Users/loick/Desktop/卓越工程师/天津/samples";
+
     public static void main(String[] args) throws DocumentException {
-        File direc = new File("/Users/loick/Desktop/卓越工程师/天津/交通肇事罪");
-        File files[] = direc.listFiles();
-        if(files.length != 0){
+        File direc = new File(path);
+        File allfiles[] = direc.listFiles();
+        List<File> files = new ArrayList<>();
+        for (int i = 0; i<allfiles.length; i++){
+            if(allfiles[i].getName().endsWith(".xml")){
+                files.add(allfiles[i]);
+            }
+        }
+
+
+        if(files.size() != 0){
 
             MongoDatabase mongoDatabase = MongoData.getDataBase();
             MongoCollection<DBObject> collection = mongoDatabase.getCollection("tianjin",DBObject.class);
 
-
-            for(File file: files) {
+            for(int i = 0; i < files.size(); i++) {
                 SAXReader sr = new SAXReader();
-                Document document = (Document) sr.read(file);
+                Document document = (Document) sr.read(files.get(i));
 
                 //by zj
                 String name=document.getRootElement().element("WS").attribute("value").getText();
@@ -44,6 +56,7 @@ public class Xml2mongodb {
                 net.sf.json.JSON jsonObj = xmlSerializer.read(responseTextObj);
                 String jsonStr = jsonObj.toString();
                 DBObject object = (DBObject) JSON.parse(jsonStr);
+                object.put("documentID", i);
 
                 //by zj
                 object.put("name",name);
@@ -51,5 +64,35 @@ public class Xml2mongodb {
                 collection.insertOne(object);
             }
         }
+
+//        Properties props = new Properties();
+//        props.put("python.home","path to the Lib folder");
+//        props.put("python.console.encoding", "UTF-8"); // Used to prevent: console: Failed to install '': java.nio.charset.UnsupportedCharsetException: cp0.
+//        props.put("python.security.respectJavaAccessibility", "false"); //don't respect java accessibility, so that we can access protected members on subclasses
+//        props.put("python.import.site","false");
+//
+//        Properties preprops = System.getProperties();
+//
+//        PythonInterpreter.initialize(preprops, props, new String[0]);
+//
+//        PythonInterpreter interpreter = new PythonInterpreter();
+//        interpreter.execfile("python/kmeansprocess.py");
+//        PyFunction runKmeans = (PyFunction) interpreter.get("runKmeans", PyFunction.class);
+//        PyObject object = runKmeans.__call__(new PyList(files));
+        String cp = "python/kmeansprocess.py";
+        String param = path;
+        try {
+            Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
+            InputStream is = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while((line = reader.readLine()) != null)
+                System.out.println(line);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //System.out.println(Command.exeCmd("python src/main/python/test.py"));
     }
 }
