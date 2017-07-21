@@ -11,6 +11,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +84,13 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
             }
         }
         return cases;
+    }
+
+    @Override
+    public List<Document> getKmeansCases(File file) {
+
+
+        return null;
     }
 
     private List<Document> getCases(Document document){
