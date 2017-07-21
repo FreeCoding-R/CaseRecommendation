@@ -34,6 +34,17 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
     }
 
     @Override
+    public Document findByName(String name) {
+        MongoCollection<Document> collection = MongoData.getDataBase().getCollection(collectionName);
+        BasicDBObject query = new BasicDBObject();
+        query.put("@value" , "天津市河东区人民法院 刑事判决书 （2011）东刑初字第307号");
+        FindIterable<Document> cursor = collection.find(query);
+        Document document=cursor.iterator().next();
+
+        return document;
+    }
+
+    @Override
     public List<Document> getRandomCases() {
         MongoCollection<Document> collection = MongoData.getDataBase().getCollection(collectionName);
         List<Document> randomList = new ArrayList<>();

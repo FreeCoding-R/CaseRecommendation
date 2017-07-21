@@ -27,16 +27,26 @@ public class Xml2mongodb {
             MongoDatabase mongoDatabase = MongoData.getDataBase();
             MongoCollection<DBObject> collection = mongoDatabase.getCollection("tianjin",DBObject.class);
 
+
             for(File file: files) {
                 SAXReader sr = new SAXReader();
                 Document document = (Document) sr.read(file);
+
+                //by zj
+                String name=document.getRootElement().element("WS").attribute("value").getText();
+
+
                 String responseTextObj = document.asXML();
                 responseTextObj = responseTextObj.replace("\r\n", "\\r\\n");
                 XMLSerializer xmlSerializer = new XMLSerializer();
+
+
                 net.sf.json.JSON jsonObj = xmlSerializer.read(responseTextObj);
                 String jsonStr = jsonObj.toString();
-
                 DBObject object = (DBObject) JSON.parse(jsonStr);
+
+                //by zj
+                object.put("name",name);
 
                 collection.insertOne(object);
             }

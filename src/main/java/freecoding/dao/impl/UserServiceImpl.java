@@ -2,6 +2,7 @@ package freecoding.dao.impl;
 
 import freecoding.dao.RecordRepository;
 import freecoding.dao.UserRepository;
+import freecoding.entity.Record;
 import freecoding.entity.User;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.UserService;
@@ -9,6 +10,7 @@ import freecoding.vo.Case;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,7 +67,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Case> getCaseListByUser(String email) {
-        return recordRepository.findByEmail(email);
+    public List<String> getCaseListByUser(String email) {
+        List<String> result=new ArrayList<>();
+        List l=recordRepository.findByEmail(email);
+
+        for (int i = 0; i < l.size(); i++) {
+            Record r= (Record) l.get(i);
+            result.add(r.getCaseName());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean insert() {
+        return false;
     }
 }

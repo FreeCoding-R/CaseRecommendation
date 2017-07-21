@@ -2,7 +2,6 @@ package freecoding.service;
 
 import freecoding.entity.User;
 import freecoding.exception.ServiceProcessException;
-import freecoding.vo.Case;
 
 import java.util.List;
 
@@ -24,7 +23,10 @@ public interface UserService {
     public boolean modify(User user) throws ServiceProcessException;
 
 
-    public List<Case> getCaseListByUser(String email);
+    public List<String> getCaseListByUser(String email);
+
+
+    public boolean insert();
 
 
 }
