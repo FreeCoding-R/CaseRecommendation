@@ -97,7 +97,7 @@ a:hover,a:focus {
 
 /* Header */
 #header .main-header {
-    min-height: 86px;
+    /*min-height: 86px;*/
     z-index: 9999;
     width: 100%;
     position: relative;
@@ -470,7 +470,7 @@ h2.title {
 /* Main Content */
 #main {
     background-color: #fff;
-	padding: 0 0 60px;
+	padding: 0 0 70px;
 }
 
 .home #main, .home-2 #main, .home-3 #main, .page-services #main, .about #main {
