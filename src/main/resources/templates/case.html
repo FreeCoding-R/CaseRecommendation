@@ -90,9 +90,40 @@
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
                         <h3 class="title">相似案件引用法条分布</h3>
                         <div id="chart" style="width: 750px;height:500px;"></div>
-                        <script type="text/javascript">
+                        <script type="text/javascript" th:inline="javascript">
                             // 基于准备好的dom，初始化echarts实例
-                            var myChart = echarts.init(document.getElementById('chart'));
+                            var myChart = echarts.init(document.getElementById('chart'))
+                            var lawData = [[${lawDistribution}]]
+                            console.log(lawData)
+                            var nameList = []
+                            var detailList = []
+                            var pieList = []
+                            var typeList = []
+                            var former = ""
+                            var total = 0
+                            for (x in lawData)
+                            {
+                                var law = lawData[x]
+                                console.log(law)
+                                console.log(law["name"])
+                                nameList.push(law["name"])
+                                detailList.push(law["detail"])
+                                pieList.push({value:law["num"],name:"第"+law["detail"]+"条"})
+                                if(x==0){
+                                    former = law["name"]
+                                    total = law["num"]
+                                }
+                                if(former===law["name"]) {
+                                    total += law["num"];
+                                }
+                                else{
+                                    typeList.push({value:total,name:former})
+                                    former = law["name"]
+                                    total = law["num"]
+                                }
+                            }
+                            typeList.push({value:total,name:former,selected:true})
+                            console.log(typeList)
 
                             option = {
                                 tooltip: {
@@ -102,11 +133,11 @@
                                 legend: {
                                     orient: 'vertical',
                                     x: 'left',
-                                    data:['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他']
+                                    data:nameList
                                 },
                                 series: [
                                     {
-                                        name:'访问来源',
+                                        name:'法律',
                                         type:'pie',
                                         selectedMode: 'single',
                                         radius: [0, '30%'],
@@ -121,33 +152,20 @@
                                                 show: false
                                             }
                                         },
-                                        data:[
-                                            {value:335, name:'直达', selected:true},
-                                            {value:679, name:'营销广告'},
-                                            {value:1548, name:'搜索引擎'}
-                                        ]
+                                        data:typeList
                                     },
                                     {
-                                        name:'访问来源',
+                                        name:'法条',
                                         type:'pie',
                                         radius: ['40%', '55%'],
 
-                                        data:[
-                                            {value:335, name:'直达'},
-                                            {value:310, name:'邮件营销'},
-                                            {value:234, name:'联盟广告'},
-                                            {value:135, name:'视频广告'},
-                                            {value:1048, name:'百度'},
-                                            {value:251, name:'谷歌'},
-                                            {value:147, name:'必应'},
-                                            {value:102, name:'其他'}
-                                        ]
+                                        data:pieList
                                     }
                                 ]
                             };
 
                             // 使用刚指定的配置项和数据显示图表。
-                            myChart.setOption(option);
+                            myChart.setOption(option)
                         </script>
                     </div>
                 </div>
