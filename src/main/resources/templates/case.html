@@ -104,9 +104,7 @@
                             for (x in lawData)
                             {
                                 var law = lawData[x]
-                                console.log(law)
-                                console.log(law["name"])
-                                nameList.push(law["name"])
+                                nameList.push(law["name"].substr(7,law["name"].length))
                                 detailList.push(law["detail"])
                                 pieList.push({value:law["num"],name:"第"+law["detail"]+"条"})
                                 if(x==0){
@@ -117,13 +115,14 @@
                                     total += law["num"];
                                 }
                                 else{
-                                    typeList.push({value:total,name:former})
+                                    typeList.push({value:total,name:former.substr(7,former.length)})
                                     former = law["name"]
                                     total = law["num"]
                                 }
                             }
-                            typeList.push({value:total,name:former,selected:true})
+                            typeList.push({value:total,name:former.substr(7,former.length),selected:true})
                             console.log(typeList)
+                            console.log(nameList)
 
                             option = {
                                 tooltip: {
