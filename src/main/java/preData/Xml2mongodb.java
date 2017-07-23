@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class Xml2mongodb {
 
-    static String path = "/Users/loick/Desktop/OSEngineer/天津/samples";
+    static String path = "/Users/loick/Desktop/3组/训练集";
 
     public static void main(String[] args) throws DocumentException {
         File direc = new File(path);
@@ -35,18 +35,20 @@ public class Xml2mongodb {
             }
         }
 
-
+//        SAXReader sr = new SAXReader();
+//        Document document = (Document) sr.read(files.get(0));
+//        System.out.println(((document.getRootElement().element("QW")).element("WS")));
         if(files.size() != 0){
 
             MongoDatabase mongoDatabase = MongoData.getDataBase();
-            MongoCollection<DBObject> collection = mongoDatabase.getCollection("tianjin",DBObject.class);
+            MongoCollection<DBObject> collection = mongoDatabase.getCollection("cases",DBObject.class);
 
             for(int i = 0; i < files.size(); i++) {
                 SAXReader sr = new SAXReader();
                 Document document = (Document) sr.read(files.get(i));
 
                 //by zj
-                String name=document.getRootElement().element("WS").attribute("value").getText();
+                String name = (document.getRootElement().element("QW")).element("WS").attribute("value").getText();
 
 
                 String responseTextObj = document.asXML();

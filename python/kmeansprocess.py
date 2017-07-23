@@ -37,7 +37,6 @@ def runKmeans(files):
     np.save("kmeansData", data)
 
 
-print(sys.argv[1])
 runKmeans(sys.argv[1])
 
 print('success')

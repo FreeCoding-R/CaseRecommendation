@@ -31,7 +31,32 @@ def del_stop_words(words, stop_words_set):
     return new_words
 
 
-def get_all_vector(file_path, stop_words_set):
+# def get_all_vector(file_path, stop_words_set):
+#     names = [ os.path.join(file_path,f) for f in os.listdir(file_path) ]
+#     posts = []
+#     for name in names:
+#       if(name.endswith(".xml")):
+#         case = read_from_file(name)
+#         posts.append(case)
+#     docs = []
+#     word_set = set()
+#     for post in posts:
+#         doc = del_stop_words(post, stop_words_set)
+#         docs.append(doc)
+#         word_set |= set(doc)
+#
+#     word_set = list(word_set)
+#     docs_vsm = []
+#     for doc in docs:
+#         temp_vector = []
+#         for word in word_set:
+#             temp_vector.append(doc.count(word) * 1.0)
+#         docs_vsm.append(temp_vector)
+#
+#     docs_matrix = np.array(docs_vsm)
+#     return docs_matrix, word_set
+#
+ def get_all_vector(file_path, stop_words_set):
     names = [ os.path.join(file_path,f) for f in os.listdir(file_path) ]
     posts = []
     for name in names:

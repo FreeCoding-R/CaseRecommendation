@@ -24,7 +24,7 @@ import static com.mongodb.client.model.Filters.eq;
 @Repository
 public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
-    private static String collectionName = "tianjin";
+    private static String collectionName = "cases";
     private static MongoDatabase database = MongoData.getDataBase();
 
     @Override
