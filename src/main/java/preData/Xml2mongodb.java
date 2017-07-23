@@ -11,7 +11,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class Xml2mongodb {
 
-    static String path = "/Users/loick/Desktop/卓越工程师/天津/samples";
+    static String path = "/Users/loick/Desktop/OSEngineer/天津/samples";
 
     public static void main(String[] args) throws DocumentException {
         File direc = new File(path);
@@ -80,14 +81,9 @@ public class Xml2mongodb {
 //        PyFunction runKmeans = (PyFunction) interpreter.get("runKmeans", PyFunction.class);
 //        PyObject object = runKmeans.__call__(new PyList(files));
         String cp = "python/kmeansprocess.py";
-        String param = path;
         try {
+            //Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
             Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
-            InputStream is = process.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String line;
-            while((line = reader.readLine()) != null)
-                System.out.println(line);
         } catch (IOException e) {
             e.printStackTrace();
         }

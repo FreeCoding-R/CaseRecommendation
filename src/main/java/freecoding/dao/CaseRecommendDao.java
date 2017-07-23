@@ -2,6 +2,7 @@ package freecoding.dao;
 
 import org.bson.Document;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -16,4 +17,6 @@ public interface CaseRecommendDao {
     List<Document> getRandomCases();
 
     List<Document> getKeyCases(Document document);
+
+    List<Document> getKmeansCases(File file);
 }
