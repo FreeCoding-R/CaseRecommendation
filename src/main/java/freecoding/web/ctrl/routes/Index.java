@@ -125,7 +125,7 @@ public class Index {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "result";
+        return "case";
     }
 
     /**
