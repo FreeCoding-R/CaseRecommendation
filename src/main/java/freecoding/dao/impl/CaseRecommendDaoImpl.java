@@ -10,10 +10,13 @@ import freecoding.util.MongoData;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
+import preData.CasesFromPython;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Created by loick on 17/07/2017.
@@ -22,10 +25,11 @@ import java.util.List;
 public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
     private static String collectionName = "tianjin";
+    private static MongoDatabase database = MongoData.getDataBase();
 
     @Override
     public Document find(String id) {
-        MongoCollection<Document> collection = MongoData.getDataBase().getCollection(collectionName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
         BasicDBObject query = new BasicDBObject();
         query.put("_id", new ObjectId(id));
         FindIterable<Document> cursor = collection.find(query);
@@ -36,7 +40,7 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
     @Override
     public Document findByName(String name) {
-        MongoCollection<Document> collection = MongoData.getDataBase().getCollection(collectionName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
         BasicDBObject query = new BasicDBObject();
         query.put("@value" , "天津市河东区人民法院 刑事判决书 （2011）东刑初字第307号");
         FindIterable<Document> cursor = collection.find(query);
@@ -47,7 +51,7 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
     @Override
     public List<Document> getRandomCases() {
-        MongoCollection<Document> collection = MongoData.getDataBase().getCollection(collectionName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
         List<Document> randomList = new ArrayList<>();
         collection.find().limit(6).forEach((Block<? super Document>) item->{
             randomList.add(item);
@@ -87,16 +91,19 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
     }
 
     @Override
-    public List<Document> getKmeansCases(File file) {
+    public List<Document> getKmeansCases(File xmlfile) {
 
-
-        return null;
+        List<Integer> indexs = CasesFromPython.getIndex(xmlfile);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+        List<Document> documents = new ArrayList<>();
+        for(Integer integer:indexs){
+            Document document = collection.find(eq("documentID", integer)).first();
+            documents.add(document);
+        }
+        return documents;
     }
 
     private List<Document> getCases(Document document){
-
-        MongoDatabase database = MongoData.getDataBase();
-
 
         MongoCollection<Document> collection = database.getCollection(collectionName);
 

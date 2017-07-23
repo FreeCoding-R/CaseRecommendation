@@ -1,10 +1,13 @@
 package preData;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class casesFromPython {
-    public static int[] getIndex(File file){
+public class CasesFromPython {
+    public static List<Integer> getIndex(File file){
         String cp = "python/caseRecommend.py";
+        String data = "";
         try {
             Process process = Runtime.getRuntime().exec("python3 " + cp+" "+file);
             InputStream is = process.getInputStream();
@@ -12,20 +15,25 @@ public class casesFromPython {
             String line;
             while((line = reader.readLine()) != null){
                 System.out.println(line);
-
+                data+=line;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int[] result = {1,2};
+        char ch[] = data.toCharArray();
+        boolean endFlag = false;
+        List<Integer> result = new ArrayList<>();
+
+        for(int i = 1; i<ch.length; i++){
+            if(ch[i] == ']'){
+                endFlag = true;
+                break;
+            }
+            if('0'<=ch[i] && ch[i] <='9') {
+                result.add(ch[i] - 48);
+            }
+        }
         return result;
     }
 
-    public static void main(String args[]){
-        String path = "/Users/loick/Desktop/卓越工程师/天津/samples";
-        File dire = new File(path);
-        File file = dire.listFiles()[1];
-        System.out.println(file);
-        getIndex(file);
-    }
 }

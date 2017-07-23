@@ -1,9 +1,18 @@
 package preData;
 
 
+import com.mongodb.DBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.util.JSON;
+import freecoding.util.MongoData;
+import net.sf.json.xml.XMLSerializer;
+import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +23,7 @@ import java.util.List;
  */
 public class Xml2mongodb {
 
-    static String path = "/Users/loick/Desktop/OSEngineer/tianjin/samples";
+    static String path = "/Users/loick/Desktop/OSEngineer/天津/samples";
 
     public static void main(String[] args) throws DocumentException {
         File direc = new File(path);
@@ -26,36 +35,36 @@ public class Xml2mongodb {
             }
         }
 
-//
-//        if(files.size() != 0){
-//
-//            MongoDatabase mongoDatabase = MongoData.getDataBase();
-//            MongoCollection<DBObject> collection = mongoDatabase.getCollection("tianjin",DBObject.class);
-//
-//            for(int i = 0; i < files.size(); i++) {
-//                SAXReader sr = new SAXReader();
-//                Document document = (Document) sr.read(files.get(i));
-//
-//                //by zj
-//                String name=document.getRootElement().element("WS").attribute("value").getText();
-//
-//
-//                String responseTextObj = document.asXML();
-//                responseTextObj = responseTextObj.replace("\r\n", "\\r\\n");
-//                XMLSerializer xmlSerializer = new XMLSerializer();
-//
-//
-//                net.sf.json.JSON jsonObj = xmlSerializer.read(responseTextObj);
-//                String jsonStr = jsonObj.toString();
-//                DBObject object = (DBObject) JSON.parse(jsonStr);
-//                object.put("documentID", i);
-//
-//                //by zj
-//                object.put("name",name);
-//
-//                collection.insertOne(object);
-//            }
-//        }
+
+        if(files.size() != 0){
+
+            MongoDatabase mongoDatabase = MongoData.getDataBase();
+            MongoCollection<DBObject> collection = mongoDatabase.getCollection("tianjin",DBObject.class);
+
+            for(int i = 0; i < files.size(); i++) {
+                SAXReader sr = new SAXReader();
+                Document document = (Document) sr.read(files.get(i));
+
+                //by zj
+                String name=document.getRootElement().element("WS").attribute("value").getText();
+
+
+                String responseTextObj = document.asXML();
+                responseTextObj = responseTextObj.replace("\r\n", "\\r\\n");
+                XMLSerializer xmlSerializer = new XMLSerializer();
+
+
+                net.sf.json.JSON jsonObj = xmlSerializer.read(responseTextObj);
+                String jsonStr = jsonObj.toString();
+                DBObject object = (DBObject) JSON.parse(jsonStr);
+                object.put("documentID", i);
+
+                //by zj
+                object.put("name",name);
+
+                collection.insertOne(object);
+            }
+        }
 
 //        Properties props = new Properties();
 //        props.put("python.home","path to the Lib folder");
@@ -73,8 +82,8 @@ public class Xml2mongodb {
 //        PyObject object = runKmeans.__call__(new PyList(files));
         String cp = "python/kmeansprocess.py";
         try {
+            //Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
             Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
