@@ -94,7 +94,7 @@ public class Index {
             } catch (DocumentException e) {
                 message+= (e.getMessage()+"\n");
             } catch (Exception e){
-                message+= "上传失败\n";
+                message+= "处理文件失败\n";
             }
             finally {
                 if (dest.exists() && dest.isFile()) {

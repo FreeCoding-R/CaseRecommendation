@@ -195,17 +195,31 @@
         <div class="slogan bottom-pad-small">
             <div class="container">
                 <div class="slogan-content">
-                    <div class="col-lg-3 col-md-3 center-block text-center" style="float: none;">
-                        <form method='post' target='_blank' action="/showCase" enctype="multipart/form-data">
+                    <div class="col-lg-12 col-md-12 com-sm-12 col-xs-12">
+                        <h3 class="title">文书分析</h3>
+                    </div>
+                    <div class="col-lg-6 col-md-6 center-block text-center" style="float: none;">
+                        <form id="form" method='post' target='_blank' action="/showCase" enctype="multipart/form-data">
                             <div class="form-group has-success">
                                 <!--使用label元素与file控件关联，input被隐藏，用户点的实际上是label-->
                                 <label for="input-file" class="btn btn-info">选择文书</label>
                                 <input type="file" name="file" id="input-file" accept="text/xml"
-                                       style="position:absolute;clip:rect(0 0 0 0);"/>
+                                       style="position:absolute;clip:rect(0 0 0 0);" onchange="fileChange()"/>
                                 <p class="help-block">添加一个XML文件</p>
                             </div>
-                            <button type="submit" class="btn btn-special btn-color">Submit</button>
+                            <button type="submit" disabled="disabled" class="btn btn-special btn-color">上传</button>
                         </form>
+                        <script type="text/javascript">
+                            function fileChange() {
+                                if($("#input-file").val() === ''){
+                                    $("#form .help-block").text('添加一个XML文件');
+                                    $("#form > button").attr('disabled',true);
+                                }else {
+                                    $("#form .help-block").text($("#input-file").get(0).files[0].name);
+                                    $("#form > button").attr('disabled',false);
+                                }
+                            }
+                        </script>
                     </div>
                     <div class="clearfix"/>
                 </div>
