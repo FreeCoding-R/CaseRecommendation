@@ -60,7 +60,7 @@
                              data-x="40">
                             <div class="list-slide">
                                 <i class="icon-search slide-icon"></i>
-                                <h5 class="dblue"> 在线计算相似文书 </h5>
+                                <h5 class="dblue"> 在线计算类似文书 </h5>
                             </div>
                         </div>
                         <div class="caption lfb caption_button_1 fadeout tp-caption start"
@@ -188,7 +188,7 @@
                     <div class="col-lg-12 col-md-12 com-sm-12 col-xs-12">
                         <h3 class="title">文书分析</h3>
                     </div>
-                    <div class="col-lg-6 col-md-6 center-block text-center animated bounceInUp" style="float: none;">
+                    <div class="col-lg-6 col-md-6 center-block text-center animated shake" style="float: none;">
                         <form id="form" method='post' target='_blank' action="/showCase" enctype="multipart/form-data">
                             <div class="form-group has-success">
                                 <!--使用label元素与file控件关联，input被隐藏，用户点的实际上是label-->
@@ -205,7 +205,6 @@
             </div>
         </div>
         <!-- Slogan End-->
-        <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">Website Template</a></div>
         <!-- Main Content start-->
         <div class="main-content">
             <div class="container">
@@ -221,13 +220,11 @@
                                 </div>
                             </div>
                             <div class="content-box-info">
-                                <h3>Responsive Layout</h3>
+                                <h3>文书原文呈现</h3>
                                 <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                    尽可能还原上传的文书，打造文书原版既视感，仔细区分换行、分段、结尾
                                 </p>
-                                <a href="#">Read More <i class="icon-angle-right"></i><i
+                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
                                         class="icon-angle-right"></i></a>
                             </div>
                         </div>
@@ -243,13 +240,11 @@
                                 </div>
                             </div>
                             <div class="content-box-info">
-                                <h3>Retina Ready</h3>
+                                <h3>文书关键信息显示</h3>
                                 <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                    提取所上传文书的所有关键信息，使文书更加一目了然，划分案件的人事物，实现XML深度可视化
                                 </p>
-                                <a href="#">Read More <i class="icon-angle-right"></i><i
+                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
                                         class="icon-angle-right"></i></a>
                             </div>
                         </div>
@@ -265,13 +260,11 @@
                                 </div>
                             </div>
                             <div class="content-box-info">
-                                <h3>Rich Elements</h3>
+                                <h3>在线计算类似文书</h3>
                                 <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                    分析所给文书的案由、案情、性质等特点，在线计算出与其最相似的裁判文书
                                 </p>
-                                <a href="#">Read More <i class="icon-angle-right"></i><i
+                                <a href="#">了解更多 <i class="icon-angle-right"></i><i
                                         class="icon-angle-right"></i></a>
                             </div>
                         </div>
@@ -280,219 +273,122 @@
             </div>
         </div>
         <!-- Main Content end-->
-        <!-- Recent works start-->
+        <!-- about us start-->
         <div class="recentworks bottom-pad">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 animate_afl d1">
-                        <div class="portfolio-desc">
-                            <h3 class="title">Recent Works</h3>
-                            <p>There are many variations passages of Lorem Ipsum available, but the majority have
-                                suffered alteration in some form, by injected humour, or randomised words which don't
-                                look even highly believable. Lorem ipsum dolor sit amet, consectetur adipisicing
-                                elit.</p>
-                            <div class="carousel-controls">
-                                <a class="prev" href="#portfolio-carousel" data-slide="prev"><i
-                                        class="icon-angle-left"></i></a>
-                                <a class="next" href="#portfolio-carousel" data-slide="next"><i
-                                        class="icon-angle-right"></i></a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-9 col-md-9 col-xs-12">
-                        <div class="row">
-                            <div id="portfolio-carousel" class="portfolio-carousel slide">
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item animate_afc d2">
-                                            <div class="portfolio-item">
-                                                <a th:href="@{/img/portfolio/portfolio-1.jpg}"
-                                                   class="portfolio-item-link" data-rel="prettyPhoto">
-                                                    <span class="portfolio-item-hover"></span>
-                                                    <span class="fullscreen"><i class="icon-search"></i></span><img
-                                                        th:src="@{/img/portfolio/portfolio-1.jpg}" alt=" "/>
-                                                </a>
-                                                <div class="portfolio-item-title">
-                                                    <a href="/">Insta
-                                                        Genius</a>
-                                                    <p>
-                                                        Design / Development
-                                                    </p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item animate_afc d3">
-                                            <div class="portfolio-item">
-                                                <a th:href="@{/img/portfolio/portfolio-2.jpg}"
-                                                   class="portfolio-item-link" data-rel="prettyPhoto">
-                                                    <span class="portfolio-item-hover"></span><span
-                                                        class="fullscreen"><i class="icon-search"></i></span><img
-                                                        th:src="@{/img/portfolio/portfolio-2.jpg}" alt=" "/>
-                                                </a>
-                                                <div class="portfolio-item-title">
-                                                    <a href="/">YA
-                                                        Sound</a>
-                                                    <p>
-                                                        Sound / Audio
-                                                    </p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item animate_afc d4">
-                                            <div class="portfolio-item">
-                                                <a th:href="@{/img/portfolio/portfolio-3.jpg}"
-                                                   class="portfolio-item-link" data-rel="prettyPhoto">
-                                                    <span class="portfolio-item-hover"></span><span
-                                                        class="fullscreen"><i class="icon-search"></i></span><img
-                                                        th:src="@{/img/portfolio/portfolio-3.jpg}" alt=" "/>
-                                                </a>
-                                                <div class="portfolio-item-title">
-                                                    <a href="/">Nike
-                                                        Shoe</a>
-                                                    <p>
-                                                        Apareal / Shoe
-                                                    </p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item">
-                                            <div class="portfolio-item">
-                                                <a th:href="@{/img/portfolio/portfolio-4.jpg}"
-                                                   class="portfolio-item-link" data-rel="prettyPhoto">
-                                                    <span class="portfolio-item-hover"></span><span
-                                                        class="fullscreen"><i class="icon-search"></i></span><img
-                                                        th:src="@{/img/portfolio/portfolio-4.jpg}" alt=" "/>
-                                                </a>
-                                                <div class="portfolio-item-title">
-                                                    <a href="/">Camera
-                                                        Icon</a>
-                                                    <p>
-                                                        Icon / Device
-                                                    </p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item">
-                                            <div class="portfolio-item">
-                                                <a th:href="@{/img/portfolio/portfolio-5.jpg}"
-                                                   class="portfolio-item-link" data-rel="prettyPhoto">
-                                                    <span class="portfolio-item-hover"></span><span
-                                                        class="fullscreen"><i class="icon-search"></i></span><img
-                                                        th:src="@{/img/portfolio/portfolio-5.jpg}" alt=" "/>
-                                                </a>
-                                                <div class="portfolio-item-title">
-                                                    <a href="/">Penguin</a>
-                                                    <p>
-                                                        Animal / Nature
-                                                    </p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item">
-                                            <div class="portfolio-item">
-                                                <a href="/"
-                                                   class="portfolio-item-link" data-rel="prettyPhoto">
-                                                    <span class="portfolio-item-hover"></span><span
-                                                        class="fullscreen"><i class="icon-search"></i></span><img
-                                                        th:src="@{/img/portfolio/portfolio-6.jpg}" alt=" "/>
-                                                </a>
-                                                <div class="portfolio-item-title">
-                                                    <a href="/">Sound
-                                                        Box</a>
-                                                    <p>
-                                                        Audio / Sound
-                                                    </p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Recent work end-->
-        <!-- Latest Posts start -->
-        <div class="latest-posts">
-            <div class="container">
-                <div class="row">
                     <div class="col-lg-12 col-md-12 com-sm-12 col-xs-12">
-                        <h3 class="title">Latest Posts</h3>
+                        <h3 class="title">关于我们</h3>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="blog-showcase col-lg-12 col-md-12 col-sm-12 col-xs-12 animate_afb d1">
-                        <ul>
-                            <li class="">
-                                <div class="blog-showcase-thumb col-lg-4">
-                                    <div class="post-body">
-                                        <a class="post-item-link"
-                                           href="../../../../../../../程序员必备/html5和css3/静态网页模板fwst_Pixmahtml5/fwst_Pixmahtml5/img/portfolio/portfolio-5.jpg"
-                                           data-rel="prettyPhoto"><span class="post-item-hover"></span><span
-                                                class="fullscreen"><i class="icon-search"></i></span><img th:src="@{/img/portfolio/portfolio-5.jpg}" alt="" /></a>
+                    <div class="row">
+                        <div id="portfolio-carousel" class="portfolio-carousel slide">
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item animate_afc d1">
+                                        <div class="portfolio-item">
+                                            <img th:src="@{/img/member/xiekailian.jpg}"/>
+                                            <div class="portfolio-item-title">
+                                                <a href="#">谢铠联</a>
+                                                <p>架构师 / Scrum Master</p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item animate_afc d2">
+                                        <div class="portfolio-item">
+                                            <img th:src="@{/img/member/zhujing.jpg}"/>
+                                            <div class="portfolio-item-title">
+                                                <a href="#">朱劲</a>
+                                                <p>测试工程师 / 数据库管理专家</p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item animate_afc d3">
+                                        <div class="portfolio-item">
+                                            <img th:src="@{/img/member/tianguisong.jpg}"/>
+                                            <div class="portfolio-item-title">
+                                                <a href="#">田桂松</a>
+                                                <p>CTO / 设计工程师</p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item animate_afc d4">
+                                        <div class="portfolio-item">
+                                            <img th:src="@{/img/member/zhujunyi.jpg}"/>
+                                            <div class="portfolio-item-title">
+                                                <a href="#">朱俊毅</a>
+                                                <p>架构师 / 配置工程师</p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="blog-showcase-extra-info col-lg-4">
-                                    <span><a href="#">Sep 11th, 2013</a></span>
-                                    <h4><a href="#" class="title">Blog post title</a></h4>
-                                    <p>Mauris sed mauris bibendum est imperdiet porttitor tincidunt at lorem. Proin
-                                        augue massa</p>
-                                    <a href="#">Read more <i class="icon-double-angle-right"></i></a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="blog-showcase-thumb col-lg-4">
-                                    <div class="post-body">
-                                        <a class="post-item-link"
-                                           th:href="@{/img/portfolio/portfolio-6.jpg}"
-                                           data-rel="prettyPhoto"><span class="post-item-hover"></span><span
-                                                class="fullscreen"><i class="icon-search"></i></span><img th:src="@{/img/portfolio/portfolio-6.jpg}" alt="" /></a>
+                                <div class="item">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item">
+                                        <div class="portfolio-item">
+                                            <a th:href="@{/img/portfolio/portfolio-4.jpg}"
+                                               class="portfolio-item-link" data-rel="prettyPhoto">
+                                                <span class="portfolio-item-hover"></span><span
+                                                    class="fullscreen"><i class="icon-search"></i></span><img
+                                                    th:src="@{/img/portfolio/portfolio-4.jpg}" alt=" "/>
+                                            </a>
+                                            <div class="portfolio-item-title">
+                                                <a href="/">Camera
+                                                    Icon</a>
+                                                <p>
+                                                    Icon / Device
+                                                </p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item">
+                                        <div class="portfolio-item">
+                                            <a th:href="@{/img/portfolio/portfolio-5.jpg}"
+                                               class="portfolio-item-link" data-rel="prettyPhoto">
+                                                <span class="portfolio-item-hover"></span><span
+                                                    class="fullscreen"><i class="icon-search"></i></span><img
+                                                    th:src="@{/img/portfolio/portfolio-5.jpg}" alt=" "/>
+                                            </a>
+                                            <div class="portfolio-item-title">
+                                                <a href="/">Penguin</a>
+                                                <p>
+                                                    Animal / Nature
+                                                </p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 item">
+                                        <div class="portfolio-item">
+                                            <a href="/"
+                                               class="portfolio-item-link" data-rel="prettyPhoto">
+                                                <span class="portfolio-item-hover"></span><span
+                                                    class="fullscreen"><i class="icon-search"></i></span><img
+                                                    th:src="@{/img/portfolio/portfolio-6.jpg}" alt=" "/>
+                                            </a>
+                                            <div class="portfolio-item-title">
+                                                <a href="/">Sound
+                                                    Box</a>
+                                                <p>
+                                                    Audio / Sound
+                                                </p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="blog-showcase-extra-info col-lg-4">
-                                    <span><a href="#">Sep 11th, 2013</a></span>
-                                    <h4><a href="#" class="title">Blog post title</a></h4>
-                                    <p>Mauris sed mauris bibendum est imperdiet porttitor tincidunt at lorem. Proin
-                                        augue massa</p>
-                                    <a href="#">Read more <i class="icon-double-angle-right"></i></a>
-                                </div>
-                            </li>
-                            <li class="blog-first-el">
-                                <div class="blog-showcase-thumb col-lg-4">
-                                    <div class="post-body">
-                                        <a class="post-item-link"
-                                           th:href="@{/img/portfolio/portfolio-7.jpg}"
-                                           data-rel="prettyPhoto"><span class="post-item-hover"></span><span
-                                                class="fullscreen"><i class="icon-search"></i></span><img th:src="@{/img/portfolio/portfolio-7.jpg}" alt="" /></a>
-                                    </div>
-                                </div>
-                                <div class="blog-showcase-extra-info col-lg-4">
-                                    <span><a href="#">Sep 11th, 2013</a></span>
-                                    <h4><a href="#" class="title">Blog post title</a></h4>
-                                    <p>Mauris sed mauris bibendum est imperdiet porttitor tincidunt at lorem. Proin
-                                        augue massa</p>
-                                    <a href="#">Read more <i class="icon-double-angle-right"></i></a>
-                                </div>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                 </div>
-                <div class="divider"></div>
             </div>
         </div>
-        <!-- Latest Posts End -->
+        <!-- about us end-->
         <!-- Our Clients Start-->
         <div class="our-clients">
             <div class="container">
@@ -671,6 +567,8 @@
             let height=$(".fullwidthbanner-container").height()-$(window).height()/3;;
             $('html,body').animate({scrollTop: height});
         });
+
+        $("div.content-box.big div.content-box-info p").height(120);
     });
 
     // 文件上传的监听
