@@ -112,16 +112,29 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         Element e=root.element("DSR");
 
-        Iterator it = e.elementIterator("");
+
+        Iterator it = e.elementIterator("GSF");
         while (it.hasNext()) {
             Element i=(Element) it.next() ;
 
             if(i.attribute("value")==null){
                 continue;
             }
-            result+="\""+"诉讼参与人"+"\""+":"+"\""+i.element("SSCYRMC").attribute("value").getText()+"\",";
+            result+="\""+"公诉方"+"\""+":"+"\""+i.element("SSCYR").attribute("value").getText()+"\",";
 
         }
+
+        Iterator itt = e.elementIterator("QSF");
+        while (itt.hasNext()) {
+            Element i=(Element) itt.next() ;
+
+            if(i.attribute("value")==null){
+                continue;
+            }
+            result+="\""+"起诉方"+"\""+":"+"\""+i.element("SSCYR").attribute("value").getText()+"\",";
+
+        }
+
 
         //关键词详细第四部分获取
         result+="\""+root.element("SSJL").attribute("nameCN").getText()+"\""+":"+"\""+root.element("SSJL").attribute("value").getText()+"\",";
