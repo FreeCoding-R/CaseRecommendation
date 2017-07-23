@@ -18,8 +18,7 @@
                 <ul>
                     <!-- THE FIRST SLIDE -->
                     <li data-delay="6000" data-masterspeed="300" data-transition="fade">
-                        <div class="slotholder"><img th:src="@{/img/slider/slider-bg-1.jpg}" data-fullwidthcentering="on"
-                                                     alt="Pixma"/></div>
+                        <img th:src="@{/img/slider/slider-bg-1.jpg}" data-fullwidthcentering="on" alt="Pixma"/>
                         <div class="caption modern_big_bluebg h1 lft tp-caption start"
                              data-x="40"
                              data-y="85"
@@ -38,7 +37,7 @@
                              data-x="40">
                             <div class="list-slide">
                                 <i class="icon-code slide-icon"></i>
-                                <h5 class="dblue"> 文书原文呈现 </h5>
+                                <h5> 文书原文呈现 </h5>
                             </div>
                         </div>
                         <div class="caption list_slide lfb tp-caption start"
@@ -49,7 +48,7 @@
                              data-x="40">
                             <div class="list-slide">
                                 <i class="icon-camera slide-icon"></i>
-                                <h5 class="dblue"> 文书关键信息显示 </h5>
+                                <h5> 文书关键信息显示 </h5>
                             </div>
                         </div>
                         <div class="caption list_slide lfb tp-caption start"
@@ -60,7 +59,7 @@
                              data-x="40">
                             <div class="list-slide">
                                 <i class="icon-search slide-icon"></i>
-                                <h5 class="dblue"> 在线计算类似文书 </h5>
+                                <h5> 在线计算类似文书 </h5>
                             </div>
                         </div>
                         <div class="caption lfb caption_button_1 fadeout tp-caption start"
@@ -96,7 +95,8 @@
                              data-y="88"
                              data-speed="300"
                              data-start="1100"
-                             data-easing="easeOutExpo"><span class="dblue">响应式布局</span></div>
+                             data-easing="easeOutExpo"><span class="dblue">响应式布局</span>
+                        </div>
                         <div class="caption list_slide lfb tp-caption start"
                              data-easing="easeOutExpo"
                              data-start="1400"
@@ -568,6 +568,7 @@
             $('html,body').animate({scrollTop: height});
         });
 
+        // 设置3个介绍栏高度相同
         $("div.content-box.big div.content-box-info p").height(120);
     });
 

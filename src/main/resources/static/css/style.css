@@ -293,7 +293,7 @@ h2.title {
 .fullwidthbanner-container {
     width: 100% !important;
     position: relative;
-    max-height: 470px !important;
+    /*max-height: 650px !important;*/
     overflow: hidden;
     background-image: url(../img/loader.gif);
     background-repeat: no-repeat;

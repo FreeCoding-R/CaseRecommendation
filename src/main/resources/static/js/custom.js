@@ -191,8 +191,8 @@ jQuery(window).load(function() {
       jQuery.fn.css = jQuery.fn.cssOriginal;
       jQuery('.fullwidthbanner').revolution({
         delay: 9000,
-        startwidth: 1170,
-        startheight: 470,
+        // startwidth: 1170,
+        // startheight: 470,
 
         onHoverStop: "on",
         // Stop Banner Timet at Hover on Slide on/off
@@ -226,7 +226,7 @@ jQuery(window).load(function() {
         soloArrowRightHOffset: 0,
         soloArrowRightVOffset: 0,
 
-        touchenabled: "on",
+        touchenabled: "off",
         // Enable Swipe Function : on/off
 
 
