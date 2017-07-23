@@ -96,7 +96,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             document = dom4jd.get();
         }
 
-        Element root = document.getRootElement();
+        Element root = document.getRootElement().element("QW");
         //关键词详细第一部分获取
 
         String yw=root.attribute("value").getText();
@@ -110,13 +110,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         //关键词详细第三部分获取
 
-        Element e=root.element("SSCYRQJ");
-        if(tag==false){
-            e=e.element("SSCYR");
+        Element e=root.element("DSR");
 
-        }
-
-        Iterator it = e.elementIterator();
+        Iterator it = e.elementIterator("");
         while (it.hasNext()) {
             Element i=(Element) it.next() ;
 
