@@ -82,13 +82,12 @@ public class UserServiceImpl implements UserService {
             result.add(c);
 
         }
-
         return result;
     }
 
+
     @Override
     public boolean insert(File file, String email) throws DocumentException {
-
         MongodbUtil.insert(file,email);
         return true;
     }

@@ -155,9 +155,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         result = result.substring(0, result.length() - 1) + "}";
 
-        if(result.length()==2){
-            throw new FileContentException("文件内容不符合要求");
-        }
+//        if(result.length()==2){
+//            throw new FileContentException("文件内容不符合要求");
+//        }
 
         result = result.replace("\n", "\\n");
         result = result.replace("\r", "\\r");
