@@ -35,17 +35,8 @@ public class Index {
      * 首页
      * @return
      */
-    @RequestMapping(value="/",method= RequestMethod.GET)
+    @RequestMapping(value= {"/","/index"},method= RequestMethod.GET)
     public String home() {
-        return "index";
-    }
-
-    /**
-     * 首页的另一个路由
-     * @return
-     */
-    @RequestMapping(value="/index", method= RequestMethod.GET)
-    public String index() {
         return "index";
     }
 
@@ -64,6 +55,7 @@ public class Index {
     public String uploadXML(Model model,
                             @RequestParam(value = "file", required = true) MultipartFile file) {
         String message="";
+        boolean sucess=false;
         if (file.isEmpty()) {
             message="文件为空";
         }else {
@@ -88,6 +80,7 @@ public class Index {
                 //开始处理文书
                 if(caseRecommendService.upload(dest)){
                     handleFile(model);
+                    sucess=true;
                 }else {
                     message+= "文件格式不符合规范！\n";
                 }
@@ -110,6 +103,7 @@ public class Index {
             }
         }
         model.addAttribute("result",message);
+        model.addAttribute("sucess",sucess);
         return "case";
     }
 
@@ -140,7 +134,7 @@ public class Index {
      * @return
      */
     @RequestMapping("/person")
-    public String index(Model model){
+    public String person(Model model){
         Person single=new Person("aa",1);
         List<Person> people=new ArrayList<Person>();
         Person p1=new Person("bb",2);

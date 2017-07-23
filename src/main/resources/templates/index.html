@@ -194,26 +194,20 @@
         <!-- Slogan Start-->
         <div class="slogan bottom-pad-small">
             <div class="container">
-                <div class="row">
-                    <div class="slogan-content">
-                        <div class="col-lg-9 col-md-9">
-                            <h2 class="slogan-title">We design and develop the best website’s for customers!</h2>
-                        </div>
-                        <div class="col-lg-3 col-md-3">
-                            <div class="get-started">
-                                <button class="btn btn-special btn-color pull-right">Get Started Now</button>
-                                <form method='post' target='_blank' action="/showCase" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
-                                        <input type="file" name="file" id="exampleInputFile"/>
-                                        <p class="help-block">Example block-level help text here.</p>
-                                    </div>
-                                    <button type="submit" class="btn btn-special btn-color pull-right">Submit</button>
-                                </form>
+                <div class="slogan-content">
+                    <div class="col-lg-3 col-md-3 center-block text-center" style="float: none;">
+                        <form method='post' target='_blank' action="/showCase" enctype="multipart/form-data">
+                            <div class="form-group has-success">
+                                <!--使用label元素与file控件关联，input被隐藏，用户点的实际上是label-->
+                                <label for="input-file" class="btn btn-info">选择文书</label>
+                                <input type="file" name="file" id="input-file" accept="text/xml"
+                                       style="position:absolute;clip:rect(0 0 0 0);"/>
+                                <p class="help-block">添加一个XML文件</p>
                             </div>
-                        </div>
-                        <div class="clearfix"></div>
+                            <button type="submit" class="btn btn-special btn-color">Submit</button>
+                        </form>
                     </div>
+                    <div class="clearfix"/>
                 </div>
             </div>
         </div>

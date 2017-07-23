@@ -7,7 +7,7 @@
     <script th:src="@{/js/echarts.min.js}" type="text/javascript"></script>
     <!--<link th:href="@{css/colors/blue.css}" rel="stylesheet" id="colors"/>-->
 </head>
-<body class="shortcodes">
+<body th:if="${sucess}" class="shortcodes">
 <div class="wrap">
     <!-- Header -->
     <header th:replace="/components/components :: header"/>
@@ -190,5 +190,8 @@
         $(".nav li a:contains('法案')").attr("id","current");
     });
 </script>
+</body>
+<body th:if="not ${sucess}">
+    上传失败：空文件！
 </body>
 </html>
