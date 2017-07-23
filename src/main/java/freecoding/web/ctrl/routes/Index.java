@@ -118,6 +118,7 @@ public class Index {
         try {
             if(caseRecommendService.init(ID)){
                 handleFile(model);
+                model.addAttribute("sucess",true);
             }else {
                 //如果没有这个ID的文书返回404页面
                 return "error/error-404";

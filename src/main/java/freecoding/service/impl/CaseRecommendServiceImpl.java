@@ -136,6 +136,30 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
             }
 
+            Iterator ittt = e.elementIterator("YSF");
+            while (ittt.hasNext()) {
+                Element i = (Element) ittt.next();
+
+                if (i.attribute("value") == null) {
+                    continue;
+                }
+                result += "\"" + "应诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
+
+            }
+
+            Iterator itttt = e.elementIterator("DLR");
+            while (itttt.hasNext()) {
+                Element i = (Element) itttt.next();
+
+                if (i.attribute("value") == null) {
+                    continue;
+                }
+                result += "\"" + "代理人" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
+
+            }
+
+
+
 
             //关键词详细第四部分获取
             result += "\"" + root.element("SSJL").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("SSJL").attribute("value").getText() + "\",";
@@ -279,7 +303,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 while (it.hasNext()) {
                     Element element = (Element) it.next();
                     String str=element.attribute("value").getText();
-                    System.out.println(str);
                     String name = str.substring(str.indexOf("《")+1,str.indexOf("》"));
                     String detail = str.substring(str.indexOf("第"),str.indexOf("条")+1);
                     Law law = new Law();

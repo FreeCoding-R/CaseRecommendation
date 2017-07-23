@@ -1,8 +1,7 @@
 package freecoding.service;
 
-import freecoding.vo.Case;
+import freecoding.entity.User;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,11 +20,23 @@ public interface AdminService {
 
 
     /**
-     * 管理员按日期查看用户上传记录
-     * @param start
-     * @param end
+     *
+     * @param user
      * @return
      */
-    public List<Case> geRecordListByAdmin(Date start, Date end);
+    public boolean addUser(User user);
+
+    /**
+     *
+     * @param email
+     * @return
+     */
+    public boolean deleteUser(String email);
+
+    /**
+     *
+     * @return
+     */
+    public List<User> getAllUser();
 
 }

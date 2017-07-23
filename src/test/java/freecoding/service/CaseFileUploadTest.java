@@ -37,19 +37,19 @@ public class CaseFileUploadTest {
         // 如在这里运行获得的就是"你的电脑的路径/CaseRecommendation/target/test-classes/"
         // 用.toURI()解决中文名乱码的问题
         File caseFile = new File(getClass().getClassLoader().getResource(
-                "xml/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_233.xml").toURI().getPath());
+                "xml/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_64.xml").toURI().getPath());
 //        System.out.println("use "+caseFile.getAbsolutePath()+" for test.");
         Assert.assertEquals(caseRecommendService.upload(caseFile), true);
 
 //        Assert.assertEquals(caseRecommendService.init("59740f3dc5b08d1b4d3cada0"), true);
-        caseRecommendService.handle();
-        caseRecommendService.getCaseRecommendation();
+//        caseRecommendService.handle();
+//        caseRecommendService.getCaseRecommendation();
 
 
     }
 
     @Test
-    @Ignore
+//    @Ignore
     public void handleTest() throws DocumentException, FileContentException, ServiceProcessException {
         JSON result = caseRecommendService.handle();
         System.out.println(result.toString());
@@ -83,7 +83,7 @@ public class CaseFileUploadTest {
     }
 
     @Test
-//    @Ignore
+    @Ignore
     public void getLawDistributionTest() throws DocumentException, ServiceProcessException {
         List<Law> result = caseRecommendService.getLawDistribution();
 //        Assert.assertNotNull(result);
