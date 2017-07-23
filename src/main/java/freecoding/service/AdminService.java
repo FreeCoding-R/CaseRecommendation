@@ -1,5 +1,7 @@
 package freecoding.service;
 
+import freecoding.vo.Case;
+
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,6 @@ public interface AdminService {
      * @param end
      * @return
      */
-    public List<Record> geRecordListByAdmin(Date start,Date end);
+    public List<Case> geRecordListByAdmin(Date start, Date end);
 
 }

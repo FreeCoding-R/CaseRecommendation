@@ -3,6 +3,7 @@ package freecoding.service.impl;
 import freecoding.dao.AdministratorRepository;
 import freecoding.entity.Administrator;
 import freecoding.service.AdminService;
+import freecoding.vo.Case;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,6 @@ import java.util.List;
  */
 @Service
 public class AdminServiceImpl implements AdminService {
-    @Autowired
-    private RecordRepository recordRepository;
 
     @Autowired
     private AdministratorRepository administratorRepository;
@@ -35,7 +34,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Record> geRecordListByAdmin(Date start, Date end) {
+    public List<Case> geRecordListByAdmin(Date start, Date end) {
         return null;
     }
 }
