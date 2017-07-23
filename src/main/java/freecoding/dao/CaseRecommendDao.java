@@ -12,7 +12,7 @@ public interface CaseRecommendDao {
 
     Document find(String id);
 
-    Document findByName(String name);
+    List<Document> findByUser(String email);
 
     List<Document> getRandomCases();
 

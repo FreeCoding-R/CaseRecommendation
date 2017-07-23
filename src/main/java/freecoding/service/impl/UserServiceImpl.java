@@ -1,14 +1,18 @@
 package freecoding.service.impl;
 
-import freecoding.dao.RecordRepository;
+import freecoding.dao.CaseRecommendDao;
 import freecoding.dao.UserRepository;
-import freecoding.entity.Record;
 import freecoding.entity.User;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.UserService;
+import freecoding.util.MongodbUtil;
+import freecoding.vo.Case;
+import org.bson.Document;
+import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private RecordRepository recordRepository;
+    private CaseRecommendDao caseRecommendDao;
 
 
     @Override
@@ -66,21 +70,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> getCaseListByUser(String email) {
-        List<String> result=new ArrayList<>();
-        List l=recordRepository.findByEmail(email);
+    public List<Case> getCaseListByUser(String email) {
+        List<Case> result=new ArrayList<>();
 
+        List<Document> l=caseRecommendDao.findByUser(email);
         for (int i = 0; i < l.size(); i++) {
-            Record r= (Record) l.get(i);
-            result.add(r.getCaseName());
+            Case c=new Case();
+            Document document=l.get(i);
+            c.setId(document.get("_id").toString());
+            c.setName(document.get("name").toString());
+            result.add(c);
+
         }
 
         return result;
     }
 
     @Override
-    public boolean insert() {
-        return false;
+    public boolean insert(File file, String email) throws DocumentException {
+
+        MongodbUtil.insert(file,email);
+        return true;
     }
 
     @Override

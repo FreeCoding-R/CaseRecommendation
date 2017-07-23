@@ -1,9 +1,7 @@
 package freecoding.service.impl;
 
 import freecoding.dao.AdministratorRepository;
-import freecoding.dao.RecordRepository;
 import freecoding.entity.Administrator;
-import freecoding.entity.Record;
 import freecoding.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

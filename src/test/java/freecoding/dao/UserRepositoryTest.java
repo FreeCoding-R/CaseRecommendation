@@ -16,8 +16,6 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
 
-    @Autowired
-    private RecordRepository recordRepository;
 
 
     @Test

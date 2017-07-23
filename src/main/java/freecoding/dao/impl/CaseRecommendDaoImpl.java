@@ -26,6 +26,7 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
 
     private static String collectionName = "cases";
+    private static String userCollectionName = "casesByUser";
     private static MongoDatabase database = MongodbUtil.getDataBase();
 
 
@@ -41,14 +42,16 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
     }
 
     @Override
-    public Document findByName(String name) {
-        MongoCollection<Document> collection = database.getCollection(collectionName);
+    public List<Document> findByUser(String email) {
+        MongoCollection<Document> collection = database.getCollection(userCollectionName);
         BasicDBObject query = new BasicDBObject();
-        query.put("@value" , "天津市河东区人民法院 刑事判决书 （2011）东刑初字第307号");
-        FindIterable<Document> cursor = collection.find(query);
-        Document document=cursor.iterator().next();
+        query.put("user", "email");
+        List<Document> result = new ArrayList<>();
+        collection.find().forEach((Block<? super Document>) item->{
+            result.add(item);
+        });
 
-        return document;
+        return result;
     }
 
     @Override

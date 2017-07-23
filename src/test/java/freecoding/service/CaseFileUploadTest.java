@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -36,12 +35,13 @@ public class CaseFileUploadTest {
         //getClass().getClassLoader().getResource("")可以获得运行时项目根路径，
         // 如在这里运行获得的就是"你的电脑的路径/CaseRecommendation/target/test-classes/"
         // 用.toURI()解决中文名乱码的问题
-        File caseFile = new File(getClass().getClassLoader().getResource(
-                "xml/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_233.xml").toURI().getPath());
+//        File caseFile = new File(getClass().getClassLoader().getResource(
+//                "xml/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_233.xml").toURI().getPath());
 //        System.out.println("use "+caseFile.getAbsolutePath()+" for test.");
-        Assert.assertEquals(caseRecommendService.upload(caseFile), true);
-//        Assert.assertEquals(caseRecommendService.init("596f05b0ec393fe8aab835ed"), true);
-//        caseRecommendService.handle();
+//        Assert.assertEquals(caseRecommendService.upload(caseFile), true);
+
+        Assert.assertEquals(caseRecommendService.init("59740f3dc5b08d1b4d3cada0"), true);
+        caseRecommendService.handle();
 //        caseRecommendService.getCaseRecommendation();
 
 
@@ -63,7 +63,7 @@ public class CaseFileUploadTest {
     @Test
     @Ignore
     public void normalKeywordDetailTest() throws FileContentException, DocumentException, ServiceProcessException {
-        JSON result = caseRecommendService.detail("裁判分析过程/。");
+        JSON result = caseRecommendService.detail("经办法院/湖北省武汉市中级人民法院");
         System.out.println(result.toString());
     }
 

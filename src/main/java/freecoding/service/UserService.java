@@ -2,7 +2,10 @@ package freecoding.service;
 
 import freecoding.entity.User;
 import freecoding.exception.ServiceProcessException;
+import freecoding.vo.Case;
+import org.dom4j.DocumentException;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -51,14 +54,14 @@ public interface UserService {
      * @param email
      * @return
      */
-    public List<String> getCaseListByUser(String email);
+    public List<Case> getCaseListByUser(String email);
 
 
     /**
      *  用户上传文书存储
      * @return
      */
-    public boolean insert();
+    public boolean insert(File file, String email) throws DocumentException;
 
 
     /**

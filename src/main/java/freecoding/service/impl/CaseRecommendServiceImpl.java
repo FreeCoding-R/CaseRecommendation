@@ -30,7 +30,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     @Autowired
     private CaseRecommendDao caseRecommendDao;
-
     private ThreadLocal <File> file = new ThreadLocal();
     private ThreadLocal <org.dom4j.Document> dom4jd = new ThreadLocal();
     private ThreadLocal <List<Document>> recommendCases = new ThreadLocal();
@@ -96,57 +95,65 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             document = dom4jd.get();
         }
 
-        Element root = document.getRootElement().element("QW");
-        //关键词详细第一部分获取
+        try {
 
-        String yw=root.attribute("value").getText();
-        yw=yw.split("PAGE")[0];
-        result+="\""+"原文"+"\""+":"+"\""+yw+"\",";
+            Element root = document.getRootElement().element("QW");
+            //关键词详细第一部分获取
 
-        //关键词详细第二部分获取
-        result+="\""+root.element("WS").element("JBFY").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("JBFY").attribute("value").getText()+"\",";
-        result+="\""+root.element("WS").element("WSMC").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("WSMC").attribute("value").getText()+"\",";
-        result+="\""+root.element("WS").element("AH").attribute("nameCN").getText()+"\""+":"+"\""+root.element("WS").element("AH").attribute("value").getText()+"\",";
+            String yw = root.attribute("value").getText();
+            yw = yw.split("PAGE")[0];
+            result += "\"" + "原文" + "\"" + ":" + "\"" + yw + "\",";
 
-        //关键词详细第三部分获取
+            //关键词详细第二部分获取
+            result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText() + "\",";
+            result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText() + "\",";
+            result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText() + "\",";
 
-        Element e=root.element("DSR");
+            //关键词详细第三部分获取
+
+            Element e = root.element("DSR");
 
 
-        Iterator it = e.elementIterator("GSF");
-        while (it.hasNext()) {
-            Element i=(Element) it.next() ;
+            Iterator it = e.elementIterator("GSF");
+            while (it.hasNext()) {
+                Element i = (Element) it.next();
 
-            if(i.attribute("value")==null){
-                continue;
+                if (i.attribute("value") == null) {
+                    continue;
+                }
+                result += "\"" + "公诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
+
             }
-            result+="\""+"公诉方"+"\""+":"+"\""+i.element("SSCYR").attribute("value").getText()+"\",";
+
+            Iterator itt = e.elementIterator("QSF");
+            while (itt.hasNext()) {
+                Element i = (Element) itt.next();
+
+                if (i.attribute("value") == null) {
+                    continue;
+                }
+                result += "\"" + "起诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
+
+            }
+
+
+            //关键词详细第四部分获取
+            result += "\"" + root.element("SSJL").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("SSJL").attribute("value").getText() + "\",";
+            String c = root.element("CPFXGC").attribute("value").getText();
+            c = c.replace("，判决如下：", "。");
+
+            result += "\"" + root.element("CPFXGC").attribute("nameCN").getText() + "\"" + ":" + "\"" + c + "\",";
+            result += "\"" + root.element("PJJG").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("PJJG").attribute("value").getText() + "\",";
+            result += "\"" + root.element("AJJBQK").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("AJJBQK").attribute("value").getText() + "\",";
+
+
+
+        }catch (NullPointerException e){
+            throw new FileContentException("文件内容不符合要求");
 
         }
 
-        Iterator itt = e.elementIterator("QSF");
-        while (itt.hasNext()) {
-            Element i=(Element) itt.next() ;
-
-            if(i.attribute("value")==null){
-                continue;
-            }
-            result+="\""+"起诉方"+"\""+":"+"\""+i.element("SSCYR").attribute("value").getText()+"\",";
-
-        }
-
-
-        //关键词详细第四部分获取
-        result+="\""+root.element("SSJL").attribute("nameCN").getText()+"\""+":"+"\""+root.element("SSJL").attribute("value").getText()+"\",";
-        String c=root.element("CPFXGC").attribute("value").getText();
-        c=c.replace("，判决如下：","。");
-
-        result+="\""+root.element("CPFXGC").attribute("nameCN").getText()+"\""+":"+"\""+c+"\",";
-        result+="\""+root.element("PJJG").attribute("nameCN").getText()+"\""+":"+"\""+root.element("PJJG").attribute("value").getText()+"\",";
-        result+="\""+root.element("AJJBQK").attribute("nameCN").getText()+"\""+":"+"\""+root.element("AJJBQK").attribute("value").getText()+"\",";
-
-
-        result=result.substring(0,result.length()-1)+"}";
+        result = result.substring(0, result.length() - 1) + "}";
 
         if(result.length()==2){
             throw new FileContentException("文件内容不符合要求");
@@ -226,7 +233,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
             Case c=new Case();
             c.setId(document.get("_id").toString());
-            c.setName( ((Document)document.get("WS")).get("@value").toString());
+            c.setName(document.get("name").toString());
             cl.add(c);
         }
 
@@ -276,7 +283,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     Element element = (Element) it.next();
                     System.out.println(element.attribute("class"));
                     String name2 = element.attribute("value").getText();
-//                    System.out.println(name2);
 
                     Element tm = element.element("TM");
 
@@ -336,7 +342,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     //递归遍历xml
     private void getNode(Element node,String keyword){
 
-        if(node.attribute("value")!=null){
+        if(node.attribute("value")!=null&&node.attribute("nameCN")!=null){
             if(node.attribute("value").getText().contains(keyword.split("/")[1])&&node.attribute("nameCN").getText().equals(keyword.split("/")[0])){
                 if(resultNode.get()==null||resultNode.get().attribute("value").getText().length()<node.attribute("value").getText().length()) {
                     resultNode.set(node);
