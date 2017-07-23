@@ -10,7 +10,7 @@ import functions as func
 
 
 def runKmeans(files):
-    stopWordsFile = "stop_words.txt"
+    stopWordsFile = "src/resources/txt/stop_words.txt"
     stop_words_set = func.stop_words(stopWordsFile)
 
     all_vector = func.get_all_vector(files, stop_words_set)

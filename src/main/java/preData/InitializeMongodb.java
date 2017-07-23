@@ -83,7 +83,7 @@ public class InitializeMongodb {
 //        interpreter.execfile("python/kmeansprocess.py");
 //        PyFunction runKmeans = (PyFunction) interpreter.get("runKmeans", PyFunction.class);
 //        PyObject object = runKmeans.__call__(new PyList(files));
-        String cp = "python/kmeansprocess.py";
+        String cp = "src/main/python/kmeansprocess.py";
         try {
             //Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
             Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
