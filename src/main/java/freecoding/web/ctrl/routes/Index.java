@@ -74,10 +74,10 @@ public class Index {
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             message+=("上传的后缀名为：" + suffixName + "\n");
             // 文件上传后的路径
+            String filePath = System.getProperty("user.dir")+"/userFiles/";
+            File dest = new File(filePath + fileName);
             try {
                 // 解决中文问题，liunx下中文路径，图片显示问题
-                String filePath = System.getProperty("user.dir")+"/userFiles/";
-                File dest = new File(filePath + fileName);
                 // 检测是否存在目录
                 if (!dest.getParentFile().exists()) {
                     dest.getParentFile().mkdirs();
@@ -102,6 +102,11 @@ public class Index {
                 message+= (e.getMessage()+"\n");
             } catch (Exception e){
                 message+= "上传失败\n";
+            }
+            finally {
+                if (dest.exists() && dest.isFile()) {
+                    dest.delete();
+                }
             }
         }
         model.addAttribute("result",message);
