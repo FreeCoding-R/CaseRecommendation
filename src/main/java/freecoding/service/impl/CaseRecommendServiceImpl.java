@@ -254,22 +254,34 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         //推荐案例遍历
         for (int i = 0; i < rl.size(); i++) {
             Document document = (Document) rl.get(i);
-            Document cpfxgc = (Document) document.get("CPFXGC");
-//            Document flftmc = (Document) cpfxgc.get("FLFTMC");
+            Document cpfxgc = (Document) ((Document) document.get("QW")).get("CPFXGC");
 
             String id=document.get("_id").toString();
-            System.out.println(id);
 
             org.dom4j.Document cpfxgcXml = DocumentHelper.parseText(Json2XmlUtil.jsonPartOfM2xml(cpfxgc.toJson()));
+            Element root = cpfxgcXml.getRootElement().element("CUS_FLFT_FZ_RY").element("CUS_FLFT_RY");
 
-            Element root = cpfxgcXml.getRootElement().element("FLFTMC");
 
             if(root.attribute("class").getText().equals("object")){
-                String name = root.attribute("value").getText();
-                Iterator it = root.element("TM").elementIterator();
+
+                String str=root.attribute("value").getText();
+                String name = str.substring(str.indexOf("《"),str.indexOf("》"));
+                String detail = str.substring(str.indexOf("第"),str.indexOf("条"));
+                Law law = new Law();
+                law.setName(name);
+                law.setDetail(detail);
+                law.setNum(1);
+                distinct(law);
+
+
+            }else {
+                Iterator it = root.elementIterator("e");
                 while (it.hasNext()) {
                     Element element = (Element) it.next();
-                    String detail = element.attribute("value").getText();
+                    String str=element.attribute("value").getText();
+                    System.out.println(str);
+                    String name = str.substring(str.indexOf("《")-1,str.indexOf("》"));
+                    String detail = str.substring(str.indexOf("第"),str.indexOf("条")+1);
                     Law law = new Law();
                     law.setName(name);
                     law.setDetail(detail);
@@ -277,42 +289,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     distinct(law);
 
                 }
-            }else{
-                Iterator it = root.elementIterator("e");
-                while (it.hasNext()) {
-                    Element element = (Element) it.next();
-                    System.out.println(element.attribute("class"));
-                    String name2 = element.attribute("value").getText();
 
-                    Element tm = element.element("TM");
-
-                    if(tm.attribute("class").getText().equals("object")){
-                        String detail = tm.attribute("value").getText();
-                        Law law = new Law();
-                        law.setName(name2);
-                        law.setDetail(detail);
-                        law.setNum(1);
-                        distinct(law);
-
-                    }else{
-                        Iterator it2=tm.elementIterator("e");
-                        while (it2.hasNext()){
-                            Element element2 = (Element) it2.next();
-                            String detail = element2.attribute("value").getText();
-                            Law law = new Law();
-                            law.setName(name2);
-                            law.setDetail(detail);
-                            law.setNum(1);
-                            distinct(law);
-
-                        }
-
-
-                    }
-
-                }
             }
-
         }
 
         return this.lawDistribution.get();
