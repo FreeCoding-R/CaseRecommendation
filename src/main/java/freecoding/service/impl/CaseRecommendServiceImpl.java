@@ -40,7 +40,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     @Override
     public boolean upload(File file) {
-        if(file==null){
+        if(file==null || !file.exists() || !file.isFile()){
             return false;
         }
         //按后缀检测

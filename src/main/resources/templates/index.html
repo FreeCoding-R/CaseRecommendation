@@ -10,7 +10,6 @@
 <div class="wrap">
     <!-- Header -->
     <header th:replace="/components/components :: header"/>
-    <script th:src="@{/js/custom.js}" type="text/javascript"></script>
     <!-- Content Start -->
     <div id="main">
         <!-- Slider Start-->
@@ -672,5 +671,12 @@
 <section th:replace="/components/components :: style-switcher"></section>
 <!--tabs-->
 <script th:src="@{/js/circularnav.js}" type="text/javascript"></script>
+
+<script th:src="@{/js/custom.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".nav li a:contains('首页')").attr("id","current");
+    });
+</script>
 </body>
 </html>
