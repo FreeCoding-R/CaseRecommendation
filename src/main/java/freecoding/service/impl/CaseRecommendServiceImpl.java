@@ -280,7 +280,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     Element element = (Element) it.next();
                     String str=element.attribute("value").getText();
                     System.out.println(str);
-                    String name = str.substring(str.indexOf("《")-1,str.indexOf("》"));
+                    String name = str.substring(str.indexOf("《")+1,str.indexOf("》"));
                     String detail = str.substring(str.indexOf("第"),str.indexOf("条")+1);
                     Law law = new Law();
                     law.setName(name);
