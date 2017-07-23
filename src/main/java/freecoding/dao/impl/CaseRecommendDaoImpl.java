@@ -6,7 +6,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import freecoding.dao.CaseRecommendDao;
-import freecoding.util.MongoData;
+import freecoding.util.MongodbUtil;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
@@ -24,8 +24,10 @@ import static com.mongodb.client.model.Filters.eq;
 @Repository
 public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
+
     private static String collectionName = "cases";
-    private static MongoDatabase database = MongoData.getDataBase();
+    private static MongoDatabase database = MongodbUtil.getDataBase();
+
 
     @Override
     public Document find(String id) {

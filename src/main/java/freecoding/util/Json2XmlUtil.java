@@ -7,7 +7,7 @@ import net.sf.json.xml.XMLSerializer;
 /**
  * Created by zhujing on 2017/7/18.
  */
-public class Json2Xml {
+public class Json2XmlUtil {
 
     public static String jsonFromM2xml(String json){
         json=json.substring(51);

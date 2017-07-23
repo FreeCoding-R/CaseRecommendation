@@ -5,7 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
-import freecoding.util.MongoData;
+import freecoding.util.MongodbUtil;
 import net.sf.json.xml.XMLSerializer;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by loick on 16/07/2017.
  */
-public class Xml2mongodb {
+public class InitializeMongodb {
 
     static String path = "/Users/loick/Desktop/3组/训练集";
 
@@ -40,8 +40,9 @@ public class Xml2mongodb {
 //        System.out.println(((document.getRootElement().element("QW")).element("WS")));
         if(files.size() != 0){
 
-            MongoDatabase mongoDatabase = MongoData.getDataBase();
+            MongoDatabase mongoDatabase = MongodbUtil.getDataBase();
             MongoCollection<DBObject> collection = mongoDatabase.getCollection("cases",DBObject.class);
+
 
             for(int i = 0; i < files.size(); i++) {
                 SAXReader sr = new SAXReader();
@@ -93,4 +94,8 @@ public class Xml2mongodb {
 
         //System.out.println(Command.exeCmd("python src/main/python/test.py"));
     }
+
+
+
+
 }

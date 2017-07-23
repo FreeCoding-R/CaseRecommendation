@@ -4,7 +4,7 @@ import freecoding.dao.CaseRecommendDao;
 import freecoding.exception.FileContentException;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.CaseRecommendService;
-import freecoding.util.Json2Xml;
+import freecoding.util.Json2XmlUtil;
 import freecoding.vo.Case;
 import freecoding.vo.Law;
 import net.sf.json.JSON;
@@ -64,7 +64,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         Document document=null;
         try{
             document=caseRecommendDao.find(id);
-            this.dom4jd.set(DocumentHelper.parseText(Json2Xml.jsonFromM2xml(document.toJson())));
+            this.dom4jd.set(DocumentHelper.parseText(Json2XmlUtil.jsonFromM2xml(document.toJson())));
         }catch (Exception e){
             return false;
         }
@@ -244,7 +244,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             String id=document.get("_id").toString();
             System.out.println(id);
 
-            org.dom4j.Document cpfxgcXml = DocumentHelper.parseText(Json2Xml.jsonPartOfM2xml(cpfxgc.toJson()));
+            org.dom4j.Document cpfxgcXml = DocumentHelper.parseText(Json2XmlUtil.jsonPartOfM2xml(cpfxgc.toJson()));
 
             Element root = cpfxgcXml.getRootElement().element("FLFTMC");
 

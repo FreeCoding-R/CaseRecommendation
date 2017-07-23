@@ -1,6 +1,7 @@
 package freecoding.dao;
 
 import freecoding.dao.impl.CaseRecommendDaoImpl;
+import freecoding.util.MongodbUtil;
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.junit.Assert;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -43,7 +45,11 @@ public class CaseRecommendDaoTest {
 
 //        Document document=caseRecommendDao.find("596f05b0ec393fe8aab835ed");
 //        Document cpfxgc = (Document) document.get("CPFXGC");
-//        System.out.println(Json2Xml.jsonPartOfM2xml(cpfxgc.toJson()));
+//        System.out.println(Json2XmlUtil.jsonPartOfM2xml(cpfxgc.toJson()));
+
+        File file=new File("/Users/zhujin/Downloads/天津文书交通肇事和危险驾驶分案由子集(冯奕2017:4:1)/交通肇事罪/(2001)南刑初字第271号刑事附带民事判决书（一审公诉案件适用普通程序用）.RTF.xml");
+        String email="haha.com";
+        MongodbUtil.insert(file,email);
 
 
 

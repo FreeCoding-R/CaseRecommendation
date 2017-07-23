@@ -9,11 +9,11 @@ import org.junit.Test;
  */
 public class MongoDataTest {
 
-    private MongoData mongoData;
+    private MongodbUtil mongoData;
 
     @Before
     public void init(){
-        mongoData = new MongoData();
+        mongoData = new MongodbUtil();
     }
 
     @Test
