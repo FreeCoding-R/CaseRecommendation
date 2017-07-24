@@ -64,7 +64,7 @@ public class CaseFileUploadTest {
     @Test
     @Ignore
     public void normalKeywordDetailTest() throws FileContentException, DocumentException, ServiceProcessException {
-        JSON result = caseRecommendService.detail("经办法院/湖北省武汉市中级人民法院");
+        JSON result = caseRecommendService.detail("案件基本情况/。");
         System.out.println(result.toString());
     }
 

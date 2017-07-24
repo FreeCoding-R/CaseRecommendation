@@ -80,6 +80,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         //xml指定节点遍历，获取信息，转为string，再转为json
         String result="{";
         org.dom4j.Document document = null;
+
+
         boolean tag=true;
 
         //调用顺序异常
@@ -100,19 +102,19 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             Element root = document.getRootElement().element("QW");
             //关键词详细第一部分获取
 
-            String yw = root.attribute("value").getText();
-            yw=yw.replace(" ","\\r\\n");
-            result += "\"" + "原文" + "\"" + ":" + "\"" + yw + "\",";
+
 
             //关键词详细第二部分获取
-            result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ","\\r\\n") + "\",";
+            result += "\""+"文书基本信息"+"\":{";
+                    result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ","\\r\\n") + "\",";
             result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText().replace(" ","\\r\\n") + "\",";
-            result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText().replace(" ","\\r\\n") + "\",";
-
+            result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText().replace(" ","\\r\\n") ;
+            result += "\"},";
             //关键词详细第三部分获取
 
-            Element e = root.element("DSR");
 
+            result += "\""+"诉讼参与人"+"\":{";
+            Element e = root.element("DSR");
 
             Iterator it = e.elementIterator("GSF");
             while (it.hasNext()) {
@@ -157,8 +159,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 result += "\"" + "代理人" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
 
             }
-
-
+            result=result.substring(0,result.length()-1)+"},";
 
 
             //关键词详细第四部分获取
@@ -171,6 +172,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             result += "\"" + root.element("PJJG").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("PJJG").attribute("value").getText().replace(" ","\\r\\n") + "\",";
             result += "\"" + root.element("AJJBQK").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("AJJBQK").attribute("value").getText().replace(" ","\\r\\n") + "\",";
 
+            String yw = root.attribute("value").getText();
+            yw=yw.replace(" ","\\r\\n");
+            result += "\"" + "原文" + "\"" + ":" + "\"" + yw + "\",";
 
 
         }catch (NullPointerException e){
