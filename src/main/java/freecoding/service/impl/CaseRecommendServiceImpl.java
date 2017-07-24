@@ -290,15 +290,14 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             if(root.attribute("class").getText().equals("object")){
 
                 String str=root.attribute("value").getText();
-                String name = str.substring(str.indexOf("《"),str.indexOf("》"));
-                String detail = str.substring(str.indexOf("第"),str.indexOf("条"));
+                String name = str.substring(str.indexOf("《")+1,str.indexOf("》"));
+                String detail = str.substring(str.indexOf("第"),str.indexOf("条")+1);
                 Law law = new Law();
                 law.setName(name);
                 law.setDetail(detail);
                 law.setNum(1);
                 distinct(law);
-
-
+                
             }else {
                 Iterator it = root.elementIterator("e");
                 while (it.hasNext()) {
