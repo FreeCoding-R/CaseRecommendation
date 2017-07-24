@@ -3,6 +3,7 @@
 <head th:replace="/components/components :: head">
 </head>
 <head >
+    <link th:href="@{/css/home.css}" rel="stylesheet"/>
     <title>类案推荐系统</title>
     <!-- Theme CSS -->
 </head>
@@ -273,8 +274,70 @@
             </div>
         </div>
         <!-- Main Content end-->
-        <!-- about us start-->
+        <!-- Portfolio start-->
         <div class="recentworks bottom-pad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 com-sm-12 col-xs-12">
+                        <h3 class="title">关于我们</h3>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div id="portfolio">
+                            <div id="projects-container" style="max-width: 800px;">
+                                <a class="col-md-5 project-item">
+                                    <img class="img-responsive project-image" src="/img/presentation/bg-1.jpg" alt=""/>
+                                    <div class="hover-mask">
+                                        <h2 class="project-title">快速显示结果</h2>
+                                        <p>FreeCoding-R</p>
+                                    </div>
+                                    <div class="project-description sr-only">
+                                        <span>FreeCoding-R</span>
+                                    </div>
+                                </a>
+
+                                <a class="col-md-5 project-item">
+                                    <img class="img-responsive project-image" src="/img/presentation/bg-2.jpg" alt=""/>
+                                    <div class="hover-mask">
+                                        <h2 class="project-title">庞大数据支持</h2>
+                                        <p>FreeCoding-R</p>
+                                    </div>
+                                    <div class="sr-only project-description">
+                                        <span>FreeCoding-R</span>
+                                    </div>
+                                </a>
+
+                                <a class="col-md-5 project-item">
+                                    <img class="img-responsive project-image" src="/img/presentation/bg-3.jpg" alt=""/>
+                                    <div class="hover-mask">
+                                        <h2 class="project-title">精确导向类案</h2>
+                                        <p>FreeCoding-R</p>
+                                    </div>
+                                    <div class="sr-only project-description">
+                                        <span>FreeCoding-R</span>
+                                    </div>
+                                </a>
+
+                                <a class="col-md-5 project-item">
+                                    <img class="img-responsive project-image" src="/img/presentation/bg-4.jpg" alt=""/>
+                                    <div class="hover-mask">
+                                        <h2 class="project-title">快捷方便使用</h2>
+                                        <p>FreeCoding-R</p>
+                                    </div>
+                                    <div class="sr-only project-description">
+                                        <span>FreeCoding-R</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio end-->
+        <!-- About us Start-->
+        <div class="our-clients">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 com-sm-12 col-xs-12">
@@ -300,7 +363,7 @@
                                             <img th:src="@{/img/member/zhujing.jpg}"/>
                                             <div class="portfolio-item-title">
                                                 <a href="#">朱劲</a>
-                                                <p>测试工程师 / 数据库管理专家</p>
+                                                <p>测试工程师 / DBA</p>
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
@@ -388,163 +451,10 @@
                 </div>
             </div>
         </div>
-        <!-- about us end-->
-        <!-- Our Clients Start-->
-        <div class="our-clients">
-            <div class="container">
-                <div class="row">
-                    <div class="client">
-                        <div class="client-logo">
-                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                                <div class="clients-title">
-                                    <h3 class="title">Our Clients</h3>
-                                    <div class="carousel-controls pull-right">
-                                        <a class="prev" href="#client-carousel" data-slide="prev"><i
-                                                class="icon-angle-left"></i></a>
-                                        <a class="next" href="#client-carousel" data-slide="next"><i
-                                                class="icon-angle-right"></i></a>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="row">
-                                    <div id="client-carousel" class="client-carousel slide">
-                                        <div class="carousel-inner">
-                                            <div class="item active">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item animate_afc d1">
-                                                    <div class="item-inner"><a href="#"><img th:src="@{/img/clientslogo/logo-1.png}" alt="Upportdash"/></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item animate_afc d2">
-                                                    <div class="item-inner"><a href="#"><img th:src="@{/img/clientslogo/logo-2.png}" alt="Upportdash"/></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item animate_afc d3">
-                                                    <div class="item-inner"><a href="#"><img th:src="@{/img/clientslogo/logo-3.png}" alt="Upportdash"/></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item animate_afc d4">
-                                                    <div class="item-inner"><a href="#"><img th:src="@{/img/clientslogo/logo-4.png}" alt="Upportdash"/></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item">
-                                                    <div class="item-inner"><a href="#"><img th:src="@{/img/clientslogo/logo-5.png}" alt="Upportdash"/></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item">
-                                                    <div class="item-inner"><a href="#"><img th:src="@{/img/clientslogo/logo-4.png}" alt="Upportdash" /></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item">
-                                                    <div class="item-inner"><a href="#"><img th:src="@{/img/clientslogo/logo-3.png}" alt="Upportdash" /></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item">
-                                                    <div class="item-inner"><a href="#"><img th:src="@{/img/clientslogo/logo-2.png}" alt="Upportdash" /></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                                <!-- Testimonials Widget Start -->
-                                <div class="row ">
-                                    <div class="testimonials widget">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="testimonials-title">
-                                                <h3 class="title">Testimonials</h3>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div id="testimonials-carousel"
-                                             class="testimonials-carousel slide animate_afr d5">
-                                            <div class="carousel-inner">
-                                                <div class="item active">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="testimonial item">
-                                                            <p>
-                                                                Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting industry. Lorem Ipsum has been the
-                                                                industry's standard dummy text ever since the 1500s,
-                                                                when an unknown printer took a galley of type.
-                                                            </p>
-                                                            <div class="testimonials-arrow">
-                                                            </div>
-                                                            <div class="author">
-                                                                <div class="testimonial-image "><img th:src="@{/img/testimonial/team-member-1.jpg}" alt="" />
-                                                                </div>
-                                                                <div class="testimonial-author-info">
-                                                                    <a href="#"><span
-                                                                            class="color">Monica Sing</span></a> FIFO
-                                                                    Themes
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="testimonial item">
-                                                            <p>
-                                                                Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting industry. Lorem Ipsum has been the
-                                                                industry's standard dummy text ever since the 1500s,
-                                                                when an unknown printer took a galley of type.
-                                                            </p>
-                                                            <div class="testimonials-arrow">
-                                                            </div>
-                                                            <div class="author">
-                                                                <div class="testimonial-image "><img th:src="@{/img/testimonial/team-member-2.jpg}" alt="" />
-                                                                </div>
-                                                                <div class="testimonial-author-info">
-                                                                    <a href="#"><span
-                                                                            class="color">Monzurul Haque</span></a> FIFO
-                                                                    Themes
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="testimonial item">
-                                                            <p>
-                                                                Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting industry. Lorem Ipsum has been the
-                                                                industry's standard dummy text ever since the 1500s,
-                                                                when an unknown printer took a galley of type.
-                                                            </p>
-                                                            <div class="testimonials-arrow">
-                                                            </div>
-                                                            <div class="author">
-                                                                <div class="testimonial-image "><img th:src="@{/img/testimonial/team-member-3.jpg}" alt="" />
-                                                                </div>
-                                                                <div class="testimonial-author-info">
-                                                                    <a href="#"><span
-                                                                            class="color">Carol Johansen</span></a> FIFO
-                                                                    Themes
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Our Clients End -->
+        <!-- About us End -->
     </div>
     <!-- Content End -->
+
     <!-- Footer -->
     <footer th:replace="/components/components :: footer"></footer>
     <!-- Scroll To Top -->
