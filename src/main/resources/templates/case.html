@@ -55,7 +55,7 @@
                                 <div class="contents">
                                     <div th:each="name:${content.keySet()}" th:id="'content'+${name}" class="tabscontent">
                                         <div th:if="${content.get(name).getClass() eq name.getClass()}">
-                                            <!--&lt;即小于，小于15个字的文本居中显示-->
+                                            <!--&lt;即小于，小于20个字的文本居中显示-->
                                             <p th:each='line:${content.get(name).split("\n")}' th:text="${line}"
                                                th:class="${line.replaceAll(' ', '').length() &lt; 20}? 'text-center' : 'text-left'">
                                             </p>
