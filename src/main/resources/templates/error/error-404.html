@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="/components/components :: head"/>
+<head th:include="components/components :: head"/>
 <head>
     <title>404错误</title>
     <!--<style>-->
@@ -10,7 +10,7 @@
 <body>
 <div>
     <!-- Content Start -->
-    <header th:replace="/components/components :: header"/>
+    <header th:replace="components/components :: header"/>
     <div id="main">
         <!-- Title, Breadcrumb Start-->
         <div class="breadcrumb-wrapper">
@@ -44,8 +44,8 @@
         <!-- Main Content end-->
     </div>
     <!-- Content End -->
-    <footer th:replace="/components/components :: footer"></footer>
+    <footer th:replace="components/components :: footer"></footer>
 </div>
-<section th:replace="/components/components :: style-switcher"></section>
+<section th:replace="components/components :: style-switcher"></section>
 </body>
 </html>

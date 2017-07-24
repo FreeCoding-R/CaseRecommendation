@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="singlePerson" type="freecoding.web.data.model.Person"*/-->
 <!--/*@thymesVar id="people" type="java.util.List"*/-->
-<head th:include="/components/components :: head">
+<head th:include="components/components :: head">
 </head>
 <head>
     <title>Person</title>
 </head>
 <body>
 <!-- Header -->
-<header th:replace="/components/components :: header"/>
+<header th:replace="components/components :: header"/>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -35,8 +35,8 @@
 
     </div>
 </div>
-<footer th:replace="/components/components :: footer"></footer>
-<section th:replace="/components/components :: style-switcher"></section>
+<footer th:replace="components/components :: footer"></footer>
+<section th:replace="components/components :: style-switcher"></section>
 <script th:inline="javascript">
     var single=[[${singlePerson}]];
     console.log(single.name+"/"+single.age);

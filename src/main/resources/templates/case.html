@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/components/components :: head">
+<head th:replace="components/components :: head">
 </head>
 <head>
     <title>CaseRecommendation Case Page</title>
@@ -10,7 +10,7 @@
 <body th:if="${sucess}" class="shortcodes">
 <div class="wrap">
     <!-- Header -->
-    <header th:replace="/components/components :: header"/>
+    <header th:replace="components/components :: header"/>
     <!-- Content Start -->
     <div id="main">
         <!--&lt;!&ndash; Title, Breadcrumb Start&ndash;&gt;-->
@@ -177,12 +177,12 @@
     </div>
     <!-- Main Content end-->
     <!-- Footer -->
-    <footer th:replace="/components/components :: footer"></footer>
+    <footer th:replace="components/components :: footer"></footer>
     <!-- Scroll To Top -->
     <a href="#" class="scrollup"><i class="icon-angle-up"></i></a>
 </div>
 <!-- Wrap End -->
-<section th:replace="/components/components :: style-switcher"></section>
+<section th:replace="components/components :: style-switcher"></section>
 <!-- The Scripts -->
 <script th:src="@{/js/circularnav.js}" type="text/javascript"></script>
 <script th:src="@{/js/custom.js}" type="text/javascript"></script>
