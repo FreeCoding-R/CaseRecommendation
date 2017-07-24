@@ -105,9 +105,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             result += "\"" + "原文" + "\"" + ":" + "\"" + yw + "\",";
 
             //关键词详细第二部分获取
-            result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText() + "\",";
-            result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText() + "\",";
-            result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText() + "\",";
+            result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ","\\r\\n") + "\",";
+            result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText().replace(" ","\\r\\n") + "\",";
+            result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText().replace(" ","\\r\\n") + "\",";
 
             //关键词详细第三部分获取
 
@@ -164,11 +164,12 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             //关键词详细第四部分获取
             result += "\"" + root.element("SSJL").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("SSJL").attribute("value").getText() + "\",";
             String c = root.element("CPFXGC").attribute("value").getText();
-            c = c.replace("，判决如下：", "。");
+            c = c.replace("裁定如下：", "作出裁定。");
+            c = c.replace(" ","\\r\\n");
 
             result += "\"" + root.element("CPFXGC").attribute("nameCN").getText() + "\"" + ":" + "\"" + c + "\",";
-            result += "\"" + root.element("PJJG").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("PJJG").attribute("value").getText() + "\",";
-            result += "\"" + root.element("AJJBQK").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("AJJBQK").attribute("value").getText() + "\",";
+            result += "\"" + root.element("PJJG").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("PJJG").attribute("value").getText().replace(" ","\\r\\n") + "\",";
+            result += "\"" + root.element("AJJBQK").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("AJJBQK").attribute("value").getText().replace(" ","\\r\\n") + "\",";
 
 
 
