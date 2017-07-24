@@ -101,7 +101,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             //关键词详细第一部分获取
 
             String yw = root.attribute("value").getText();
-            yw = yw.split("PAGE")[0];
+            yw=yw.replace(" ","\\r\\n");
             result += "\"" + "原文" + "\"" + ":" + "\"" + yw + "\",";
 
             //关键词详细第二部分获取
