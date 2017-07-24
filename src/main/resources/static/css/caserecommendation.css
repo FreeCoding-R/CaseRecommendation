@@ -55,3 +55,16 @@
 .blocs-hero-btn-dwn:hover{
     color: rgba(255,255,255,1);
 }
+
+/* = backgrounds
+-------------------------------------------------------------- */
+.background-1{
+    background-image: url('../img/slider/slider-bg-1.jpg');
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+.background-2{
+    background-image: url('../img/slider/slider-bg-2.jpg');
+    background-repeat:no-repeat;
+    background-size: cover;
+}
