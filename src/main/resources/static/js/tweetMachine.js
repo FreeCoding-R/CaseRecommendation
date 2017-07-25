@@ -114,7 +114,7 @@
                             // Save a reference to the time element
 							timeElement = $(this);
                             
-                            // Get the original time from the data stored on the timestamp
+                            // Get the original time from the pythondata stored on the timestamp
 							originalTime = timeElement.data('timestamp');
 
                             // Generate and show a new time based on the original time
@@ -166,7 +166,7 @@
                             .attr('href', "http://twitter.com/" + tweet.user.screen_name + "/status/" + tweet.id_str)
                             .attr('target', '_blank')
                             .html(tweetMachine.relativeTime(tweet.created_at))
-                            // Save the created_at time as jQuery data so we can update it later
+                            // Save the created_at time as jQuery pythondata so we can update it later
                             .data('timestamp', tweet.created_at);
 
                         // Set the text

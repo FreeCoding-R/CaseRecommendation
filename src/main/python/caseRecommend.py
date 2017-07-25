@@ -16,7 +16,7 @@ def kmeansCases(xmlfile):
     doc = casefile.read()
     casefile.close()
 
-    # prepare for kmeans data
+    # prepare for kmeans pythondata
     data = np.load("kmeansData.npy")
     centroids = data[0][0]
     clusters = data[0][1]

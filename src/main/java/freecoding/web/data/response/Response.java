@@ -9,7 +9,7 @@ import java.io.Serializable;
  * {<br>
  * status:"success | fail",<br>
  * errorCode:"",<br>
- * data:{}<br>
+ * pythondata:{}<br>
  * }<br><br>
  * 对外提供构造器(可链式调用){@link Builder}
  *

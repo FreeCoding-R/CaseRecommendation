@@ -26,8 +26,8 @@ jQuery(function () {
 
         // make option object dynamically, i.e. { filter: '.my-filter-class' }
         var options = {},
-            key = jQueryoptionSet.attr('data-option-key'),
-            value = jQuerythis.attr('data-option-value');
+            key = jQueryoptionSet.attr('pythondata-option-key'),
+            value = jQuerythis.attr('pythondata-option-value');
         // parse 'false' as false boolean
         value = value === 'false' ? false : value;
         options[key] = value;
