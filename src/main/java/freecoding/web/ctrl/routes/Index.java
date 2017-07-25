@@ -60,10 +60,7 @@ public class Index {
         }else {
             // 获取文件名
             String fileName = file.hashCode() + file.getOriginalFilename();
-            message+=("上传的文件名为：" + fileName + "\n");
-            // 获取文件的后缀名
-            String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            message+=("上传的后缀名为：" + suffixName + "\n");
+            message+=("上传的文件名为：" + file.getOriginalFilename() + "\n");
             // 文件上传后的路径
             String filePath = System.getProperty("user.dir")+"/userFiles/";
             File dest = new File(filePath + fileName);
@@ -103,8 +100,7 @@ public class Index {
             }
         }
         model.addAttribute("result",message);
-        model.addAttribute("sucess",sucess);
-        return "case";
+        return sucess? "case": "uploadFail";
     }
 
     /**
@@ -118,7 +114,6 @@ public class Index {
         try {
             if(caseRecommendService.init(ID)){
                 handleFile(model);
-                model.addAttribute("sucess",true);
             }else {
                 //如果没有这个ID的文书返回404页面
                 return "error/error-404";

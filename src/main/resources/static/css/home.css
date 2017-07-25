@@ -50,7 +50,7 @@
   -moz-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
-  opacity:1;
+  /*opacity:1;*/
   filter:alpha(opacity=100);
   overflow:hidden;
 }

@@ -117,7 +117,7 @@
 
 
 <!-- Footer Start -->
-<footer th:fragment="footer" th:id="footer" class="footer-bottom">
+<footer th:fragment="footer" th:id="footer">
     <!-- Footer Bottom Start -->
     <div class="footer-bottom">
         <div class="container">
@@ -146,6 +146,23 @@
         </div>
     </div>
     <!-- Footer Bottom End -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            fixBottom();
+            $(window).resize(function() {
+                fixBottom();
+            });
+        });
+
+        //控制页脚固定在底部
+        function fixBottom() {
+            if($(document).height() === $(window).height()){
+                $("footer").addClass("navbar-fixed-bottom");
+            }else {
+                $("footer").removeClass("navbar-fixed-bottom");
+            }
+        }
+    </script>
 </footer>
 <!-- Footer End -->
 
