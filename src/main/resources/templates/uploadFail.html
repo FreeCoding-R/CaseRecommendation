@@ -11,8 +11,33 @@
     <header th:replace="components/components :: header"/>
     <!-- Content Start -->
     <div id="main" class="container">
-        <p>上传失败：</p>
-        <p th:each="line:${result.split('\n')}" th:text="${line}"></p>
+        <div class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" style="margin-top: 200px;" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">上传失败</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p th:each="line:${result.split('\n')}" th:text="${line}"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">点击关闭窗口</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".modal-body > p:last").css("color","red");
+                $('.modal').modal("show");
+                $('.modal').on('hidden.bs.modal', function (e) {
+                    window.close();
+                })
+            });
+        </script>
     </div>
     <!-- Content End -->
     <!-- Footer -->

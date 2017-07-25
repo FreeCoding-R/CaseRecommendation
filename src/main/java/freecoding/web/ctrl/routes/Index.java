@@ -71,7 +71,6 @@ public class Index {
                     dest.getParentFile().mkdirs();
                 }
                 file.transferTo(dest);
-                message+= "上传成功\n";
 
                 //开始处理文书
                 if(caseRecommendService.upload(dest)){
