@@ -653,11 +653,11 @@ h2.title {
     cursor: pointer;
     float: left;
     font-size: 15px;
-    padding: 12px;
+    padding: 10px;
 }
 
 #horizontal-tabs ul.tabs li.current {
-    border-bottom: 1px solid #fff;
+    /*border-bottom: 1px solid #fff;*/
     background: none;
     cursor: default;
 }

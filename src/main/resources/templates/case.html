@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="components/components :: head">
+<head th:replace="/components/components :: head">
 </head>
 <head>
-    <title>文书信息</title>
+    <title>CaseRecommendation Case Page</title>
     <script th:src="@{/js/echarts.min.js}" type="text/javascript"></script>
     <!--<link th:href="@{css/colors/blue.css}" rel="stylesheet" id="colors"/>-->
 </head>
-<body class="shortcodes">
+<body th:if="${sucess}" class="shortcodes">
+<script>
+    function isMobileBrowser() {
+        let sUserAgent = navigator.userAgent.toLowerCase();
+        let bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+        let bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+        let bIsMidp = sUserAgent.match(/midp/i) == "midp";
+        let bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+        let bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+        let bIsAndroid = sUserAgent.match(/android/i) == "android";
+        let bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+        let bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+        return (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM)
+    }
+
+    function browserRedirect() {
+        if (!isMobileBrowser()) {
+            $(".tabs li").css("font-size", "85%");
+        }
+    }
+    browserRedirect();
+</script>
 <div class="wrap">
     <!-- Header -->
-    <header th:replace="components/components :: header"/>
+    <header th:replace="/components/components :: header"/>
     <!-- Content Start -->
     <div id="main">
         <!--&lt;!&ndash; Title, Breadcrumb Start&ndash;&gt;-->
@@ -96,17 +117,36 @@
                         <div id="chart" style="width: 750px;height:500px;"></div>
                         <script type="text/javascript" th:inline="javascript">
                             // 基于准备好的dom，初始化echarts实例
-                            var myChart = echarts.init(document.getElementById('chart'))
-                            var lawData = [[${lawDistribution}]]
+                            let myChartDom = document.getElementById('chart')
+                            //自适应宽高
+                            function myChartPC() {
+                                myChartDom.style.width = $(window).width()/2+'px';
+                                myChartDom.style.height = $(window).height()/3*2+'px';
+                            };
+                            function myChartMobile() {
+                                myChartDom.style.width = $(window).width()+'px';
+                                myChartDom.style.height = $(window).height()/9*5+'px';
+                            }
+                            function  myChartContainer() {
+                                if (isMobileBrowser()){
+                                    myChartMobile()
+                                }
+                                else {
+                                    myChartPC()
+                                }
+                            }
+                            myChartContainer()
+                            let myChart = echarts.init(myChartDom);
+                            let lawData = [[${lawDistribution}]]
                             console.log([[${content}]])
-                            var nameList = []
-                            var detailList = []
-                            var pieList = []
-                            var typeList = []
-                            var former = ""
-                            var total = 0
+                            let nameList = []
+                            let detailList = []
+                            let pieList = []
+                            let typeList = []
+                            let former = ""
+                            let total = 0
                             for (x in lawData) {
-                                var law = lawData[x]
+                                let law = lawData[x]
                                 nameList.push(law["name"].substr(7, law["name"].length))
                                 detailList.push(law["detail"])
                                 pieList.push({value: law["num"], name: law["detail"]})
@@ -135,12 +175,15 @@
                                     x: 'left',
                                     data: nameList
                                 },
+                                textStyle: {
+                                    fontSize: 10
+                                },
                                 series: [
                                     {
                                         name: '法律',
                                         type: 'pie',
                                         selectedMode: 'single',
-                                        radius: [0, '30%'],
+                                        radius: [0, '28%'],
 
                                         label: {
                                             normal: {
@@ -157,15 +200,36 @@
                                     {
                                         name: '法条',
                                         type: 'pie',
-                                        radius: ['40%', '55%'],
+                                        radius: ['40%', '50%'],
 
+                                        label: {
+                                            normal: {
+                                                textStyle: {
+                                                    fontSize: 8
+                                                }
+                                            }
+                                        },
+
+                                        labelLine: {
+                                            normal: {
+                                                show: true,
+                                                length:6
+                                            },
+                                        },
                                         data: pieList
+
                                     }
                                 ]
                             };
 
                             // 使用刚指定的配置项和数据显示图表。
                             myChart.setOption(option)
+                            //浏览器大小改变时重置大小
+                            window.onresize = function () {
+                                myChartContainer();
+                                myChart.resize();
+                            };
+                            //                            window.onresize = myChart
                         </script>
                     </div>
                 </div>
@@ -177,12 +241,12 @@
     </div>
     <!-- Main Content end-->
     <!-- Footer -->
-    <footer th:replace="components/components :: footer"></footer>
+    <footer th:replace="/components/components :: footer"></footer>
     <!-- Scroll To Top -->
     <a href="#" class="scrollup"><i class="icon-angle-up"></i></a>
 </div>
 <!-- Wrap End -->
-<section th:replace="components/components :: style-switcher"></section>
+<section th:replace="/components/components :: style-switcher"></section>
 <!-- The Scripts -->
 <script th:src="@{/js/circularnav.js}" type="text/javascript"></script>
 <script th:src="@{/js/custom.js}" type="text/javascript"></script>
@@ -195,6 +259,14 @@
     $(".tabs li:contains('文书基本信息')").attr("class", "current")
     $(".contents div[id='content文书基本信息']").attr("style", "display: block")
 </script>
+<!--<script type="text/javascript">-->
+<!--$("div#chart").width($(window).width / 2)-->
+<!--$("div#chart").height($(window).height / 2)-->
+<!--console.log("width:" + $(window).width / 2)-->
+<!--</script>-->
 </body>
-
+<body th:if="not ${sucess}">
+<p>上传失败：</p>
+<p th:text="${result}"></p>
+</body>
 </html>
