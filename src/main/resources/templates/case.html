@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/components/components :: head">
+<head th:replace="components/components :: head">
 </head>
 <head>
-    <title>CaseRecommendation Case Page</title>
+    <title>文书信息</title>
     <script th:src="@{/js/echarts.min.js}" type="text/javascript"></script>
     <!--<link th:href="@{css/colors/blue.css}" rel="stylesheet" id="colors"/>-->
 </head>
-<body th:if="${sucess}" class="shortcodes">
+<body class="shortcodes">
 <script>
     function isMobileBrowser() {
         let sUserAgent = navigator.userAgent.toLowerCase();
@@ -31,7 +31,7 @@
 </script>
 <div class="wrap">
     <!-- Header -->
-    <header th:replace="/components/components :: header"/>
+    <header th:replace="components/components :: header"/>
     <!-- Content Start -->
     <div id="main">
         <!--&lt;!&ndash; Title, Breadcrumb Start&ndash;&gt;-->
@@ -241,12 +241,12 @@
     </div>
     <!-- Main Content end-->
     <!-- Footer -->
-    <footer th:replace="/components/components :: footer"></footer>
+    <footer th:replace="components/components :: footer"></footer>
     <!-- Scroll To Top -->
     <a href="#" class="scrollup"><i class="icon-angle-up"></i></a>
 </div>
 <!-- Wrap End -->
-<section th:replace="/components/components :: style-switcher"></section>
+<section th:replace="components/components :: style-switcher"></section>
 <!-- The Scripts -->
 <script th:src="@{/js/circularnav.js}" type="text/javascript"></script>
 <script th:src="@{/js/custom.js}" type="text/javascript"></script>
@@ -265,8 +265,5 @@
 <!--console.log("width:" + $(window).width / 2)-->
 <!--</script>-->
 </body>
-<body th:if="not ${sucess}">
-<p>上传失败：</p>
-<p th:text="${result}"></p>
-</body>
+
 </html>
