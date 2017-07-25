@@ -1,5 +1,6 @@
 package freecoding.web.ctrl.routes;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,7 @@ public class UserTest {
     private int port;
 
     @Test
+    @Ignore
     public void testUser(){
         String url = "http://localhost:"+port+"/user";
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
