@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean login(String email, String password) {
-        User u=userRepository.findByEmail(email);
+    public boolean login(String userName, String password) {
+        User u=userRepository.findByUserName(userName);
         if(u==null){
             return false;
         }
@@ -43,7 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean signUp(User user) {
-        User u=userRepository.findByEmail(user.getEmail());
+        if(user.getUserName()==null||user.getPassword()==null){
+            return false;
+        }
+        User u=userRepository.findByUserName(user.getUserName());
         if(u!=null){
             return false;
         }
@@ -52,8 +55,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User show(String email) throws ServiceProcessException {
-        User u=userRepository.findByEmail(email);
+    public User show(String userName) throws ServiceProcessException {
+        User u=userRepository.findByUserName(userName);
         if(u==null){
             throw  new ServiceProcessException("未按顺序调用或错误传参");
         }
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean modify(User user) throws ServiceProcessException {
-        if (userRepository.findByEmail(user.getEmail())==null){
+        if (userRepository.findByUserName(user.getUserName())==null){
             throw  new ServiceProcessException("未按顺序调用或错误传参");
         }
         userRepository.save(user);
@@ -70,25 +73,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Case> getCaseListByUser(String email) {
-        List<Case> result=new ArrayList<>();
+    public List<Case> getCaseListByUser(String userName) throws ServiceProcessException {
+        if(userRepository.findByUserName(userName)==null){
+            throw  new ServiceProcessException("未按顺序调用或错误传参");
+        }
 
-        List<Document> l=caseRecommendDao.findByUser(email);
+        List<Case> result=new ArrayList<>();
+        List<Document> l=caseRecommendDao.findByUser(userName);
         for (int i = 0; i < l.size(); i++) {
             Case c=new Case();
             Document document=l.get(i);
             c.setId(document.get("_id").toString());
             c.setName(document.get("name").toString());
             result.add(c);
-
         }
         return result;
     }
 
 
     @Override
-    public boolean insert(File file, String email) throws DocumentException {
-        MongodbUtil.insert(file,email);
+    public boolean insert(File file, String userName) throws DocumentException, ServiceProcessException {
+        //不再对file做详细检查
+        if(userRepository.findByUserName(userName)==null||file==null){
+            throw  new ServiceProcessException("未按顺序调用或错误传参");
+        }
+        MongodbUtil.insert(file,userName);
         return true;
     }
 
