@@ -6,9 +6,10 @@ import java.util.List;
 
 public class CasesFromPython {
     public static List<Integer> getIndex(File file){
-        String cp = "python/caseRecommend.py";
+        String cp = "src/main/python2.0/query.py";
         String data = "";
         try {
+            System.out.println("start");
             Process process = Runtime.getRuntime().exec("python3 " + cp+" "+file);
             InputStream is = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -20,19 +21,15 @@ public class CasesFromPython {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        char ch[] = data.toCharArray();
-        boolean endFlag = false;
-        List<Integer> result = new ArrayList<>();
 
-        for(int i = 1; i<ch.length; i++){
-            if(ch[i] == ']'){
-                endFlag = true;
-                break;
-            }
-            if('0'<=ch[i] && ch[i] <='9') {
-                result.add(ch[i] - 48);
-            }
+        List<Integer> result = new ArrayList<>();
+        data = data.substring(1, data.length()-1);
+        String dataset[] = data.split(", ");
+        for(String item:dataset){
+            int num = Integer.parseInt(item);
+            result.add(num);
         }
+
         return result;
     }
 

@@ -1,10 +1,15 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 from gensim import corpora, models, similarities
 from six import iteritems
 import os
 import xml.etree.ElementTree as ET
+from constant import FILE_PATH
+from constant import PYTHON_PATH
 
 
-file_path = '/Users/loick/Desktop/3组/训练集'
+file_path = FILE_PATH
 
 
 # 遍历所有的节点
@@ -40,7 +45,7 @@ once_ids = [tokenid for tokenid, docfreq in iteritems(dictionary.dfs) if docfreq
 dictionary.filter_tokens(once_ids)  # remove stop words and words that appear only once
 dictionary.compactify()  # remove gaps in id sequence after words that were removed
 
-dictionary.save('data/deerwester.dict')  # store the dictionary, for future reference
+dictionary.save(PYTHON_PATH+ 'data/deerwester.dict')  # store the dictionary, for future reference
 
 
 class MyCorpus(object):
@@ -52,7 +57,7 @@ class MyCorpus(object):
 
 corpus_memory_friendly = MyCorpus()  # doesn't load the corpus into memory!
 
-corpora.MmCorpus.serialize('data/deerwester.mm', corpus_memory_friendly)
+corpora.MmCorpus.serialize(PYTHON_PATH+ 'data/deerwester.mm', corpus_memory_friendly)
 
 
 tfidf = models.TfidfModel(corpus_memory_friendly) # step 1 -- initialize a model
@@ -62,6 +67,8 @@ corpus_tfidf = tfidf[corpus_memory_friendly]
 lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=num_topics)# initialize an LSI transformation
 
 
-lsi.save('data/model.lsi') # same for tfidf, lda, ...
+lsi.save(PYTHON_PATH+ 'data/model.lsi') # same for tfidf, lda, ...
+
+print('success')
 
 

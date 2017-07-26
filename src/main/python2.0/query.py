@@ -1,7 +1,10 @@
-from gensim import corpora, models, similarities
-from pprint import pprint
-import xml.etree.ElementTree as ET
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
+from gensim import corpora, models, similarities
+import xml.etree.ElementTree as ET
+import sys
+from constant import RECOMMEND_NUM,PYTHON_PATH
 
 # 遍历所有的节点
 def walkData(root_node,  result_list):
@@ -26,18 +29,18 @@ def getXmlData(file_name):
     return result_list
 
 
-dictionary = corpora.Dictionary.load('data/deerwester.dict')
-lsi = models.LsiModel.load('data/model.lsi')
-index = similarities.MatrixSimilarity.load('data/deerwester.index')
+def getCases(file):
+    dictionary = corpora.Dictionary.load(PYTHON_PATH+ 'data/deerwester.dict')
+    lsi = models.LsiModel.load(PYTHON_PATH+ 'data/model.lsi')
+    index = similarities.MatrixSimilarity.load(PYTHON_PATH+ 'data/deerwester.index')
 
-file = '/Users/loick/Desktop/test.xml'
-vec_bow = dictionary.doc2bow(getXmlData(file))
+    vec_bow = dictionary.doc2bow(getXmlData(file))
 
-vec_lsi = lsi[vec_bow] # convert the query to LSI space
-sims = index[vec_lsi]
+    vec_lsi = lsi[vec_bow] # convert the query to LSI space
+    sims = index[vec_lsi]
 
-sims = abs(sims)
-sims = sorted(enumerate(sims), key=lambda item: -item[1])
-pprint(sims)
+    sims = abs(sims)
+    sims = sorted(enumerate(sims), key=lambda item: -item[1])
+    return [index[0] for index in sims[:RECOMMEND_NUM]]
 
-print('done')
+print(getCases(sys.argv[1]))

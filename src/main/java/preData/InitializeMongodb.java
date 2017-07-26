@@ -11,8 +11,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ import java.util.List;
  */
 public class InitializeMongodb {
 
-    static String path = "/Users/loick/Desktop/3组/训练集";
+    static String path = "/Users/loick/Desktop/group3/train";
 
     public static void main(String[] args) throws DocumentException {
         File direc = new File(path);
@@ -35,9 +34,6 @@ public class InitializeMongodb {
             }
         }
 
-//        SAXReader sr = new SAXReader();
-//        Document document = (Document) sr.read(files.get(0));
-//        System.out.println(((document.getRootElement().element("QW")).element("WS")));
         if(files.size() != 0){
 
             MongoDatabase mongoDatabase = MongodbUtil.getDataBase();
@@ -83,16 +79,27 @@ public class InitializeMongodb {
 //        interpreter.execfile("python/kmeansprocess.py");
 //        PyFunction runKmeans = (PyFunction) interpreter.get("runKmeans", PyFunction.class);
 //        PyObject object = runKmeans.__call__(new PyList(files));
-        String cp = "src/main/python/kmeansprocess.py";
+        String cp = "src/main/python2.0/processData.py";
+        String cp2 = "src/main/python2.0/index.py";
         try {
-            //Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
-            Process process = Runtime.getRuntime().exec("python3 " + cp+" "+path);
+            Process process = Runtime.getRuntime().exec("python3 " + cp);
+            InputStream is = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while((line = reader.readLine()) != null){
+                System.out.println(line);
+            }
+
+            String line2 = "";
+            Process process2 = Runtime.getRuntime().exec("python3 "+cp2);
+            InputStream is2 = process2.getInputStream();
+            BufferedReader reader2 = new BufferedReader(new InputStreamReader(is2));
+            while((line2 = reader2.readLine()) != null){
+                System.out.println(line2);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        //System.out.println(Command.exeCmd("python src/main/python/test.py"));
     }
 
 
