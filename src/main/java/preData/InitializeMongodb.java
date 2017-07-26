@@ -81,8 +81,14 @@ public class InitializeMongodb {
 //        PyObject object = runKmeans.__call__(new PyList(files));
         String cp = "src/main/python2.0/processData.py";
         String cp2 = "src/main/python2.0/index.py";
+        String pythonV = "";
         try {
-            Process process = Runtime.getRuntime().exec("python3 " + cp);
+            if (System.getProperty("os.name").startsWith("Mac")){
+                pythonV = "python3";
+            }else{
+                pythonV = "python";
+            }
+            Process process = Runtime.getRuntime().exec(pythonV+" " + cp);
             InputStream is = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
@@ -91,7 +97,7 @@ public class InitializeMongodb {
             }
 
             String line2 = "";
-            Process process2 = Runtime.getRuntime().exec("python3 "+cp2);
+            Process process2 = Runtime.getRuntime().exec(pythonV+" "+cp2);
             InputStream is2 = process2.getInputStream();
             BufferedReader reader2 = new BufferedReader(new InputStreamReader(is2));
             while((line2 = reader2.readLine()) != null){
