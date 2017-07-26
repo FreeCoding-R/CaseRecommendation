@@ -106,7 +106,9 @@
                             <a href="#">记录</a>
                         </li>
                         <li>
-                            <a href="/login">登陆</a>
+                            <!--如果用户没有登陆就显示登陆，否则显示注销，session 是javax.servlet.http.HttpSession ，
+                            thymeleaf 提供的直接获取 session 的方式-->
+                            <a th:href="${session.user eq null}? '/login':'/logout'" th:text="${session.user eq null}? '登录':'注销'"></a>
                         </li>
                     </ul>
                 </div>
