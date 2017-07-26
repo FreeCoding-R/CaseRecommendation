@@ -11,10 +11,10 @@ public class CasesFromPython {
         String pythonV = "";
 
         try {
-            if (System.getProperty("os.name").startsWith("Mac")){
-                pythonV = "python3";
-            }else{
+            if (System.getProperty("os.name").startsWith("Windows")){
                 pythonV = "python";
+            }else{
+                pythonV = "python3";
             }
             System.out.println("start");
             Process process = Runtime.getRuntime().exec(pythonV+" " + cp+" "+file);
