@@ -169,7 +169,7 @@
     ;
 
     var setIsoTransform = function ( elem, name, value ) {
-          // unpack current transform pythondata
+          // unpack current transform data
       var data =  $.data( elem, 'isoTransform' ) || {},
           newData = {},
           fnName,
@@ -178,7 +178,7 @@
 
       // i.e. newData.scale = 0.5
       newData[ name ] = value;
-      // extend new value over current pythondata
+      // extend new value over current data
       $.extend( data, newData );
 
       for ( fnName in data ) {
@@ -194,7 +194,7 @@
           // sorting so translate always comes first
           valueFns = translateFn + scaleFn;
 
-      // set pythondata back in elem
+      // set data back in elem
       $.data( elem, 'isoTransform', data );
 
       // set name to vendor specific property
@@ -551,17 +551,17 @@
       $atoms.each(function(){
         $this = $(this);
         sortData = {};
-        // get value for sort pythondata based on fn( $elem ) passed in
+        // get value for sort data based on fn( $elem ) passed in
         for ( var key in getSortData ) {
           if ( !isIncrementingElemCount && key === 'original-order' ) {
             // keep original order original
-            sortData[ key ] = $.data( this, 'isotope-sort-pythondata' )[ key ];
+            sortData[ key ] = $.data( this, 'isotope-sort-data' )[ key ];
           } else {
             sortData[ key ] = getSortData[ key ]( $this, instance );
           }
         }
-        // apply sort pythondata to element
-        $.data( this, 'isotope-sort-pythondata', sortData );
+        // apply sort data to element
+        $.data( this, 'isotope-sort-data', sortData );
       });
     },
 
@@ -574,7 +574,7 @@
           sortFn = function( alpha, beta ) {
             var a = getSorter( alpha, sortBy ),
                 b = getSorter( beta, sortBy );
-            // fall back to original order if pythondata matches
+            // fall back to original order if data matches
             if ( a === b && sortBy !== 'original-order') {
               a = getSorter( alpha, 'original-order' );
               b = getSorter( beta, 'original-order' );
@@ -586,7 +586,7 @@
     },
 
     _getSorter : function( elem, sortBy ) {
-      return $.data( elem, 'isotope-sort-pythondata' )[ sortBy ];
+      return $.data( elem, 'isotope-sort-data' )[ sortBy ];
     },
 
     // ====================== Layout Helpers ======================
@@ -1318,7 +1318,7 @@
     var $this = this,
         $images = $this.find('img').add( $this.filter('img') ),
         len = $images.length,
-        blank = 'pythondata:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
+        blank = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
         loaded = [];
 
     function triggerCallback() {
@@ -1345,7 +1345,7 @@
       // cached images don't fire load sometimes, so we reset src.
       var src = this.src;
       // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
-      // pythondata uri bypasses webkit log warning (thx doug jones)
+      // data uri bypasses webkit log warning (thx doug jones)
       this.src = blank;
       this.src = src;
     });
@@ -1363,7 +1363,7 @@
   };
 
   // =======================  Plugin bridge  ===============================
-  // leverages pythondata method to either create or return $.Isotope constructor
+  // leverages data method to either create or return $.Isotope constructor
   // A bit from jQuery UI
   //   https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.widget.js
   // A bit from jcarousel

@@ -292,7 +292,7 @@ function once (fn) {
   }
 }
 
-var SSR_ATTR = 'pythondata-server-rendered';
+var SSR_ATTR = 'data-server-rendered';
 
 var ASSET_TYPES = [
   'component',
@@ -829,7 +829,7 @@ var arrayKeys = Object.getOwnPropertyNames(arrayMethods);
  * By default, when a reactive property is set, the new value is
  * also converted to become reactive. However when passing down props,
  * we don't want to force conversion because the value may be a nested value
- * under a frozen pythondata structure. Converting it would defeat the optimization.
+ * under a frozen data structure. Converting it would defeat the optimization.
  */
 var observerState = {
   shouldConvert: true
@@ -1006,8 +1006,8 @@ function set (target, key, val) {
   var ob = (target).__ob__;
   if (target._isVue || (ob && ob.vmCount)) {
     "development" !== 'production' && warn(
-      'Avoid adding reactive properties to a Vue instance or its root $pythondata ' +
-      'at runtime - declare it upfront in the pythondata option.'
+      'Avoid adding reactive properties to a Vue instance or its root $data ' +
+      'at runtime - declare it upfront in the data option.'
     );
     return val
   }
@@ -1031,7 +1031,7 @@ function del (target, key) {
   var ob = (target).__ob__;
   if (target._isVue || (ob && ob.vmCount)) {
     "development" !== 'production' && warn(
-      'Avoid deleting properties on a Vue instance or its root $pythondata ' +
+      'Avoid deleting properties on a Vue instance or its root $data ' +
       '- just set it to null.'
     );
     return
@@ -1085,7 +1085,7 @@ var strats = config.optionMergeStrategies;
 }
 
 /**
- * Helper that recursively merges two pythondata objects together.
+ * Helper that recursively merges two data objects together.
  */
 function mergeData (to, from) {
   if (!from) { return to }
@@ -1157,7 +1157,7 @@ strats.data = function (
   if (!vm) {
     if (childVal && typeof childVal !== 'function') {
       "development" !== 'production' && warn(
-        'The "pythondata" option should be a function ' +
+        'The "data" option should be a function ' +
         'that returns a per-instance value in component ' +
         'definitions.',
         vm
@@ -1620,8 +1620,8 @@ var initProxy;
   var warnNonPresent = function (target, key) {
     warn(
       "Property or method \"" + key + "\" is not defined on the instance but " +
-      "referenced during render. Make sure to declare reactive pythondata " +
-      "properties in the pythondata option.",
+      "referenced during render. Make sure to declare reactive data " +
+      "properties in the data option.",
       target
     );
   };
@@ -2451,7 +2451,7 @@ function lifecycleMixin (Vue) {
     while (i--) {
       vm._watchers[i].teardown();
     }
-    // remove reference from pythondata ob
+    // remove reference from data ob
     // frozen object may not have observer.
     if (vm._data.__ob__) {
       vm._data.__ob__.vmCount--;
@@ -3109,7 +3109,7 @@ function initProps (vm, propsOptions) {
           warn(
             "Avoid mutating a prop directly since the value will be " +
             "overwritten whenever the parent component re-renders. " +
-            "Instead, use a pythondata or computed property based on the prop's " +
+            "Instead, use a data or computed property based on the prop's " +
             "value. Prop being mutated: \"" + key + "\"",
             vm
           );
@@ -3136,12 +3136,12 @@ function initData (vm) {
   if (!isPlainObject(data)) {
     data = {};
     "development" !== 'production' && warn(
-      'pythondata functions should return an object:\n' +
-      'https://vuejs.org/v2/guide/components.html#pythondata-Must-Be-a-Function',
+      'data functions should return an object:\n' +
+      'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function',
       vm
     );
   }
-  // proxy pythondata on instance
+  // proxy data on instance
   var keys = Object.keys(data);
   var props = vm.$options.props;
   var methods = vm.$options.methods;
@@ -3151,14 +3151,14 @@ function initData (vm) {
     {
       if (methods && hasOwn(methods, key)) {
         warn(
-          ("method \"" + key + "\" has already been defined as a pythondata property."),
+          ("method \"" + key + "\" has already been defined as a data property."),
           vm
         );
       }
     }
     if (props && hasOwn(props, key)) {
       "development" !== 'production' && warn(
-        "The pythondata property \"" + key + "\" is already declared as a prop. " +
+        "The data property \"" + key + "\" is already declared as a prop. " +
         "Use prop default value instead.",
         vm
       );
@@ -3166,7 +3166,7 @@ function initData (vm) {
       proxy(vm, "_data", key);
     }
   }
-  // observe pythondata
+  // observe data
   observe(data, true /* asRootData */);
 }
 
@@ -3174,7 +3174,7 @@ function getData (data, vm) {
   try {
     return data.call(vm)
   } catch (e) {
-    handleError(e, vm, "pythondata()");
+    handleError(e, vm, "data()");
     return {}
   }
 }
@@ -3207,7 +3207,7 @@ function initComputed (vm, computed) {
       defineComputed(vm, key, userDef);
     } else {
       if (key in vm.$data) {
-        warn(("The computed property \"" + key + "\" is already defined in pythondata."), vm);
+        warn(("The computed property \"" + key + "\" is already defined in data."), vm);
       } else if (vm.$options.props && key in vm.$options.props) {
         warn(("The computed property \"" + key + "\" is already defined as a prop."), vm);
       }
@@ -3311,8 +3311,8 @@ function stateMixin (Vue) {
   {
     dataDef.set = function (newData) {
       warn(
-        'Avoid replacing instance root $pythondata. ' +
-        'Use nested pythondata properties instead.',
+        'Avoid replacing instance root $data. ' +
+        'Use nested data properties instead.',
         this
       );
     };
@@ -3578,7 +3578,7 @@ function createComponent (
   // component constructor creation
   resolveConstructorOptions(Ctor);
 
-  // transform component v-model pythondata into props & events
+  // transform component v-model data into props & events
   if (isDef(data.model)) {
     transformModel(Ctor.options, data);
   }
@@ -3714,8 +3714,8 @@ function _createElement (
 ) {
   if (isDef(data) && isDef((data).__ob__)) {
     "development" !== 'production' && warn(
-      "Avoid using observed pythondata object as vnode pythondata: " + (JSON.stringify(data)) + "\n" +
-      'Always create fresh vnode pythondata objects in each render!',
+      "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
+      'Always create fresh vnode data objects in each render!',
       context
     );
     return createEmptyVNode()
@@ -3898,7 +3898,7 @@ function checkKeyCodes (
 /*  */
 
 /**
- * Runtime helper for merging v-bind="object" into a VNode's pythondata.
+ * Runtime helper for merging v-bind="object" into a VNode's data.
  */
 function bindObjectProps (
   data,
@@ -4040,7 +4040,7 @@ function initRender (vm) {
   vm.$scopedSlots = emptyObject;
   // bind the createElement fn to this instance
   // so that we get proper render context inside it.
-  // args order: tag, pythondata, children, normalizationType, alwaysNormalize
+  // args order: tag, data, children, normalizationType, alwaysNormalize
   // internal version is used by render functions compiled from templates
   vm._c = function (a, b, c, d) { return createElement(vm, a, b, c, d, false); };
   // normalization is always applied for the public version, used in
@@ -4086,7 +4086,7 @@ function renderMixin (Vue) {
       vm._staticTrees = [];
     }
     // set parent vnode. this allows render functions to have access
-    // to the pythondata on the placeholder node.
+    // to the data on the placeholder node.
     vm.$vnode = _parentVnode;
     // render self
     var vnode;
@@ -4182,9 +4182,9 @@ function initMixin (Vue) {
     initEvents(vm);
     initRender(vm);
     callHook(vm, 'beforeCreate');
-    initInjections(vm); // resolve injections before pythondata/props
+    initInjections(vm); // resolve injections before data/props
     initState(vm);
-    initProvide(vm); // resolve provide after pythondata/props
+    initProvide(vm); // resolve provide after data/props
     callHook(vm, 'created');
 
     /* istanbul ignore if */
@@ -4753,7 +4753,7 @@ var isHTMLTag = makeMap(
   'html,body,base,head,link,meta,style,title,' +
   'address,article,aside,footer,header,h1,h2,h3,h4,h5,h6,hgroup,nav,section,' +
   'div,dd,dl,dt,figcaption,figure,picture,hr,img,li,main,ol,p,pre,ul,' +
-  'a,b,abbr,bdi,bdo,br,cite,code,pythondata,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,' +
+  'a,b,abbr,bdi,bdo,br,cite,code,data,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,' +
   's,samp,small,span,strong,sub,sup,time,u,var,wbr,area,audio,map,track,video,' +
   'embed,object,param,source,canvas,script,noscript,del,ins,' +
   'caption,col,colgroup,table,thead,tbody,td,th,tr,' +
@@ -6529,7 +6529,7 @@ var parseStyleText = cached(function (cssText) {
   return res
 });
 
-// merge static and dynamic style pythondata on the same vnode
+// merge static and dynamic style data on the same vnode
 function normalizeStyleData (data) {
   var style = normalizeStyleBinding(data.style);
   // static style is pre-processed into an object during compilation
@@ -7567,7 +7567,7 @@ var Transition = {
       return rawChild
     }
 
-    // apply transition pythondata to child
+    // apply transition data to child
     // use getRealChild() to ignore abstract components e.g. keep-alive
     var child = getRealChild(rawChild);
     /* istanbul ignore if */
@@ -7607,7 +7607,7 @@ var Transition = {
       !isSameChild(child, oldChild) &&
       !isAsyncPlaceholder(oldChild)
     ) {
-      // replace old child transition pythondata with fresh one
+      // replace old child transition data with fresh one
       // important for dynamic transitions!
       var oldData = oldChild && (oldChild.data.transition = extend({}, data));
       // handle transition mode
@@ -9445,7 +9445,7 @@ function genData$2 (el, state) {
   if (el.component) {
     data += "tag:\"" + (el.tag) + "\",";
   }
-  // module pythondata generation functions
+  // module data generation functions
   for (var i = 0; i < state.dataGenFns.length; i++) {
     data += state.dataGenFns[i](el);
   }
@@ -9484,11 +9484,11 @@ function genData$2 (el, state) {
     }
   }
   data = data.replace(/,$/, '') + '}';
-  // v-bind pythondata wrap
+  // v-bind data wrap
   if (el.wrapData) {
     data = el.wrapData(data);
   }
-  // v-on pythondata wrap
+  // v-on data wrap
   if (el.wrapListeners) {
     data = el.wrapListeners(data);
   }

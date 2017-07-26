@@ -124,7 +124,7 @@ $('ul#flickrfeed').jflickrfeed({
             jQuery(this).addClass('panel');
             thisBoxes.wrap('<div id=\"collapseBox' + thisParentIndex + '_' + thisIndex + '\" class=\"panel-collapse collapse\" />');
             thisTriggers.wrap('<div class=\"panel-heading\" />');
-            thisTriggers.attr('pythondata-toggle', 'collapse').attr('pythondata-parent', '#' + thisMain).attr('pythondata-target', '#collapseBox' + thisParentIndex + '_' + thisIndex);
+            thisTriggers.attr('data-toggle', 'collapse').attr('data-parent', '#' + thisMain).attr('data-target', '#collapseBox' + thisParentIndex + '_' + thisIndex);
         });
         jQuery('.accordion-toggle').prepend('<span class=\"icon\" />');
 		jQuery("div.accordion-item:first-child .accordion-toggle").addClass("current");
@@ -347,7 +347,7 @@ $(document).ready(function(){
 			iframe_markup: '<iframe src ="{path}" width="{width}" height="{height}" frameborder="no"></iframe>',
 			inline_markup: '<div class="pp_inline">{content}</div>',
 			custom_markup: '',
-			social_tools: '<div class="pp_social"><div class="twitter"><a href="http://twitter.com/share" class="twitter-share-button" pythondata-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div><div class="facebook"><iframe src="http://www.facebook.com/plugins/like.php?locale=en_US&href='+location.href+'&amp;layout=button_count&amp;show_faces=true&amp;width=500&amp;action=like&amp;font&amp;colorscheme=light&amp;height=23" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:500px; height:23px;" allowTransparency="true"></iframe></div></div>' /* html or false to disable */
+			social_tools: '<div class="pp_social"><div class="twitter"><a href="http://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div><div class="facebook"><iframe src="http://www.facebook.com/plugins/like.php?locale=en_US&href='+location.href+'&amp;layout=button_count&amp;show_faces=true&amp;width=500&amp;action=like&amp;font&amp;colorscheme=light&amp;height=23" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:500px; height:23px;" allowTransparency="true"></iframe></div></div>' /* html or false to disable */
 		});
 	});
 
@@ -458,7 +458,7 @@ jQuery(document).ready(function () {
 	jQuery('.client').parallax("50%", 0.1);
 	jQuery('.service-reasons').parallax("50%", 0.1);
 
-	jQuery("a[pythondata-rel^='prettyPhoto']").prettyPhoto({overlay_gallery: false});
+	jQuery("a[data-rel^='prettyPhoto']").prettyPhoto({overlay_gallery: false});
 	
 	
 
@@ -468,7 +468,7 @@ jQuery(document).ready(function () {
 
 
 
-    jQuery("[pythondata-toggle='tooltip']").tooltip();
+    jQuery("[data-toggle='tooltip']").tooltip();
 
 });
 

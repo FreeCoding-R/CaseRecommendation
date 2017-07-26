@@ -215,7 +215,7 @@ function scrollToTarget(D)
 // Initial tooltips
 $(function()
 {
-  $('[pythondata-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip()
 })
 
 
@@ -236,7 +236,7 @@ function animateWhenVisible()
 // Set Up Dropdown Menu Support
 function setUpDropdownSubs()
 {
-	$('ul.dropdown-menu [pythondata-toggle=dropdown]').on('click', function(event)
+	$('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event)
 	{
 		event.preventDefault(); 
 		event.stopPropagation(); 
@@ -344,10 +344,10 @@ function scrollToTopView()
 // Toggle Visibility
 function setUpVisibilityToggle()
 {
-	$(document).on('click', '[pythondata-toggle-visibility]', function(e)
+	$(document).on('click', '[data-toggle-visibility]', function(e)
 	{
 		e.preventDefault();
-		var targetID = $(this).attr('pythondata-toggle-visibility');
+		var targetID = $(this).attr('data-toggle-visibility');
 		if(targetID.indexOf(',')!=-1) // Is Array
 		{
 			var targeArray = targetID.split(',');
@@ -381,21 +381,21 @@ function setUpLightBox()
 {
 	window.targetLightbox;
 	
-	$(document).on('click', '[pythondata-lightbox]', function(e) // Create Lightbox Modal
+	$(document).on('click', '[data-lightbox]', function(e) // Create Lightbox Modal
 	{
 		e.preventDefault();
 		targetLightbox = $(this);
-		var lightBoxPath = targetLightbox.attr('pythondata-lightbox');
-		var lightBoxAutoPlay = targetLightbox.attr('pythondata-autoplay');
-		var captionData ='<p class="lightbox-caption">'+targetLightbox.attr('pythondata-caption')+'</p>';
+		var lightBoxPath = targetLightbox.attr('data-lightbox');
+		var lightBoxAutoPlay = targetLightbox.attr('data-autoplay');
+		var captionData ='<p class="lightbox-caption">'+targetLightbox.attr('data-caption')+'</p>';
 		var galleryID = 'no-gallery-set';
 		
-		if(targetLightbox.attr('pythondata-gallery-id')) // Has a gallery ID so use it
+		if(targetLightbox.attr('data-gallery-id')) // Has a gallery ID so use it
 		{
-			galleryID = targetLightbox.attr('pythondata-gallery-id');
+			galleryID = targetLightbox.attr('data-gallery-id');
 		}
 		
-		if(!targetLightbox.attr('pythondata-caption')) // No caption caption pythondata
+		if(!targetLightbox.attr('data-caption')) // No caption caption data
 		{
 			captionData = '';
 		}
@@ -407,7 +407,7 @@ function setUpLightBox()
 			autoplay = "autoplay";
 		}
 		
-		var customModal = $('<div id="lightbox-modal" class="modal fade"><div class="modal-dialog"><div class="modal-content '+targetLightbox.attr('pythondata-frame')+' blocs-lb-container"><button type="button" class="close close-lightbox" pythondata-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><div class="modal-body"><a href="#" class="prev-lightbox" aria-label="prev"><span class="fa fa-chevron-left"></span></a><a href="#" class="next-lightbox" aria-label="next"><span class="fa fa-chevron-right"></span></a><img id="lightbox-image" class="img-responsive" src="'+lightBoxPath+'"><div id="lightbox-video-container" class="embed-responsive embed-responsive-16by9"><video controls '+autoplay+' class="embed-responsive-item"><source id="lightbox-video" src="'+lightBoxPath+'" type="video/mp4"></video></div>'+captionData+'</div></div></div></div>');
+		var customModal = $('<div id="lightbox-modal" class="modal fade"><div class="modal-dialog"><div class="modal-content '+targetLightbox.attr('data-frame')+' blocs-lb-container"><button type="button" class="close close-lightbox" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><div class="modal-body"><a href="#" class="prev-lightbox" aria-label="prev"><span class="fa fa-chevron-left"></span></a><a href="#" class="next-lightbox" aria-label="next"><span class="fa fa-chevron-right"></span></a><img id="lightbox-image" class="img-responsive" src="'+lightBoxPath+'"><div id="lightbox-video-container" class="embed-responsive embed-responsive-16by9"><video controls '+autoplay+' class="embed-responsive-item"><source id="lightbox-video" src="'+lightBoxPath+'" type="video/mp4"></video></div>'+captionData+'</div></div></div></div>');
 		$('body').append(customModal);
 		
 		if(lightBoxPath.substring(lightBoxPath.length-4) == ".mp4") // Video Object
@@ -426,11 +426,11 @@ function setUpLightBox()
 		if(galleryID == 'no-gallery-set') // No Gallery ID
 		{
 			// Handle navigation buttons (next - prev)
-			if($('a[pythondata-lightbox]').index(targetLightbox) == 0)
+			if($('a[data-lightbox]').index(targetLightbox) == 0)
 			{
 				$('.prev-lightbox').hide();
 			}
-			if($('a[pythondata-lightbox]').index(targetLightbox) == $('a[pythondata-lightbox]').length-1)
+			if($('a[data-lightbox]').index(targetLightbox) == $('a[data-lightbox]').length-1)
 			{
 				$('.next-lightbox').hide();
 			}
@@ -438,11 +438,11 @@ function setUpLightBox()
 		else // Has Gallery ID
 		{
 			// Handle navigation buttons (next - prev)
-			if($('a[pythondata-gallery-id="'+galleryID+'"]').index(targetLightbox) == 0)
+			if($('a[data-gallery-id="'+galleryID+'"]').index(targetLightbox) == 0)
 			{
 				$('.prev-lightbox').hide();
 			}
-			if($('a[pythondata-gallery-id="'+galleryID+'"]').index(targetLightbox) == $('a[pythondata-gallery-id="'+galleryID+'"]').length-1)
+			if($('a[data-gallery-id="'+galleryID+'"]').index(targetLightbox) == $('a[data-gallery-id="'+galleryID+'"]').length-1)
 			{
 				$('.next-lightbox').hide();
 			}
@@ -457,31 +457,31 @@ function setUpLightBox()
 	{
 		e.preventDefault();
 		var galleryID = 'no-gallery-set';
-		var idx = $('a[pythondata-lightbox]').index(targetLightbox);
-		var next = $('a[pythondata-lightbox]').eq(idx+1) // Next
+		var idx = $('a[data-lightbox]').index(targetLightbox);
+		var next = $('a[data-lightbox]').eq(idx+1) // Next
 		
-		if(targetLightbox.attr('pythondata-gallery-id')) // Has Gallery ID so Use
+		if(targetLightbox.attr('data-gallery-id')) // Has Gallery ID so Use
 		{
-			galleryID = targetLightbox.attr('pythondata-gallery-id'); // ID
-			idx = $('a[pythondata-gallery-id="'+galleryID+'"]').index(targetLightbox); // Index
-			next = $('a[pythondata-gallery-id="'+galleryID+'"]').eq(idx+1) // Next
+			galleryID = targetLightbox.attr('data-gallery-id'); // ID
+			idx = $('a[data-gallery-id="'+galleryID+'"]').index(targetLightbox); // Index
+			next = $('a[data-gallery-id="'+galleryID+'"]').eq(idx+1) // Next
 		}
 		
 		if($(this).hasClass('prev-lightbox'))
 		{
-			next = $('a[pythondata-gallery-id="'+galleryID+'"]').eq(idx-1) // Prev
+			next = $('a[data-gallery-id="'+galleryID+'"]').eq(idx-1) // Prev
 			
 			if(galleryID == 'no-gallery-set') // No Gallery ID
 			{
-				next = $('a[pythondata-lightbox]').eq(idx-1) // Prev
+				next = $('a[data-lightbox]').eq(idx-1) // Prev
 			}
 		}
 		
-		var nextContentPath = next.attr('pythondata-lightbox');
+		var nextContentPath = next.attr('data-lightbox');
 		
 		if(nextContentPath.substring(nextContentPath.length-4) == ".mp4") // Video Object
 		{
-			var lightBoxAutoPlay = next.attr('pythondata-autoplay');
+			var lightBoxAutoPlay = next.attr('data-autoplay');
 			var autoplay = ""; // No Auto Play default
 
 			if(lightBoxAutoPlay == 1) // Add Auto Play
@@ -495,7 +495,7 @@ function setUpLightBox()
 		else // Image Object
 		{
 			$('#lightbox-image').attr('src',nextContentPath).show();
-			$('.lightbox-caption').html(next.attr('pythondata-caption')).show();
+			$('.lightbox-caption').html(next.attr('data-caption')).show();
 			$('#lightbox-video-container').hide();
 		}
 		
@@ -506,22 +506,22 @@ function setUpLightBox()
 		
 		if(galleryID == 'no-gallery-set') // No Gallery ID
 		{
-			if($('a[pythondata-lightbox]').index(next) != $('a[pythondata-lightbox]').length-1)
+			if($('a[data-lightbox]').index(next) != $('a[data-lightbox]').length-1)
 			{
 				$('.next-lightbox').show();
 			}
-			if($('a[pythondata-lightbox]').index(next) > 0)
+			if($('a[data-lightbox]').index(next) > 0)
 			{
 				$('.prev-lightbox').show();
 			}
 		}
 		else // Has Gallery ID
 		{
-			if($('a[pythondata-gallery-id="'+galleryID+'"]').index(next) != $('a[pythondata-gallery-id="'+galleryID+'"]').length-1)
+			if($('a[data-gallery-id="'+galleryID+'"]').index(next) != $('a[data-gallery-id="'+galleryID+'"]').length-1)
 			{
 				$('.next-lightbox').show();
 			}
-			if($('a[pythondata-gallery-id="'+galleryID+'"]').index(next) > 0)
+			if($('a[data-gallery-id="'+galleryID+'"]').index(next) > 0)
 			{
 				$('.prev-lightbox').show();
 			}
