@@ -106,7 +106,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
             //关键词详细第二部分获取
             result += "\""+"文书基本信息"+"\":{";
-                    result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ","\\r\\n") + "\",";
+                    result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "@\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ","\\r\\n") + "\",";
             result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText().replace(" ","\\r\\n") + "\",";
             result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText().replace(" ","\\r\\n") ;
             result += "\"},";
@@ -123,7 +123,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 if (i.attribute("value") == null) {
                     continue;
                 }
-                result += "\"" + "公诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
+                result += "\"" + "公诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
 
             }
 
@@ -134,7 +134,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 if (i.attribute("value") == null) {
                     continue;
                 }
-                result += "\"" + "起诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
+                result += "\"" + "起诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
 
             }
 
@@ -145,7 +145,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 if (i.attribute("value") == null) {
                     continue;
                 }
-                result += "\"" + "应诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
+                result += "\"" + "应诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
 
             }
 
@@ -156,7 +156,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 if (i.attribute("value") == null) {
                     continue;
                 }
-                result += "\"" + "代理人" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "\",";
+                result += "\"" + "代理人" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
 
             }
             result=result.substring(0,result.length()-1)+"},";
@@ -270,7 +270,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         return cl;
     }
 
-
     @Override
     public List<Law> getLawDistribution() throws ServiceProcessException, DocumentException {
         //调用顺序异常
@@ -342,7 +341,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         this.lawDistribution.set(result);
     }
-
 
     //递归遍历xml
     private void getNode(Element node,String keyword){

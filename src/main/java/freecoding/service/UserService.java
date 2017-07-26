@@ -15,16 +15,16 @@ public interface UserService {
 
 
     /**
-     *  登录
-     * @param email
+     *  登录(需要)
+     * @param userName
      * @param password
      * @return
      */
-    public boolean login(String email,String password);
+    public boolean login(String userName,String password);
 
 
     /**
-     *  注册
+     *  注册(需要)
      * @param user
      * @return
      */
@@ -33,11 +33,11 @@ public interface UserService {
 
     /**
      *  个人信息展示
-     * @param email
+     * @param userName
      * @return
      * @throws ServiceProcessException
      */
-    public User show(String email) throws ServiceProcessException;
+    public User show(String userName) throws ServiceProcessException;
 
 
     /**
@@ -50,18 +50,18 @@ public interface UserService {
 
 
     /**
-     *  用户已上传文书列表
-     * @param email
+     *  用户已上传文书列表(需要)
+     * @param userName
      * @return
      */
-    public List<Case> getCaseListByUser(String email);
+    public List<Case> getCaseListByUser(String userName) throws ServiceProcessException;
 
 
     /**
-     *  用户上传文书存储
+     *  用户上传文书存储(需要)
      * @return
      */
-    public boolean insert(File file, String email) throws DocumentException;
+    public boolean insert(File file, String userName) throws DocumentException, ServiceProcessException;
 
 
     /**

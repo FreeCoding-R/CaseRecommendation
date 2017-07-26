@@ -33,14 +33,14 @@ public class MongodbUtil {
 
 
 
-    public static void insert(File file,String email) throws DocumentException {
+    public static void insert(File file,String userName) throws DocumentException {
 
         MongoDatabase mongoDatabase = MongodbUtil.getDataBase();
         MongoCollection<DBObject> collection = mongoDatabase.getCollection("casesByUser",DBObject.class);
         SAXReader sr = new SAXReader();
         Document document = (Document) sr.read(file);
 
-        String name=document.getRootElement().element("WS").attribute("value").getText();
+        String name=document.getRootElement().element("QW").element("WS").attribute("value").getText();
         String responseTextObj = document.asXML();
         responseTextObj = responseTextObj.replace("\r\n", "\\r\\n");
         XMLSerializer xmlSerializer = new XMLSerializer();
@@ -52,7 +52,7 @@ public class MongodbUtil {
 
         //by zj
         object.put("name",name);
-        object.put("user",email);
+        object.put("user",userName);
         collection.insertOne(object);
 
     }
