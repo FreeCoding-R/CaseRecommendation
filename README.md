@@ -8,4 +8,4 @@ http://www.caserecommendation.org:8080/
 
 以及**依赖模块**
 
-    BuffClient-2.0.jar
+    gensim
