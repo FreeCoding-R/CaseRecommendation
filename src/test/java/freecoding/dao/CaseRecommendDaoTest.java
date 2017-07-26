@@ -55,9 +55,9 @@ public class CaseRecommendDaoTest {
     }
 
     @Test
-    public void testKmeans(){
-        String filestring = "/Users/loick/Desktop/group3/test/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_151160.xml";
-        File file = new File(filestring);
+    public void testKmeans() throws URISyntaxException {
+        File file = new File(getClass().getClassLoader().getResource(
+                "xml/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_151160.xml").toURI().getPath());
         Assert.assertEquals(6, caseRecommendDao.getKmeansCases(file).size());
     }
 }
