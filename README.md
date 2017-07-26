@@ -1,5 +1,11 @@
 # CaseRecommendation
-项目展示：
+## 项目展示：
 http://www.caserecommendation.org:8080/
-安装python版本：
-3.6.0, 依赖模块gensim
+
+## 项目依赖
+
+    python版本：3.6.0
+
+以及**依赖模块**
+
+    BuffClient-2.0.jar
