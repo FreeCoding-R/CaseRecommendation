@@ -17,7 +17,8 @@ def walkData(root_node,  result_list):
     item = root_node.items()
     if len(item) >= 2:
         if len(item[1][1]) < 15:
-            result_list.add(root_node.tag+','+item[1][1])
+            if root_node.tag != "CUS_FLFT_RY":
+                result_list.add(root_node.tag+','+item[1][1])
 
     # 遍历每个子节点
     children_node = root_node.getchildren()
