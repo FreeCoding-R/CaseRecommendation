@@ -480,6 +480,12 @@
 
         // 设置3个介绍栏高度相同
         $("div.content-box.big div.content-box-info p").height(120);
+
+        $('.scrollup').before('<div id="bottom-alert" class="text-center alert alert-dismissible alert-success fade in navbar-fixed-bottom" style="bottom: -20px;" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>保存策略成功</strong></div>');
+
+        window.setTimeout(function () {
+            $("#bottom-alert").alert("close");
+        }, 5000);
     });
 
     // 文件上传的监听
