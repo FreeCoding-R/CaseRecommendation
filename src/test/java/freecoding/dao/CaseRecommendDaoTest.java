@@ -1,9 +1,7 @@
 package freecoding.dao;
 
 import freecoding.dao.impl.CaseRecommendDaoImpl;
-import freecoding.util.Json2XmlUtil;
 import org.apache.log4j.Logger;
-import org.bson.Document;
 import org.dom4j.DocumentException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,10 +41,6 @@ public class CaseRecommendDaoTest {
 //        List<org.bson.Document> documentList = caseRecommendDao.getRandomCases();
 //        Assert.assertEquals(6, documentList.size());
 
-        Document document=caseRecommendDao.find("59740f3ec5b08d1b4d3cada2");
-        Document cpfxgc = (Document) document.get("QW");
-        cpfxgc= (Document) cpfxgc.get("CPFXGC");
-        System.out.println(Json2XmlUtil.jsonPartOfM2xml(cpfxgc.toJson()));
 
 
     }
