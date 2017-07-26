@@ -4,6 +4,7 @@ import freecoding.dao.impl.CaseRecommendDaoImpl;
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,7 @@ public class CaseRecommendDaoTest {
     }
 
     @Test
+    @Ignore
     public void testKmeans() throws URISyntaxException {
         File file = new File(getClass().getClassLoader().getResource(
                 "xml/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_151160.xml").toURI().getPath());
