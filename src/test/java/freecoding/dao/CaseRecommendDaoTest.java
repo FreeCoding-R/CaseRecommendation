@@ -41,8 +41,6 @@ public class CaseRecommendDaoTest {
 //        List<org.bson.Document> documentList = caseRecommendDao.getRandomCases();
 //        Assert.assertEquals(6, documentList.size());
 
-
-
     }
 
     @Test
