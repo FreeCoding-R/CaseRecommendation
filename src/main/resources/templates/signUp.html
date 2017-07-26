@@ -3,14 +3,14 @@
 <head th:include="components/components :: head">
 </head>
 <head>
-    <title>登录</title>
+    <title>注册</title>
 </head>
 <body>
 <!-- Header -->
 <header th:replace="components/components :: header"/>
 
 <div class="container">
-    <form action="/loginPost" method="post" autocomplete="true">
+    <form action="/signUpPost" method="post" name="signUp" autocomplete="true">
         <div class="row control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
                 <label>用户名</label>
@@ -25,16 +25,43 @@
                        name="password" required="required" title="在这里输入密码"/>
             </div>
         </div>
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>密码确认</label>
+                <input type="password" class="form-control" placeholder="请再次输入密码..."
+                       id="confirm_password_field" name="confirm_password"
+                       required="required" title="在这里输入密码"/>
+            </div>
+        </div>
         <div class="text-center" style="margin: 20px 0;">
             <button type="submit"
-                    class="btn-primary bloc-button btn btn-lg btn-block animated"
-                    id="signInButton">
-                登陆
+                    class="btn-success bloc-button btn btn-lg btn-block animated"
+                    id="signUpButton">
+                立即注册
             </button>
+
+            <script type="text/javascript">
+                $(function () {
+
+                    $("#signUpButton").click(function () {
+
+                        let pwd = $('#password_field').val();
+
+                        let cpwd = $('#confirm_password_field').val();
+                        if (pwd !== cpwd) {
+                            $('footer').after('<div id="bottom-alert" class="text-center alert alert-dismissible alert-danger fade in navbar-fixed-bottom" style="bottom: -20px;" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> <strong>两次输入的密码不一致！</strong> </div>');
+
+                            window.setTimeout(function () {
+                                $('#bottom-alert').alert('close');
+                            }, 3000);
+
+                            return false;
+                        }
+                    });
+                });
+            </script>
         </div>
     </form>
-    <div class= "text-center"> 还没有账户？<br/> <a class="text-info" href="/signUp"><b>现在注册</b></a>
-    </div>
 </div>
 
 <!-- Footer -->
