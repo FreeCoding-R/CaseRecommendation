@@ -106,7 +106,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
             //关键词详细第二部分获取
             result += "\""+"文书基本信息"+"\":{";
-                    result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "@\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ","\\r\\n") + "\",";
+                    result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ","\\r\\n") + "@\"" + "\",";
             result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText().replace(" ","\\r\\n") + "\",";
             result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText().replace(" ","\\r\\n") ;
             result += "\"},";
