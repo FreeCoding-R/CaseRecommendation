@@ -166,6 +166,22 @@
 </footer>
 <!-- Footer End -->
 
+<!--底部的消息栏，如果模板发现有alertMessage，就会显示，否则不显示-->
+<div th:fragment="message" th:if="${alertMessage ne null}" id="message-alert"
+     th:class="'text-center alert alert-dismissible '+${alertType}+' fade in navbar-fixed-bottom'"
+     style="bottom: -20px;" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong th:text="${alertMessage}"></strong>
+
+    <script type="text/javascript">
+        window.setTimeout(function () {
+            $("#message-alert").alert("close");
+        }, 3000);
+    </script>
+</div>
+
 <!--网页左边的设置区域-->
 <section th:fragment="style-switcher" id="style-switcher">
     <h2>Style Switcher <a href="#"><i class="icon-cog"></i></a></h2>
