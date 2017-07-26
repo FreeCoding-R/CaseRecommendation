@@ -252,6 +252,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         List rl = this.recommendCases.get();
 
         rl=caseRecommendDao.getKmeansCases(this.file.get());
+//        rl=caseRecommendDao.getRandomCases();
         this.recommendCases.set(rl);
 
 
@@ -278,9 +279,15 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         }
 
         List rl=this.recommendCases.get();
+        List ci=this.caseInfo.get();
 
         //推荐案例遍历
         for (int i = 0; i < rl.size(); i++) {
+
+            Case c= (Case) ci.get(i);
+            List<Law> cl=new ArrayList<>();
+
+
             Document document = (Document) rl.get(i);
             Document cpfxgc = (Document) ((Document) document.get("QW")).get("CPFXGC");
 
@@ -299,8 +306,10 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 law.setName(name);
                 law.setDetail(detail);
                 law.setNum(1);
+                cl.add(law);
                 distinct(law);
-                
+
+
             }else {
                 Iterator it = root.elementIterator("e");
                 while (it.hasNext()) {
@@ -312,13 +321,16 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     law.setName(name);
                     law.setDetail(detail);
                     law.setNum(1);
+                    cl.add(law);
                     distinct(law);
 
                 }
 
             }
+            c.setList(cl);
+            ci.set(i,c);
         }
-
+        this.caseInfo.set(ci);
         return this.lawDistribution.get();
     }
 
