@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -51,5 +52,12 @@ public class CaseRecommendDaoTest {
     @Test
     public void findTest() {
 
+    }
+
+    @Test
+    public void testKmeans(){
+        String filestring = "/Users/loick/Desktop/group3/test/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_151160.xml";
+        File file = new File(filestring);
+        Assert.assertEquals(6, caseRecommendDao.getKmeansCases(file).size());
     }
 }
