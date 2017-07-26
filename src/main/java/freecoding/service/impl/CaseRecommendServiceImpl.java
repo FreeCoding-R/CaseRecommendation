@@ -251,7 +251,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         List cl = this.caseInfo.get();
         List rl = this.recommendCases.get();
 
-        rl=caseRecommendDao.getRandomCases();
+        rl=caseRecommendDao.getKmeansCases(this.file.get());
         this.recommendCases.set(rl);
 
 

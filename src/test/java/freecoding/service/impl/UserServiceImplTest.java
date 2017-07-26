@@ -21,9 +21,6 @@ public class UserServiceImplTest {
 
     @Test
     public void login() throws Exception {
-
-
-
     }
 
 }
