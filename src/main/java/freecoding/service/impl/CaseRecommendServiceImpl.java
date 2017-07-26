@@ -18,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -64,11 +67,18 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         try{
             document=caseRecommendDao.find(id);
             this.dom4jd.set(DocumentHelper.parseText(Json2XmlUtil.jsonFromM2xml(document.toJson())));
+            File file=new File("example.xml");
+            Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+            write.write(Json2XmlUtil.jsonFromM2xml(document.toJson()));
+            write.flush();
+            write.close();
+            this.file.set(file);
+            
         }catch (Exception e){
             return false;
         }
 
-        this.file.set(null);
+
         this.recommendCases.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
         this.lawDistribution.set(new ArrayList<>());
@@ -250,6 +260,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         List cl = this.caseInfo.get();
         List rl = this.recommendCases.get();
+
 
         rl=caseRecommendDao.getKmeansCases(this.file.get());
 //        rl=caseRecommendDao.getRandomCases();
