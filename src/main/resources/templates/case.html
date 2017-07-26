@@ -84,10 +84,24 @@
                                             </p>
                                         </div>
                                         <div th:if="${content.get(name).getClass() ne name.getClass()}">
-                                            <p th:each="item:${content.get(name)}" th:text="${item}"
-                                               class="text-center">
-                                            </p>
+                                            <div th:each="subName:${content.get(name).keySet()}">
+                                                <div th:if="${content.get(name).get(subName).getClass() eq subName.getClass()}">
+                                                    <label data-placement="left" th:text="${subName}"></label>
+                                                    <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="right" data-html="true" th:title="'点击获得详细信息'">右侧的 Tooltip</button>
+                                                </div>
+                                                <div th:if="${content.get(name).get(subName).getClass() ne subName.getClass()}">
+                                                    <label data-placement="left" th:text="${subName}+':'"></label>
+                                                    <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="right" data-html="true" title="点击获得详细信息">右侧的 Tooltip</button>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <script>
+                                            $(".btn.btn-link").hover(function () {
+                                                $(this).css({"color":"black"});
+                                            },function () {
+                                                $(this).css({"color":"#337ab7"});
+                                            })
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -120,15 +134,15 @@
                             let myChartDom = document.getElementById('chart')
                             //自适应宽高
                             function myChartPC() {
-                                myChartDom.style.width = $(window).width()/2+'px';
-                                myChartDom.style.height = $(window).height()/3*2+'px';
+                                myChartDom.style.width = $(window).width() / 2 + 'px';
+                                myChartDom.style.height = $(window).height() / 3 * 2 + 'px';
                             };
                             function myChartMobile() {
-                                myChartDom.style.width = $(window).width()+'px';
-                                myChartDom.style.height = $(window).height()/9*5+'px';
+                                myChartDom.style.width = $(window).width() + 'px';
+                                myChartDom.style.height = $(window).height() / 9 * 5 + 'px';
                             }
-                            function  myChartContainer() {
-                                if (isMobileBrowser()){
+                            function myChartContainer() {
+                                if (isMobileBrowser()) {
                                     myChartMobile()
                                 }
                                 else {
@@ -213,7 +227,7 @@
                                         labelLine: {
                                             normal: {
                                                 show: true,
-                                                length:6
+                                                length: 6
                                             },
                                         },
                                         data: pieList
