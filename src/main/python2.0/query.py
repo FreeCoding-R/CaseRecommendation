@@ -69,6 +69,3 @@ def getCases(file):
     return [index[0] for index in sims[:RECOMMEND_NUM]]
 
 print(getCases(sys.argv[1]))
-file = sys.argv[1]
-with open(file, encoding='utf8') as file:
-    print(file.read())
