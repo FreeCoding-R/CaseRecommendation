@@ -9,3 +9,4 @@ http://www.caserecommendation.org:8080/
 以及**依赖模块**
 
     gensim
+    jieba
