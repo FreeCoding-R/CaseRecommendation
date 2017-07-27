@@ -11,7 +11,7 @@ public class Json2XmlUtil {
 
     public static String jsonFromM2xml(String json){
         json=json.substring(51);
-        json="{\"QW\":{"+json+"}";
+        json="{\"writ\":{"+json+"}";
 
         XMLSerializer serializer = new XMLSerializer();
         JSON jsonObject = JSONSerializer.toJSON(json);

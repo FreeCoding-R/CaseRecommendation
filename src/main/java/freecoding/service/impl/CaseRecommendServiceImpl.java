@@ -70,7 +70,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             this.dom4jd.set(DocumentHelper.parseText(Json2XmlUtil.jsonFromM2xml(document.toJson())));
             File file=new File("userFiles/example.xml");
             Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-            write.write(Json2XmlUtil.jsonFromM2xml(document.toJson()));
+            String str="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Json2XmlUtil.jsonFromM2xml(document.toJson());
+            write.write(str);
             write.flush();
             write.close();
             this.file.set(file);
