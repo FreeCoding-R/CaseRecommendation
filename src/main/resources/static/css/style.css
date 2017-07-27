@@ -657,7 +657,6 @@ h2.title {
 }
 
 #horizontal-tabs ul.tabs li.current {
-    /*border-bottom: 1px solid #fff;*/
     background: none;
     cursor: default;
 }
