@@ -68,3 +68,9 @@
     background-repeat:no-repeat;
     background-size: cover;
 }
+
+
+/*font-weigtht*/
+.font-normal{
+    font-weight: normal;
+}
