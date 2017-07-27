@@ -4,21 +4,45 @@
 from gensim import corpora, models, similarities
 from six import iteritems
 import os
+import jieba
 import xml.etree.ElementTree as ET
 from constant import FILE_PATH
-from constant import PYTHON_PATH
+from constant import PYTHON_PATH, STOP_WORDS_FILE
 
 
 file_path = FILE_PATH
+
+stop_words_file = STOP_WORDS_FILE
+
+
+def get_stop_words(stop_file):
+    result = set([])
+    with open(stop_file, 'r', encoding='utf8') as file:
+        templist = jieba.cut(file.read())
+        # for word in templist:
+        #     result.add(word)
+        return set(templist)
+
+
+def delete_stop_words(words):
+    result = []
+    stoplist = get_stop_words(stop_words_file)
+    tempset = jieba.cut(words)
+    for word in tempset:
+        if word not in stoplist:
+            result.append(word)
+    return result
 
 
 # 遍历所有的节点
 def walkData(root_node,  result_list):
     item = root_node.items()
     if len(item) >= 2:
+        if root_node.tag == 'QW':
+            templist = delete_stop_words(item[1][1])
+            result_list += templist
         if len(item[1][1]) < 15:
-            if root_node.tag != "CUS_FLFT_RY":
-                result_list.add(root_node.tag+','+item[1][1])
+            result_list.append(root_node.tag+','+item[1][1])
 
     # 遍历每个子节点
     children_node = root_node.getchildren()
@@ -30,7 +54,7 @@ def walkData(root_node,  result_list):
 
 
 def getXmlData(file_name):
-    result_list = set([])
+    result_list = []
     root = ET.parse(file_name).getroot()
     walkData(root, result_list)
     return result_list
@@ -69,7 +93,5 @@ lsi = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=num_topics)# 
 
 
 lsi.save(PYTHON_PATH+ 'data/model.lsi') # same for tfidf, lda, ...
-
-print('success')
 
 

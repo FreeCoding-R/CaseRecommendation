@@ -16,13 +16,11 @@ public class CasesFromPython {
             }else{
                 pythonV = "python3";
             }
-            System.out.println("start");
             Process process = Runtime.getRuntime().exec(pythonV+" " + cp+" "+file);
             InputStream is = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
             while((line = reader.readLine()) != null){
-                System.out.println(line);
                 data+=line;
             }
         } catch (IOException e) {

@@ -12,5 +12,3 @@ index = similarities.MatrixSimilarity(lsi[corpus])# transform corpus to LSI spac
 
 index.save(PYTHON_PATH+'data/deerwester.index')
 #index = similarities.MatrixSimilarity.load('/tmp/deerwester.index')
-
-print('success index')
