@@ -277,6 +277,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             Case c=new Case();
             c.setId(document.get("_id").toString());
             c.setName(document.get("name").toString());
+
+
             cl.add(c);
         }
 
@@ -319,7 +321,13 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 law.setName(name);
                 law.setDetail(detail);
                 law.setNum(1);
-                cl.add(law);
+
+                if(cl.contains(law)){
+
+                }else {
+                    cl.add(law);
+                }
+
                 distinct(law);
 
 
@@ -334,12 +342,17 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     law.setName(name);
                     law.setDetail(detail);
                     law.setNum(1);
-                    cl.add(law);
+                    if(cl.contains(law)){
+
+                    }else {
+                        cl.add(law);
+                    }
                     distinct(law);
 
                 }
 
             }
+
             c.setList(cl);
             ci.set(i,c);
         }
