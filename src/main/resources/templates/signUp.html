@@ -73,6 +73,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // 将导航栏的登录选项选中
+        $(".nav li a:contains('登录')").attr("id", "current");
+
         //如果这个class写进html里，会出现页脚没有固定在底部的bug
         $("form button[type=submit]").addClass("bounceInUp");
     });
