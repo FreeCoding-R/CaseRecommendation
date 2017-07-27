@@ -1,5 +1,6 @@
 package freecoding.web.ctrl.routes;
 
+import freecoding.exception.ServiceProcessException;
 import freecoding.service.UserService;
 import freecoding.web.ctrl.security.WebSecurityConfig;
 import org.python.antlr.ast.Str;
@@ -11,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by zjy on 2017/7/16.
@@ -35,6 +33,16 @@ public class User {
     @RequestMapping(value = "/user/name", method= RequestMethod.GET)
     public @ResponseBody String userName(@SessionAttribute(WebSecurityConfig.SESSION_KEY) String username, Model model) {
         return "user: " + username;
+    }
+
+    @RequestMapping(value = "/user/record", method= RequestMethod.GET)
+    public String userRecord(@SessionAttribute(WebSecurityConfig.SESSION_KEY) String username, Model model) {
+        try {
+            model.addAttribute("record", userService.getCaseListByUser(username));
+        } catch (ServiceProcessException e) {
+            e.printStackTrace();
+        }
+        return "record";
     }
 
     @GetMapping("/login")

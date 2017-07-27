@@ -3,6 +3,8 @@ package freecoding.web.ctrl.routes;
 import freecoding.exception.FileContentException;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.CaseRecommendService;
+import freecoding.service.UserService;
+import freecoding.web.ctrl.security.WebSecurityConfig;
 import freecoding.web.data.model.Person;
 import net.sf.json.JSONObject;
 import org.dom4j.DocumentException;
@@ -10,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -29,6 +28,8 @@ import java.util.List;
 public class Index {
     @Autowired
     private CaseRecommendService caseRecommendService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 首页
@@ -52,6 +53,7 @@ public class Index {
      */
     @RequestMapping(value="/showCase", method= RequestMethod.POST)
     public String uploadXML(Model model,
+                            @SessionAttribute(WebSecurityConfig.SESSION_KEY) String username,
                             @RequestParam(value = "file", required = true) MultipartFile file) {
         String message="";
         boolean sucess=false;
@@ -75,6 +77,9 @@ public class Index {
                 //开始处理文书
                 if(caseRecommendService.upload(dest)){
                     handleFile(model);
+                    if(username != null){
+                        userService.insert(dest,username);
+                    }
                     sucess=true;
                 }else {
                     message+= "文件格式不符合规范！\n";
