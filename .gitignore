@@ -2,6 +2,10 @@ target/
 userFiles/
 !.mvn/wrapper/maven-wrapper.jar
 
+
+### Python ###
+*.pyc
+
 ### STS ###
 .apt_generated
 .classpath

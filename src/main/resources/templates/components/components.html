@@ -102,7 +102,7 @@
                         <li>
                             <a href="#">法案</a>
                         </li>
-                        <li>
+                        <li th:if="${session.user ne null}">
                             <a href="#">记录</a>
                         </li>
                         <li>
