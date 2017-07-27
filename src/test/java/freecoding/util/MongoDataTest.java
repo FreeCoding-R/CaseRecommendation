@@ -1,24 +1,21 @@
 package freecoding.util;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by 铠联 on 2017/7/19.
  */
 public class MongoDataTest {
-
+    @Autowired
     private MongodbUtil mongoData;
 
-    @Before
-    public void init(){
-        mongoData = new MongodbUtil();
-    }
+
 
     @Test
     public void getDataBaseTest(){
-        Assert.assertNotNull(mongoData.getDataBase());
+        Assert.assertNotNull(mongoData.getDatabase());
     }
 
 }
