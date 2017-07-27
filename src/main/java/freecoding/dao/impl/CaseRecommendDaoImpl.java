@@ -9,6 +9,7 @@ import freecoding.dao.CaseRecommendDao;
 import freecoding.util.MongodbUtil;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import preData.CasesFromPython;
 
@@ -23,12 +24,17 @@ import static com.mongodb.client.model.Filters.eq;
  */
 @Repository
 public class CaseRecommendDaoImpl implements CaseRecommendDao {
-
+    MongodbUtil mongodbUtil;
 
     private static String collectionName = "cases";
     private static String userCollectionName = "casesByUser";
-    private static MongoDatabase database = MongodbUtil.getDataBase();
+    private MongoDatabase database;
 
+    @Autowired
+    public CaseRecommendDaoImpl(MongodbUtil mongodbUtil){
+        this.mongodbUtil = mongodbUtil;
+        database = this.mongodbUtil.getDatabase();
+    }
 
     @Override
     public Document find(String id) {

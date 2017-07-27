@@ -23,6 +23,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
+    private MongodbUtil mongodbUtil;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -97,7 +100,7 @@ public class UserServiceImpl implements UserService {
         if(userRepository.findByUserName(userName)==null||file==null){
             throw  new ServiceProcessException("未按顺序调用或错误传参");
         }
-        MongodbUtil.insert(file,userName);
+        mongodbUtil.insert(file,userName);
         return true;
     }
 

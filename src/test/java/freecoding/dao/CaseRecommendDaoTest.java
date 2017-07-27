@@ -1,6 +1,7 @@
 package freecoding.dao;
 
 import freecoding.dao.impl.CaseRecommendDaoImpl;
+import freecoding.util.MongodbUtil;
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.junit.Assert;
@@ -24,6 +25,8 @@ public class CaseRecommendDaoTest {
 
     Logger logger = Logger.getLogger(CaseRecommendDaoTest.class);
 
+    @Autowired
+    MongodbUtil mongodbUtil;
 
     @Autowired
     CaseRecommendDaoImpl caseRecommendDao;
@@ -50,10 +53,6 @@ public class CaseRecommendDaoTest {
         Assert.assertNotNull(caseRecommendDao.getRandomCases().size());
     }
 
-    @Test
-    public void findTest() {
-
-    }
 
     @Test
     @Ignore
@@ -62,4 +61,10 @@ public class CaseRecommendDaoTest {
                 "xml/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_151160.xml").toURI().getPath());
         Assert.assertEquals(6, caseRecommendDao.getKmeansCases(file).size());
     }
+
+    @Test
+    public void testMongo(){
+        Assert.assertNotNull(mongodbUtil.getDatabase().getName(), "freecoding");
+    }
+
 }
