@@ -87,7 +87,7 @@
                                             <div th:each="subName:${content.get(name).keySet()}">
                                                 <div th:with="subContent=${content.get(name).get(subName)}">
                                                     <div th:if="${subContent.getClass() eq subName.getClass()}">
-                                                        <label data-placement="left" th:text="${subName}+':'"></label>
+                                                        <label data-placement="left" th:text="${subName}+'：'"></label>
                                                         <a th:if="${subContent.contains('@')}" type="button"
                                                                 class="btn btn-link"
                                                                 data-toggle="tooltip"
@@ -99,11 +99,11 @@
                                                         <label class="font-normal" th:if="${!subContent.contains('@')}"
                                                                data-placement="left"
                                                                style="padding: 6px 12px"
-                                                               th:text="${subName}">
+                                                               th:text="${subContent}">
                                                         </label>
                                                     </div>
                                                     <div th:if="${subContent.getClass() ne subName.getClass()}">
-                                                        <label data-placement="left" th:text="${subName}+':'"></label>
+                                                        <label data-placement="left" th:text="${subName}+'：'"></label>
                                                         <a th:each="memberName:${subContent}" type="button"
                                                                 class="btn btn-link"
                                                                 data-toggle="tooltip"
