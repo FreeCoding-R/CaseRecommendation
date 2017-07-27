@@ -6,6 +6,7 @@ import freecoding.service.CaseRecommendService;
 import freecoding.service.UserService;
 import freecoding.web.ctrl.security.WebSecurityConfig;
 import freecoding.web.data.model.Person;
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,26 @@ public class Index {
             e.printStackTrace();
         }
         return "case";
+    }
+
+    /**
+     * 上传文书的路由
+     * @param memberName
+     * @return
+     */
+    @RequestMapping(value="/getMemberInfo", method= RequestMethod.GET)
+    public @ResponseBody
+    JSON getMemberInfo(@RequestParam(value = "memberName", required = true) String memberName) {
+        try {
+            return caseRecommendService.detail(memberName);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileContentException e) {
+            e.printStackTrace();
+        } catch (ServiceProcessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
