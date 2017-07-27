@@ -1,11 +1,8 @@
 package preData;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import java.io.File;
 
 public class test {
-    @Autowired
-    static MongoTemplate mongoTemplate;
     public static void main(String args[]){
 //        String filestring = "/Users/loick/Desktop/group3/test/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_151160.xml";
 //        File file = new File(filestring);
@@ -14,6 +11,7 @@ public class test {
 //            System.out.println(document);
 //        }
 
-        System.out.println(mongoTemplate);
+        File file = new File("userFiles/example.xml");
+
     }
 }

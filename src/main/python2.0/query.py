@@ -9,12 +9,11 @@ from constant import RECOMMEND_NUM,PYTHON_PATH,STOP_WORDS_FILE
 
 stop_words_file = STOP_WORDS_FILE
 
+
 def get_stop_words(stop_file):
     result = set([])
     with open(stop_file, 'r', encoding='utf8') as file:
         templist = jieba.cut(file.read())
-        # for word in templist:
-        #     result.add(word)
         return set(templist)
 
 
@@ -35,7 +34,7 @@ def walkData(root_node,  result_list):
         if root_node.tag == 'QW':
             templist = delete_stop_words(item[1][1])
             result_list += templist
-        if len(item[1][1]) < 15:
+        if len(item[1][1]) < 15 and root_node.tag != 'e':
             result_list.append(root_node.tag+','+item[1][1])
 
     # 遍历每个子节点
@@ -66,6 +65,10 @@ def getCases(file):
 
     sims = abs(sims)
     sims = sorted(enumerate(sims), key=lambda item: -item[1])
-    return [index[0] for index in sims[:RECOMMEND_NUM] if index[1]>0.8]
+    #return sims[:6]
+    return [index[0] for index in sims[:RECOMMEND_NUM]]
 
 print(getCases(sys.argv[1]))
+file = sys.argv[1]
+with open(file, encoding='utf8') as file:
+    print(file.read())
