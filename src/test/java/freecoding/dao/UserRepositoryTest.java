@@ -16,8 +16,6 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
 
-
-
     @Test
     public void findById() throws Exception {
 //        User u=new User();
@@ -49,7 +47,6 @@ public class UserRepositoryTest {
 //        record.setDate(new Date());
 
 
-//
     }
 
 }

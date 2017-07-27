@@ -3,7 +3,7 @@ package freecoding.vo;
 /**
  * Created by zhujing on 2017/7/17.
  */
-public class Law {
+public class Law implements Comparable{
 
     private String name;
 
@@ -38,5 +38,16 @@ public class Law {
     @Override
     public String toString() {
         return name+" 第"+detail+"条";
+    }
+
+
+    @Override
+    public int compareTo(Object o) {
+        Law l=(Law)o;
+        if(this.toString().compareTo(l.toString())<0){
+            return 1;
+
+        }
+        return -1;
     }
 }
