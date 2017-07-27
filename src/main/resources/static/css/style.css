@@ -747,9 +747,12 @@ h2.title {
 }
 
 .avatar {
-	border: 1px solid #ddd;
+	/*border: 1px solid #ddd;*/
 	padding:4px !important;
-	border-radius: 100%;
+	/*border-radius: 100%;*/
+    width: 100px;
+    height: 100px;
+    margin: 5px 15px;
 }
 
 .avatar img {
@@ -2481,10 +2484,6 @@ strong,.author-content .data a {
 
 .page article.post .post-image,.portfolio-single .recentwork_wrapper .item {
     margin-bottom: 25px;
-}
-
-ol li ol.childlist .comment-des,header nav li,.avatar {
-    float: left;
 }
 
 .recentworks li.slide,.portfolio-wrap {

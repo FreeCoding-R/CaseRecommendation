@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="components/components :: head">
+</head>
+<head>
+    <title>上传记录</title>
+</head>
+<body>
+<!-- Header -->
+<header th:replace="components/components :: header"/>
+
+<div class="container" id="main">
+    <div class="content">
+        <div class="col-sm-12">
+            <h1 class="content-title text-center">文书上传记录</h1>
+
+            <!--如果没有记录，提示用户-->
+            <h3 th:if="${record eq null} or ${record.size() eq 0}" class="text-center" style="margin-top: 100px;">空空如也...</h3>
+
+            <!--记录列表-->
+            <div th:if="${record ne null} and ${record.size() &gt; 0}">
+                <div th:each="case:${record}" class="panel panel-info" style="margin-top: 10px">
+                    <div>
+                        <img src="/img/file.png" class="avatar"/>
+                        <div style="display: inline-block;">
+                            <a th:href="'/case/'+${case.getId()}" style="font-size: 18px;">
+                                <b th:text="${case.getName()}">文件</b>
+                            </a>
+                            <h6 class="text-muted time">2017/7/27</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--记录列表 end -->
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer th:replace="components/components :: footer"></footer>
+<div th:replace="components/components :: message"></div>
+<section th:replace="components/components :: style-switcher"></section>
+<!-- The Scripts -->
+<script th:src="@{/js/custom.js}" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // 将导航栏的登录选项选中
+        $(".nav li a:contains('记录')").attr("id", "current");
+    });
+</script>
+
+</body>
+</html>

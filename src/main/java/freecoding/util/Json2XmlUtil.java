@@ -36,5 +36,18 @@ public class Json2XmlUtil {
 
     }
 
-
+//
+//
+//                SAXReader sr = new SAXReader();
+//                Document document = (Document) sr.read(files.get(i));
+//
+//                String responseTextObj = document.asXML();
+//                responseTextObj = responseTextObj.replace("\r\n", "\\r\\n");
+//                XMLSerializer xmlSerializer = new XMLSerializer();
+//
+//
+//                net.sf.json.JSON jsonObj = xmlSerializer.read(responseTextObj);
+//                String jsonStr = jsonObj.toString();
+//                DBObject object = (DBObject) JSON.parse(jsonStr);
+//
 }

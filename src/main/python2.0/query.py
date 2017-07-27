@@ -9,12 +9,11 @@ from constant import RECOMMEND_NUM,PYTHON_PATH,STOP_WORDS_FILE
 
 stop_words_file = STOP_WORDS_FILE
 
+
 def get_stop_words(stop_file):
     result = set([])
     with open(stop_file, 'r', encoding='utf8') as file:
         templist = jieba.cut(file.read())
-        # for word in templist:
-        #     result.add(word)
         return set(templist)
 
 
@@ -31,11 +30,17 @@ def delete_stop_words(words):
 # 遍历所有的节点
 def walkData(root_node,  result_list):
     item = root_node.items()
+    tag = False
+    if len(item) == 3:
+        tag = True
     if len(item) >= 2:
         if root_node.tag == 'QW':
-            templist = delete_stop_words(item[1][1])
+            if tag:
+                templist = delete_stop_words(item[2][1])
+            else:
+                templist = delete_stop_words(item[1][1])
             result_list += templist
-        if len(item[1][1]) < 15:
+        if len(item[1+tag][1]) < 15 and root_node.tag != 'e':
             result_list.append(root_node.tag+','+item[1][1])
 
     # 遍历每个子节点
@@ -61,11 +66,14 @@ def getCases(file):
 
     vec_bow = dictionary.doc2bow(getXmlData(file))
 
+    print(len(getXmlData(file)))
+
     vec_lsi = lsi[vec_bow] # convert the query to LSI space
     sims = index[vec_lsi]
 
     sims = abs(sims)
     sims = sorted(enumerate(sims), key=lambda item: -item[1])
-    return [index[0] for index in sims[:RECOMMEND_NUM] if index[1]>0.8]
+    #return sims[:6]
+    return [index[0] for index in sims[:RECOMMEND_NUM]]
 
 print(getCases(sys.argv[1]))

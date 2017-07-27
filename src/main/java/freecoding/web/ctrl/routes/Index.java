@@ -3,19 +3,20 @@ package freecoding.web.ctrl.routes;
 import freecoding.exception.FileContentException;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.CaseRecommendService;
+import freecoding.service.UserService;
+import freecoding.web.ctrl.security.WebSecurityConfig;
 import freecoding.web.data.model.Person;
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ import java.util.List;
 public class Index {
     @Autowired
     private CaseRecommendService caseRecommendService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 首页
@@ -52,6 +55,7 @@ public class Index {
      */
     @RequestMapping(value="/showCase", method= RequestMethod.POST)
     public String uploadXML(Model model,
+                            HttpSession session,
                             @RequestParam(value = "file", required = true) MultipartFile file) {
         String message="";
         boolean sucess=false;
@@ -75,6 +79,9 @@ public class Index {
                 //开始处理文书
                 if(caseRecommendService.upload(dest)){
                     handleFile(model);
+                    if(session.getAttribute(WebSecurityConfig.SESSION_KEY) != null){
+                        userService.insert(dest, (String) session.getAttribute(WebSecurityConfig.SESSION_KEY));
+                    }
                     sucess=true;
                 }else {
                     message+= "文件格式不符合规范！\n";
@@ -121,6 +128,26 @@ public class Index {
             e.printStackTrace();
         }
         return "case";
+    }
+
+    /**
+     * 上传文书的路由
+     * @param memberName
+     * @return
+     */
+    @RequestMapping(value="/getMemberInfo", method= RequestMethod.GET)
+    public @ResponseBody
+    JSON getMemberInfo(@RequestParam(value = "memberName", required = true) String memberName) {
+        try {
+            return caseRecommendService.detail(memberName);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileContentException e) {
+            e.printStackTrace();
+        } catch (ServiceProcessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

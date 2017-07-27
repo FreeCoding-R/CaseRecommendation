@@ -9,59 +9,61 @@
 <!-- Header -->
 <header th:replace="components/components :: header"/>
 
-<div class="container">
-    <form action="/signUpPost" method="post" name="signUp" autocomplete="true">
-        <div class="row control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>用户名</label>
-                <input type="text" class="form-control" placeholder="请输入用户名..." id="username_field"
-                       name="username" required="required" title="在这里填写用户名"/>
+<div class="container" id="main">
+    <div class="content">
+        <form action="/signUpPost" method="post" name="signUp" autocomplete="true">
+            <div class="row control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                    <label>用户名</label>
+                    <input type="text" class="form-control" placeholder="请输入用户名..." id="username_field"
+                           name="username" required="required" title="在这里填写用户名"/>
+                </div>
             </div>
-        </div>
-        <div class="row control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>密码</label>
-                <input type="password" class="form-control" placeholder="请输入密码..." id="password_field"
-                       name="password" required="required" title="在这里输入密码"/>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                    <label>密码</label>
+                    <input type="password" class="form-control" placeholder="请输入密码..." id="password_field"
+                           name="password" required="required" title="在这里输入密码"/>
+                </div>
             </div>
-        </div>
-        <div class="row control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>密码确认</label>
-                <input type="password" class="form-control" placeholder="请再次输入密码..."
-                       id="confirm_password_field" name="confirm_password"
-                       required="required" title="在这里输入密码"/>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                    <label>密码确认</label>
+                    <input type="password" class="form-control" placeholder="请再次输入密码..."
+                           id="confirm_password_field" name="confirm_password"
+                           required="required" title="在这里输入密码"/>
+                </div>
             </div>
-        </div>
-        <div class="text-center" style="margin: 20px 0;">
-            <button type="submit"
-                    class="btn-success bloc-button btn btn-lg btn-block animated"
-                    id="signUpButton">
-                立即注册
-            </button>
+            <div class="text-center" style="margin: 20px 0;">
+                <button type="submit"
+                        class="btn-success bloc-button btn btn-lg btn-block animated"
+                        id="signUpButton">
+                    立即注册
+                </button>
 
-            <script type="text/javascript">
-                $(function () {
+                <script type="text/javascript">
+                    $(function () {
 
-                    $("#signUpButton").click(function () {
+                        $("#signUpButton").click(function () {
 
-                        let pwd = $('#password_field').val();
+                            let pwd = $('#password_field').val();
 
-                        let cpwd = $('#confirm_password_field').val();
-                        if (pwd !== cpwd) {
-                            $('footer').after('<div id="bottom-alert" class="text-center alert alert-dismissible alert-danger fade in navbar-fixed-bottom" style="bottom: -20px;" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> <strong>两次输入的密码不一致！</strong> </div>');
+                            let cpwd = $('#confirm_password_field').val();
+                            if (pwd !== cpwd) {
+                                $('footer').after('<div id="bottom-alert" class="text-center alert alert-dismissible alert-danger fade in navbar-fixed-bottom" style="bottom: -20px;" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> <strong>两次输入的密码不一致！</strong> </div>');
 
-                            window.setTimeout(function () {
-                                $('#bottom-alert').alert('close');
-                            }, 3000);
+                                window.setTimeout(function () {
+                                    $('#bottom-alert').alert('close');
+                                }, 3000);
 
-                            return false;
-                        }
+                                return false;
+                            }
+                        });
                     });
-                });
-            </script>
-        </div>
-    </form>
+                </script>
+            </div>
+        </form>
+    </div>
 </div>
 
 <!-- Footer -->
@@ -73,6 +75,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // 将导航栏的登录选项选中
+        $(".nav li a:contains('登录')").attr("id", "current");
+
         //如果这个class写进html里，会出现页脚没有固定在底部的bug
         $("form button[type=submit]").addClass("bounceInUp");
     });
