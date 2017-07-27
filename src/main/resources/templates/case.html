@@ -85,21 +85,42 @@
                                         </div>
                                         <div th:if="${content.get(name).getClass() ne name.getClass()}">
                                             <div th:each="subName:${content.get(name).keySet()}">
-                                                <div th:if="${content.get(name).get(subName).getClass() eq subName.getClass()}">
-                                                    <label data-placement="left" th:text="${subName}"></label>
-                                                    <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="right" data-html="true" th:title="'点击获得详细信息'">右侧的 Tooltip</button>
-                                                </div>
-                                                <div th:if="${content.get(name).get(subName).getClass() ne subName.getClass()}">
-                                                    <label data-placement="left" th:text="${subName}+':'"></label>
-                                                    <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="right" data-html="true" title="点击获得详细信息">右侧的 Tooltip</button>
+                                                <div th:with="subContent=${content.get(name).get(subName)}">
+                                                    <div th:if="${subContent.getClass() eq subName.getClass()}">
+                                                        <label data-placement="left" th:text="${subName}+':'"></label>
+                                                        <a th:if="${subContent.contains('@')}" type="button"
+                                                                class="btn btn-link"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right" data-html="true"
+                                                                style="font-size: 14px"
+                                                                th:title="点击获得详细信息"
+                                                                th:text="${subContent.substring(0,subContent.length()-1)}">
+                                                        </a>
+                                                        <label class="font-normal" th:if="${!subContent.contains('@')}"
+                                                               data-placement="left"
+                                                               style="padding: 6px 12px"
+                                                               th:text="${subName}">
+                                                        </label>
+                                                    </div>
+                                                    <div th:if="${subContent.getClass() ne subName.getClass()}">
+                                                        <label data-placement="left" th:text="${subName}+':'"></label>
+                                                        <a th:each="memberName:${subContent}" type="button"
+                                                                class="btn btn-link"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top" data-html="true"
+                                                                style="font-size: 14px"
+                                                                th:text="${memberName.substring(0,memberName.length()-1)}"
+                                                                title="点击获得详细信息">
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <script>
                                             $(".btn.btn-link").hover(function () {
-                                                $(this).css({"color":"black"});
-                                            },function () {
-                                                $(this).css({"color":"#337ab7"});
+                                                $(this).css({"color": "black"});
+                                            }, function () {
+                                                $(this).css({"color": "#337ab7"});
                                             })
                                         </script>
                                     </div>
