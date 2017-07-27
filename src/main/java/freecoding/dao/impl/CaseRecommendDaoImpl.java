@@ -27,7 +27,7 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
     MongodbUtil mongodbUtil;
 
     private static String collectionName = "cases";
-    private static String userCollectionName = "casesByUser";
+
     private MongoDatabase database;
 
     @Autowired
@@ -43,13 +43,14 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
         query.put("_id", new ObjectId(id));
         FindIterable<Document> cursor = collection.find(query);
         Document document=cursor.iterator().next();
-
         return document;
     }
 
+
+
     @Override
     public List<Document> findByUser(String email) {
-        MongoCollection<Document> collection = database.getCollection(userCollectionName);
+        MongoCollection<Document> collection = database.getCollection(collectionName);
         BasicDBObject query = new BasicDBObject();
         query.put("user", "email");
         List<Document> result = new ArrayList<>();
@@ -59,6 +60,8 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
         return result;
     }
+
+
 
     @Override
     public List<Document> getRandomCases() {

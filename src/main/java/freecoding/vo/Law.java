@@ -50,4 +50,13 @@ public class Law implements Comparable{
         }
         return -1;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Law l=(Law)o;
+        if(this.name.equals(l.getName())&&this.detail.equals(l.getDetail())){
+            return true;
+        }
+        return false;
+    }
 }
