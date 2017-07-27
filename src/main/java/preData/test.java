@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 public class test {
     @Autowired
-    static MongoTemplate mongoTemplate
+    static MongoTemplate mongoTemplate;
     public static void main(String args[]){
 //        String filestring = "/Users/loick/Desktop/group3/test/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_151160.xml";
 //        File file = new File(filestring);
