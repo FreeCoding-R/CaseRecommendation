@@ -20,9 +20,9 @@
             <!--记录列表-->
             <div th:if="${record ne null} and ${record.size() &gt; 0}">
                 <div th:each="case:${record}" class="panel panel-info" style="margin-top: 10px">
-                    <div>
-                        <img src="/img/file.png" class="avatar"/>
-                        <div style="display: inline-block;">
+                    <div class="row">
+                        <img src="/img/file.png" class="col-xs-5 clo-md-2 avatar"/>
+                        <div class="col-xs-7 clo-md-10" style="margin-top: 15px;">
                             <a th:href="'/case/'+${case.getId()}" style="font-size: 18px;">
                                 <b th:text="${case.getName()}">文件</b>
                             </a>
