@@ -30,11 +30,17 @@ def delete_stop_words(words):
 # 遍历所有的节点
 def walkData(root_node,  result_list):
     item = root_node.items()
+    tag = False
+    if len(item) == 3:
+        tag = True
     if len(item) >= 2:
         if root_node.tag == 'QW':
-            templist = delete_stop_words(item[1][1])
+            if tag:
+                templist = delete_stop_words(item[2][1])
+            else:
+                templist = delete_stop_words(item[1][1])
             result_list += templist
-        if len(item[1][1]) < 15 and root_node.tag != 'e':
+        if len(item[1+tag][1]) < 15 and root_node.tag != 'e':
             result_list.append(root_node.tag+','+item[1][1])
 
     # 遍历每个子节点
@@ -59,6 +65,8 @@ def getCases(file):
     index = similarities.MatrixSimilarity.load(PYTHON_PATH+ 'data/deerwester.index')
 
     vec_bow = dictionary.doc2bow(getXmlData(file))
+
+    print(len(getXmlData(file)))
 
     vec_lsi = lsi[vec_bow] # convert the query to LSI space
     sims = index[vec_lsi]
