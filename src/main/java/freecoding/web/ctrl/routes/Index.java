@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class Index {
      */
     @RequestMapping(value="/showCase", method= RequestMethod.POST)
     public String uploadXML(Model model,
-                            @SessionAttribute(WebSecurityConfig.SESSION_KEY) String username,
+                            HttpSession session,
                             @RequestParam(value = "file", required = true) MultipartFile file) {
         String message="";
         boolean sucess=false;
@@ -77,8 +78,8 @@ public class Index {
                 //开始处理文书
                 if(caseRecommendService.upload(dest)){
                     handleFile(model);
-                    if(username != null){
-                        userService.insert(dest,username);
+                    if(session.getAttribute(WebSecurityConfig.SESSION_KEY) != null){
+                        userService.insert(dest, (String) session.getAttribute(WebSecurityConfig.SESSION_KEY));
                     }
                     sucess=true;
                 }else {
