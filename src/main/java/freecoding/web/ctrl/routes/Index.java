@@ -181,6 +181,7 @@ public class Index {
         model.addAttribute("content",(JSONObject)caseRecommendService.handle());
         model.addAttribute("caseRecommendation",caseRecommendService.getCaseRecommendation());
         model.addAttribute("lawDistribution",caseRecommendService.getLawDistribution());
+        model.addAttribute("detail",caseRecommendService.detail());
     }
 
     @RequestMapping("/chart")

@@ -118,7 +118,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <script>
+                                        <script th:inline="javascript">
                                             $(".btn.btn-link").hover(function () {
                                                 $(this).css({"color": "black"});
                                             }, function () {
@@ -126,26 +126,17 @@
                                             })
 
                                             function getMemberInfo(element) {
-                                                let memberName = $(element).attr("data") + '/' + $(element).text()
-                                                $.ajax({
-                                                    url: '/getMemberInfo',
-                                                    type: 'get',
-                                                    data: {'memberName': memberName},
-                                                    dataType: 'text',
-                                                    success: setInfo,
-                                                    error: errorInfo
-                                                })
-                                                function setInfo(data) {
-                                                    console.log("data:" + data);
-                                                    $(document).ready(function () {
-                                                        $(element).attr("data-original-title",data);
-                                                        $(element).next().find("div.tooltip-inner").text(data);
-                                                    });
-                                                }
-
-                                                function errorInfo() {
-                                                    element.title = "网络异常！"
-                                                }
+                                                let memberName = $(element).text();
+                                                let details = [[${detail}]];
+                                                console.log("memberName:"+memberName);
+                                                console.log(details);
+                                                let data = JSON.stringify(details[memberName]);
+                                                let outputData = data.substr(1,data.length-2);
+                                                console.log(data);
+                                                $(document).ready(function () {
+                                                    $(element).attr("data-original-title",outputData);
+                                                    $(element).next().find("div.tooltip-inner").text(outputData);
+                                                });
                                             }
                                         </script>
                                     </div>
