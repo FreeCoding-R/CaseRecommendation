@@ -39,13 +39,6 @@ public interface CaseRecommendService {
     JSON handle() throws DocumentException, FileContentException, ServiceProcessException;
 
 
-    /**
-     * 用户上传文书细节摘取,keyword变量按照固定格式如“诉讼人/xxx”传入
-     * @param keyword
-     * @return
-     */
-    JSON detail(String keyword) throws DocumentException, FileContentException, ServiceProcessException;
-
 
     /**
      * 案例推荐
