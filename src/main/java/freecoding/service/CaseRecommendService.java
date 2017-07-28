@@ -40,6 +40,11 @@ public interface CaseRecommendService {
      * @return 处理结果
      */
     JSON handle() throws DocumentException, FileContentException, ServiceProcessException;
+    /**
+     * 用户上传文书
+     * @return
+     */
+    JSON detail();
 
 
 

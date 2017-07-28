@@ -40,6 +40,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     private ThreadLocal <List<Case>> caseInfo = new ThreadLocal();
     private ThreadLocal <Element> resultNode= new ThreadLocal();
     private ThreadLocal <List<Law>> lawDistribution = new ThreadLocal();
+    private ThreadLocal <String> detail=new ThreadLocal();
 
     @Override
     public boolean upload(File file) {
@@ -148,7 +149,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             result += "\"},";
 
             String jbfy=root.element("WS").element("JBFY").attribute("value").getText();
-            detail+="\""+jbfy+"\":"+detail("经办法院/"+jbfy)+",";
+            detail+="\""+jbfy+"\":"+ singleDetail("经办法院/"+jbfy)+",";
 
             //关键词详细第三部分获取
 
@@ -165,7 +166,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 }
                 result += "\"" + "公诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
                 String gsf=i.element("SSCYR").attribute("value").getText();
-                detail+="\""+gsf+"\":"+detail("公诉方/"+gsf)+",";
+                detail+="\""+gsf+"\":"+ singleDetail("公诉方/"+gsf)+",";
 
             }
 
@@ -178,7 +179,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 }
                 result += "\"" + "起诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
                 String qsf=i.element("SSCYR").attribute("value").getText();
-                detail+="\""+qsf+"\":"+detail("起诉方/"+qsf)+",";
+                detail+="\""+qsf+"\":"+ singleDetail("起诉方/"+qsf)+",";
 
 
             }
@@ -192,7 +193,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 }
                 result += "\"" + "应诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
                 String ysf=i.element("SSCYR").attribute("value").getText();
-                detail+="\""+ysf+"\":"+detail("应诉方/"+ysf)+",";
+                detail+="\""+ysf+"\":"+ singleDetail("应诉方/"+ysf)+",";
 
             }
 
@@ -205,7 +206,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                 }
                 result += "\"" + "代理人" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
                 String dlr=i.element("SSCYR").attribute("value").getText();
-                detail+="\""+dlr+"\":"+detail("代理人/"+dlr)+",";
+                detail+="\""+dlr+"\":"+ singleDetail("代理人/"+dlr)+",";
 
             }
             result=result.substring(0,result.length()-1)+"},";
@@ -224,7 +225,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             String yw = root.attribute("value").getText();
             yw=yw.replace(" ","\\r\\n");
             result += "\"" + "原文" + "\"" + ":" + "\"" + yw + "\",";
-            result+=detail;
+//            result+=singleDetail;
+            this.detail.set(detail);
 
 
         }catch (NullPointerException e){
@@ -242,8 +244,23 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         return (JSON) jsonObject;
     }
 
+    @Override
+    public JSON detail() {
+        String result="{";
+        result+=this.detail.get();
 
-    private String detail(String keyword) throws DocumentException, FileContentException, ServiceProcessException {
+        result = result.substring(0, result.length() - 1) + "}";
+
+        result = result.replace("\n", "\\n");
+        result = result.replace("\r", "\\r");
+
+        JSONObject jsonObject=JSONObject.fromObject(result);
+
+        return (JSON) jsonObject;
+    }
+
+
+    private String singleDetail(String keyword) throws DocumentException, FileContentException, ServiceProcessException {
 
         if(keyword==null){
             throw new FileContentException("关键字为空");

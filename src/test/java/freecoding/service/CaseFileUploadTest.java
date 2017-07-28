@@ -51,8 +51,10 @@ public class CaseFileUploadTest {
     @Test
 //    @Ignore
     public void handleTest() throws DocumentException, FileContentException, ServiceProcessException {
-        JSON result = caseRecommendService.handle();
+        caseRecommendService.handle();
+        JSON result =caseRecommendService.detail();
         System.out.println(result.toString());
+
     }
 
     @Test
