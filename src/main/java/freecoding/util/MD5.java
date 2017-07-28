@@ -14,7 +14,6 @@ public class MD5 {
             messageDigest.update(str.getBytes("UTF-8"));
         } catch (NoSuchAlgorithmException e) {
             System.out.println("NoSuchAlgorithmException caught!");
-            System.exit(-1);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
