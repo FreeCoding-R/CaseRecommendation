@@ -115,8 +115,9 @@ public class User {
             return "redirect:/signUp";
         }
 
-        modelMap.addFlashAttribute("alertType","alert-success");
-        modelMap.addFlashAttribute("alertMessage","注册成功");
-        return "redirect:/";
+//        modelMap.addFlashAttribute("alertType","alert-success");
+//        modelMap.addFlashAttribute("alertMessage","注册成功");
+        //注册成功后自动登录
+        return loginPost(username,password,session,modelMap);
     }
 }
