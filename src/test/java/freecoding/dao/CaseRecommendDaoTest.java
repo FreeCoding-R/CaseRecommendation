@@ -67,16 +67,10 @@ public class CaseRecommendDaoTest {
     }
 
     @Test
-    public void testGetKeams(){
-        File file = new File("userFiles/test.xml");
-        Assert.assertEquals(6, caseRecommendDao.getKmeansCases(file).size());
-    }
-
-    @Test
     public void testRandom(){
         Assert.assertEquals(6, caseRecommendDao.getRandomCases().size());
     }
-    
+
     @Test
     public void testProcess(){
         String cp = "src/main/python2.0/query.py";
