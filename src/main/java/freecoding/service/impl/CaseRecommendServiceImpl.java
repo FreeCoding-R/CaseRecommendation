@@ -41,6 +41,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     private ThreadLocal <Element> resultNode= new ThreadLocal();
     private ThreadLocal <List<Law>> lawDistribution = new ThreadLocal();
     private ThreadLocal <String> detail=new ThreadLocal();
+    private ThreadLocal <Integer> documentID=new ThreadLocal();
 
     @Override
     public boolean upload(File file) {
@@ -55,6 +56,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         this.file.set(file);
 
         //线程变量初始化
+        this.documentID.set(null);
         this.dom4jd.set(null);
         this.recommendCases.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
@@ -69,13 +71,15 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         try{
             document=caseRecommendDao.find(id);
             this.dom4jd.set(DocumentHelper.parseText(Json2XmlUtil.jsonFromM2xml(document.toJson())));
-            File file=new File("userFiles/example.xml");
-            Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-            String str="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Json2XmlUtil.jsonFromM2xml(document.toJson());
-            write.write(str);
-            write.flush();
-            write.close();
-            this.file.set(file);
+            this.documentID.set((Integer) document.get("documentID"));
+
+//            File file=new File("userFiles/example.xml");
+//            Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+//            String str="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Json2XmlUtil.jsonFromM2xml(document.toJson());
+//            write.write(str);
+//            write.flush();
+//            write.close();
+//            this.file.set(file);
         }catch (Exception e){
             return false;
         }
@@ -104,7 +108,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             return false;
         }
 
-
+        this.documentID.set(null);
         this.recommendCases.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
         this.lawDistribution.set(new ArrayList<>());
@@ -315,7 +319,12 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         List rl = this.recommendCases.get();
 
 
-        rl=caseRecommendDao.getKmeansCases(this.file.get());
+        if(this.documentID.get()!=null){
+            rl = caseRecommendDao.getKmeansCases(this.documentID.get());
+
+        }else {
+            rl = caseRecommendDao.getKmeansCases(this.file.get());
+        }
 //        rl=caseRecommendDao.getRandomCases();
         this.recommendCases.set(rl);
 
