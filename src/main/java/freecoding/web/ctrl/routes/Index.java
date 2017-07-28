@@ -131,7 +131,7 @@ public class Index {
     }
 
     /**
-     * 上传文书的路由
+     * 获得细节信息的路由
      * @param memberName
      * @return
      */

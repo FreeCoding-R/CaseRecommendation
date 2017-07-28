@@ -112,7 +112,7 @@
                                                            data-placement="top" data-html="true"
                                                            style="font-size: 14px"
                                                            th:text="${memberName.substring(0,memberName.length()-1)}"
-                                                           title="点击获得详细信息">
+                                                           data-original-title="点击获得详细信息" onclick="getMemberInfo(this)">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -137,7 +137,10 @@
                                                 })
                                                 function setInfo(data) {
                                                     console.log("data:" + data);
-                                                    element.title = data
+                                                    $(document).ready(function () {
+                                                        $(element).attr("data-original-title",data);
+                                                        $(element).next().find("div.tooltip-inner").text(data);
+                                                    });
                                                 }
 
                                                 function errorInfo() {
@@ -161,7 +164,8 @@
                                 <h4 class="accordion-toggle" th:text="${item.getName()}"></h4>
                                 <section class="accordion-inner panel-body">
                                     <div th:with="lawList=${item.getList()}">
-                                        <p th:each="law:${lawList}" th:text="${law.getName().substring(7,law.getName().length())+law.getDetail()}"></p>
+                                        <p th:each="law:${lawList}"
+                                           th:text="${law.getName().substring(7,law.getName().length())+law.getDetail()}"></p>
                                     </div>
                                     <a th:href="'/case/' + ${item.getId()}"
                                        style="display: block" target="_blank">了解更多<i class="icon-angle-right"></i><i
@@ -320,8 +324,10 @@
     });
 </script>
 <script type="text/javascript">
-    $(".tabs li:contains('文书基本信息')").attr("class", "current")
-    $(".contents div[id='content文书基本信息']").attr("style", "display: block")
+    $(document).ready(function () {
+        $(".tabs li:contains('文书基本信息')").attr("class", "current")
+        $(".contents div[id='content文书基本信息']").attr("style", "display: block")
+    });
 </script>
 <!--<script type="text/javascript">-->
 <!--$("div#chart").width($(window).width / 2)-->
