@@ -59,7 +59,7 @@ public class MongodbUtil {
     public void insert(File file,String userName) throws DocumentException {
 
         MongoDatabase mongoDatabase = database;
-        MongoCollection<DBObject> collection = mongoDatabase.getCollection("cases",DBObject.class);
+        MongoCollection<DBObject> collection = mongoDatabase.getCollection("casesByUser",DBObject.class);
         SAXReader sr = new SAXReader();
         Document document = (Document) sr.read(file);
 

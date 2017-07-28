@@ -12,7 +12,8 @@ public interface CaseRecommendDao {
 
     Document find(String id);
 
-    List<Document> findByUser(String email);
+    Document findByUser(String id);
+
 
     List<Document> getRandomCases();
 

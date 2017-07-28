@@ -31,6 +31,9 @@ public interface CaseRecommendService {
     boolean init(String id) throws DocumentException;
 
 
+    boolean initFromU(String id) throws DocumentException;
+
+
     /**
      * 处理用户上传文书
      * @param

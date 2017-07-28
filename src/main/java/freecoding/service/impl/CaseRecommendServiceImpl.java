@@ -87,6 +87,30 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 
     @Override
+    public boolean initFromU(String id) throws DocumentException {
+        Document document=null;
+        try{
+            document=caseRecommendDao.findByUser(id);
+            this.dom4jd.set(DocumentHelper.parseText(Json2XmlUtil.jsonFromM2xml(document.toJson())));
+            File file=new File("userFiles/example.xml");
+            Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+            String str="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Json2XmlUtil.jsonFromM2xml(document.toJson());
+            write.write(str);
+            write.flush();
+            write.close();
+            this.file.set(file);
+        }catch (Exception e){
+            return false;
+        }
+
+
+        this.recommendCases.set(new ArrayList<>());
+        this.caseInfo.set(new ArrayList<>());
+        this.lawDistribution.set(new ArrayList<>());
+        return true;
+    }
+
+    @Override
     public JSON handle() throws DocumentException, FileContentException, ServiceProcessException {
         //xml指定节点遍历，获取信息，转为string，再转为json
         String result="{";
