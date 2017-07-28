@@ -131,7 +131,7 @@
                                                 console.log("memberName:"+memberName);
                                                 console.log(details);
                                                 let data = JSON.stringify(details[memberName]);
-                                                let outputData = data.substr(1,data.length-2);
+                                                let outputData = data.substr(1,data.length-2).replace(/"/g,"").replace(/,/g,", ");
                                                 console.log(data);
                                                 $(document).ready(function () {
                                                     $(element).attr("data-original-title",outputData);
@@ -155,8 +155,10 @@
                                 <h4 class="accordion-toggle" th:text="${item.getName()}"></h4>
                                 <section class="accordion-inner panel-body">
                                     <div th:with="lawList=${item.getList()}">
-                                        <p th:each="law:${lawList}"
-                                           th:text="${law.getName().substring(7,law.getName().length())+law.getDetail()}"></p>
+                                        <div th:each="law:${lawList}">
+                                            <p th:if="${law.getName().startsWith('中华人民共和国')}" th:text="${law.getName().substring(7,law.getName().length())+law.getDetail()}"></p>
+                                            <p th:if="${!law.getName().startsWith('中华人民共和国')}" th:text="${law.getName()+law.getDetail()}"></p>
+                                        </div>
                                     </div>
                                     <a th:href="'/case/' + ${item.getId()}"
                                        style="display: block" target="_blank">了解更多<i class="icon-angle-right"></i><i
@@ -205,9 +207,14 @@
                             let total = 0
                             for (x in lawData) {
                                 let law = lawData[x]
-                                nameList.push(law["name"].substr(7, law["name"].length))
-                                detailList.push(law["detail"])
-                                pieList.push({value: law["num"], name: law["detail"]})
+                                if (law["name"].startsWith("中华人民共和国")){
+                                    nameList.push(law["name"].substr(7, law["name"].length));
+                                }
+                                else{
+                                    nameList.push(law["name"]);
+                                }
+                                detailList.push(law["detail"]);
+                                pieList.push({value: law["num"], name: law["detail"]});
                                 if (x == 0) {
                                     former = law["name"]
                                     total = law["num"]
@@ -216,12 +223,22 @@
                                     total += law["num"];
                                 }
                                 else {
-                                    typeList.push({value: total, name: former.substr(7, former.length)})
+                                    if (former.startsWith("中华人民共和国")) {
+                                        typeList.push({value: total, name: former.substr(7, former.length)})
+                                    }
+                                    else {
+                                        typeList.push({value: total, name: former, selected: true})
+                                    }
                                     former = law["name"]
                                     total = law["num"]
                                 }
                             }
-                            typeList.push({value: total, name: former.substr(7, former.length), selected: true})
+                            if (former.startsWith("中华人民共和国")) {
+                                typeList.push({value: total, name: former.substr(7, former.length), selected: true})
+                            }
+                            else {
+                                typeList.push({value: total, name: former, selected: true})
+                            }
 
                             option = {
                                 tooltip: {

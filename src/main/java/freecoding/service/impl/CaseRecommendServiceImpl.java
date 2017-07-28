@@ -34,29 +34,27 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     @Autowired
     private CaseRecommendDao caseRecommendDao;
-    private ThreadLocal <File> file = new ThreadLocal();
-    private ThreadLocal <org.dom4j.Document> dom4jd = new ThreadLocal();
-    private ThreadLocal <List<Document>> recommendCases = new ThreadLocal();
-    private ThreadLocal <List<Case>> caseInfo = new ThreadLocal();
-    private ThreadLocal <Element> resultNode= new ThreadLocal();
-    private ThreadLocal <List<Law>> lawDistribution = new ThreadLocal();
-    private ThreadLocal <String> detail=new ThreadLocal();
-    private ThreadLocal <Integer> documentID=new ThreadLocal();
+    private ThreadLocal<File> file = new ThreadLocal();
+    private ThreadLocal<org.dom4j.Document> dom4jd = new ThreadLocal();
+    private ThreadLocal<List<Document>> recommendCases = new ThreadLocal();
+    private ThreadLocal<List<Case>> caseInfo = new ThreadLocal();
+    private ThreadLocal<Element> resultNode = new ThreadLocal();
+    private ThreadLocal<List<Law>> lawDistribution = new ThreadLocal();
+    private ThreadLocal<String> detail = new ThreadLocal();
 
     @Override
     public boolean upload(File file) {
-        if(file==null || !file.exists() || !file.isFile()){
+        if (file == null || !file.exists() || !file.isFile()) {
             return false;
         }
         //按后缀检测
         String fileName = file.getName();
-        if(!fileName.endsWith(".xml")){
+        if (!fileName.endsWith(".xml")) {
             return false;
         }
         this.file.set(file);
 
         //线程变量初始化
-        this.documentID.set(null);
         this.dom4jd.set(null);
         this.recommendCases.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
@@ -67,20 +65,18 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     @Override
     public boolean init(String id) {
-        Document document=null;
-        try{
-            document=caseRecommendDao.find(id);
+        Document document = null;
+        try {
+            document = caseRecommendDao.find(id);
             this.dom4jd.set(DocumentHelper.parseText(Json2XmlUtil.jsonFromM2xml(document.toJson())));
-            this.documentID.set((Integer) document.get("documentID"));
-
-//            File file=new File("userFiles/example.xml");
-//            Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-//            String str="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Json2XmlUtil.jsonFromM2xml(document.toJson());
-//            write.write(str);
-//            write.flush();
-//            write.close();
-//            this.file.set(file);
-        }catch (Exception e){
+            File file = new File("userFiles/example.xml");
+            Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+            String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + Json2XmlUtil.jsonFromM2xml(document.toJson());
+            write.write(str);
+            write.flush();
+            write.close();
+            this.file.set(file);
+        } catch (Exception e) {
             return false;
         }
 
@@ -93,22 +89,22 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     @Override
     public boolean initFromU(String id) throws DocumentException {
-        Document document=null;
-        try{
-            document=caseRecommendDao.findByUser(id);
+        Document document = null;
+        try {
+            document = caseRecommendDao.findByUser(id);
             this.dom4jd.set(DocumentHelper.parseText(Json2XmlUtil.jsonFromM2xml(document.toJson())));
-            File file=new File("userFiles/example.xml");
+            File file = new File("userFiles/example.xml");
             Writer write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-            String str="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Json2XmlUtil.jsonFromM2xml(document.toJson());
+            String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + Json2XmlUtil.jsonFromM2xml(document.toJson());
             write.write(str);
             write.flush();
             write.close();
             this.file.set(file);
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
 
-        this.documentID.set(null);
+
         this.recommendCases.set(new ArrayList<>());
         this.caseInfo.set(new ArrayList<>());
         this.lawDistribution.set(new ArrayList<>());
@@ -118,23 +114,23 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     @Override
     public JSON handle() throws DocumentException, FileContentException, ServiceProcessException {
         //xml指定节点遍历，获取信息，转为string，再转为json
-        String result="{";
-        String detail="";
+        String result = "{";
+        String detail = "";
         org.dom4j.Document document = null;
 
 
-        boolean tag=true;
+        boolean tag = true;
 
         //调用顺序异常
-        if(this.file.get()==null&&this.dom4jd.get()==null){
+        if (this.file.get() == null && this.dom4jd.get() == null) {
             throw new ServiceProcessException("未按顺序调用");
         }
-        if(this.dom4jd.get()==null){
+        if (this.dom4jd.get() == null) {
             SAXReader sr = new SAXReader();
             document = sr.read(this.file.get());
             dom4jd.set(document);
-        }else {
-            tag=false;
+        } else {
+            tag = false;
             document = dom4jd.get();
         }
 
@@ -144,21 +140,20 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             //关键词详细第一部分获取
 
 
-
             //关键词详细第二部分获取
-            result += "\""+"文书基本信息"+"\":{";
-                    result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "\""+ ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ","\\r\\n") + "@" + "\",";
-            result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText().replace(" ","\\r\\n") + "\",";
-            result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText().replace(" ","\\r\\n") ;
+            result += "\"" + "文书基本信息" + "\":{";
+            result += "\"" + root.element("WS").element("JBFY").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("JBFY").attribute("value").getText().replace(" ", "\\r\\n") + "@" + "\",";
+            result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText().replace(" ", "\\r\\n") + "\",";
+            result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText().replace(" ", "\\r\\n");
             result += "\"},";
 
-            String jbfy=root.element("WS").element("JBFY").attribute("value").getText();
-            detail+="\""+jbfy+"\":"+ singleDetail("经办法院/"+jbfy)+",";
+            String jbfy = root.element("WS").element("JBFY").attribute("value").getText();
+            detail += "\"" + jbfy + "\":" + singleDetail("经办法院/" + jbfy) + ",";
 
             //关键词详细第三部分获取
 
 
-            result += "\""+"诉讼参与人"+"\":{";
+            result += "\"" + "诉讼参与人" + "\":{";
             Element e = root.element("DSR");
 
             Iterator it = e.elementIterator("GSF");
@@ -169,8 +164,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     continue;
                 }
                 result += "\"" + "公诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
-                String gsf=i.element("SSCYR").attribute("value").getText();
-                detail+="\""+gsf+"\":"+ singleDetail("公诉方/"+gsf)+",";
+                String gsf = i.element("SSCYR").attribute("value").getText();
+                detail += "\"" + gsf + "\":" + singleDetail("公诉方/" + gsf) + ",";
 
             }
 
@@ -182,8 +177,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     continue;
                 }
                 result += "\"" + "起诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
-                String qsf=i.element("SSCYR").attribute("value").getText();
-                detail+="\""+qsf+"\":"+ singleDetail("起诉方/"+qsf)+",";
+                String qsf = i.element("SSCYR").attribute("value").getText();
+                detail += "\"" + qsf + "\":" + singleDetail("起诉方/" + qsf) + ",";
 
 
             }
@@ -196,8 +191,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     continue;
                 }
                 result += "\"" + "应诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
-                String ysf=i.element("SSCYR").attribute("value").getText();
-                detail+="\""+ysf+"\":"+ singleDetail("应诉方/"+ysf)+",";
+                String ysf = i.element("SSCYR").attribute("value").getText();
+                detail += "\"" + ysf + "\":" + singleDetail("应诉方/" + ysf) + ",";
 
             }
 
@@ -209,31 +204,31 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     continue;
                 }
                 result += "\"" + "代理人" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
-                String dlr=i.element("SSCYR").attribute("value").getText();
-                detail+="\""+dlr+"\":"+ singleDetail("代理人/"+dlr)+",";
+                String dlr = i.element("SSCYR").attribute("value").getText();
+                detail += "\"" + dlr + "\":" + singleDetail("代理人/" + dlr) + ",";
 
             }
-            result=result.substring(0,result.length()-1)+"},";
+            result = result.substring(0, result.length() - 1) + "},";
 
 
             //关键词详细第四部分获取
             result += "\"" + root.element("SSJL").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("SSJL").attribute("value").getText() + "\",";
             String c = root.element("CPFXGC").attribute("value").getText();
             c = c.replace("裁定如下：", "作出裁定。");
-            c = c.replace(" ","\\r\\n");
+            c = c.replace(" ", "\\r\\n");
 
             result += "\"" + root.element("CPFXGC").attribute("nameCN").getText() + "\"" + ":" + "\"" + c + "\",";
-            result += "\"" + root.element("PJJG").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("PJJG").attribute("value").getText().replace(" ","\\r\\n") + "\",";
-            result += "\"" + root.element("AJJBQK").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("AJJBQK").attribute("value").getText().replace(" ","\\r\\n") + "\",";
+            result += "\"" + root.element("PJJG").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("PJJG").attribute("value").getText().replace(" ", "\\r\\n") + "\",";
+            result += "\"" + root.element("AJJBQK").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("AJJBQK").attribute("value").getText().replace(" ", "\\r\\n") + "\",";
 
             String yw = root.attribute("value").getText();
-            yw=yw.replace(" ","\\r\\n");
+            yw = yw.replace(" ", "\\r\\n");
             result += "\"" + "原文" + "\"" + ":" + "\"" + yw + "\",";
 //            result+=singleDetail;
             this.detail.set(detail);
 
 
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new FileContentException("文件内容不符合要求");
 
         }
@@ -243,22 +238,22 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         result = result.replace("\n", "\\n");
         result = result.replace("\r", "\\r");
 
-        JSONObject jsonObject=JSONObject.fromObject(result);
+        JSONObject jsonObject = JSONObject.fromObject(result);
 
         return (JSON) jsonObject;
     }
 
     @Override
     public JSON detail() {
-        String result="{";
-        result+=this.detail.get();
+        String result = "{";
+        result += this.detail.get();
 
         result = result.substring(0, result.length() - 1) + "}";
 
         result = result.replace("\n", "\\n");
         result = result.replace("\r", "\\r");
 
-        JSONObject jsonObject=JSONObject.fromObject(result);
+        JSONObject jsonObject = JSONObject.fromObject(result);
 
         return (JSON) jsonObject;
     }
@@ -266,26 +261,26 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
     private String singleDetail(String keyword) throws DocumentException, FileContentException, ServiceProcessException {
 
-        if(keyword==null){
+        if (keyword == null) {
             throw new FileContentException("关键字为空");
         }
 
         //同上
-        if(this.dom4jd.get()==null){
+        if (this.dom4jd.get() == null) {
             throw new ServiceProcessException("未按顺序调用");
 
         }
 
-        String result="{";
+        String result = "{";
         org.dom4j.Document document = null;
-        document=this.dom4jd.get();
+        document = this.dom4jd.get();
 
         this.resultNode.set(null);
         getNode(document.getRootElement(), keyword);
-        Element root =this.resultNode.get();
+        Element root = this.resultNode.get();
         this.resultNode.set(null);
 
-        if(root==null||!root.elementIterator().hasNext()){
+        if (root == null || !root.elementIterator().hasNext()) {
             throw new FileContentException(root.attribute("value").getText());
         }
 
@@ -295,13 +290,13 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         Iterator it = root.elementIterator();
         while (it.hasNext()) {
             Element i = (Element) it.next();
-            if(i.attribute("value")==null){
+            if (i.attribute("value") == null) {
                 continue;
             }
-            result+="\""+i.attribute("nameCN").getText()+"\""+":"+"\""+i.attribute("value").getText()+"\",";
+            result += "\"" + i.attribute("nameCN").getText() + "\"" + ":" + "\"" + i.attribute("value").getText() + "\",";
         }
 
-        result=result.substring(0,result.length()-1)+"}";
+        result = result.substring(0, result.length() - 1) + "}";
 
 
         return result;
@@ -311,7 +306,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     public List<Case> getCaseRecommendation() throws ServiceProcessException {
 
         //调用顺序异常
-        if(this.file.get()==null&&this.dom4jd.get()==null){
+        if (this.file.get() == null && this.dom4jd.get() == null) {
             throw new ServiceProcessException("未按顺序调用");
         }
 
@@ -319,22 +314,17 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         List rl = this.recommendCases.get();
 
 
-        if(this.documentID.get()!=null){
-            rl = caseRecommendDao.getKmeansCases(this.documentID.get());
-
-        }else {
-            rl = caseRecommendDao.getKmeansCases(this.file.get());
-        }
+        rl = caseRecommendDao.getKmeansCases(this.file.get());
 //        rl=caseRecommendDao.getRandomCases();
         this.recommendCases.set(rl);
 
 
         //获取推荐案例的简要信息
-        for (int i=0;i<rl.size();i++){
+        for (int i = 0; i < rl.size(); i++) {
 
-            Document document= (Document) rl.get(i);
+            Document document = (Document) rl.get(i);
 
-            Case c=new Case();
+            Case c = new Case();
             c.setId(document.get("_id").toString());
             c.setName(document.get("name").toString());
 
@@ -349,62 +339,62 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     @Override
     public List<Law> getLawDistribution() throws ServiceProcessException, DocumentException {
         //调用顺序异常
-        if(this.recommendCases.get()==null){
+        if (this.recommendCases.get() == null) {
             throw new ServiceProcessException("未按顺序调用");
         }
 
-        List rl=this.recommendCases.get();
-        List ci=this.caseInfo.get();
+        List rl = this.recommendCases.get();
+        List ci = this.caseInfo.get();
 
         //推荐案例遍历
         for (int i = 0; i < rl.size(); i++) {
 
-            Case c= (Case) ci.get(i);
-            List<Law> cl=new ArrayList<>();
+            Case c = (Case) ci.get(i);
+            List<Law> cl = new ArrayList<>();
 
 
             Document document = (Document) rl.get(i);
             Document cpfxgc = (Document) ((Document) document.get("QW")).get("CPFXGC");
 
-            String id=document.get("_id").toString();
+            String id = document.get("_id").toString();
 
             org.dom4j.Document cpfxgcXml = DocumentHelper.parseText(Json2XmlUtil.jsonPartOfM2xml(cpfxgc.toJson()));
             Element root = cpfxgcXml.getRootElement().element("CUS_FLFT_FZ_RY").element("CUS_FLFT_RY");
 
 
-            if(root.attribute("class").getText().equals("object")){
+            if (root.attribute("class").getText().equals("object")) {
 
-                String str=root.attribute("value").getText();
-                String name = str.substring(str.indexOf("《")+1,str.indexOf("》"));
-                String detail = str.substring(str.indexOf("第"),str.indexOf("条")+1);
+                String str = root.attribute("value").getText();
+                String name = str.substring(str.indexOf("《") + 1, str.indexOf("》"));
+                String detail = str.substring(str.indexOf("第"), str.indexOf("条") + 1);
                 Law law = new Law();
                 law.setName(name);
                 law.setDetail(detail);
                 law.setNum(1);
 
-                if(cl.contains(law)){
+                if (cl.contains(law)) {
 
-                }else {
+                } else {
                     cl.add(law);
                 }
 
                 distinct(law);
 
 
-            }else {
+            } else {
                 Iterator it = root.elementIterator("e");
                 while (it.hasNext()) {
                     Element element = (Element) it.next();
-                    String str=element.attribute("value").getText();
-                    String name = str.substring(str.indexOf("《")+1,str.indexOf("》"));
-                    String detail = str.substring(str.indexOf("第"),str.indexOf("条")+1);
+                    String str = element.attribute("value").getText();
+                    String name = str.substring(str.indexOf("《") + 1, str.indexOf("》"));
+                    String detail = str.substring(str.indexOf("第"), str.indexOf("条") + 1);
                     Law law = new Law();
                     law.setName(name);
                     law.setDetail(detail);
                     law.setNum(1);
-                    if(cl.contains(law)){
+                    if (cl.contains(law)) {
 
-                    }else {
+                    } else {
                         cl.add(law);
                     }
                     distinct(law);
@@ -414,26 +404,26 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             }
 
             c.setList(cl);
-            ci.set(i,c);
+            ci.set(i, c);
         }
         this.caseInfo.set(ci);
         return this.lawDistribution.get();
     }
 
-    private void distinct(Law law){
-        List<Law> result=this.lawDistribution.get();
-        boolean tag=true;
+    private void distinct(Law law) {
+        List<Law> result = this.lawDistribution.get();
+        boolean tag = true;
 
-        for(int i=0;i<result.size();i++){
-            Law l=(Law) result.get(i);
-            if(l.toString().equals(law.toString())){
-                l.setNum(l.getNum()+1);
-                result.set(i,l);
-                tag=false;
+        for (int i = 0; i < result.size(); i++) {
+            Law l = (Law) result.get(i);
+            if (l.toString().equals(law.toString())) {
+                l.setNum(l.getNum() + 1);
+                result.set(i, l);
+                tag = false;
             }
         }
 
-        if(tag){
+        if (tag) {
             result.add(law);
         }
         Collections.sort(result);
@@ -441,11 +431,11 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     }
 
     //递归遍历xml
-    private void getNode(Element node,String keyword){
+    private void getNode(Element node, String keyword) {
 
-        if(node.attribute("value")!=null&&node.attribute("nameCN")!=null){
-            if(node.attribute("value").getText().contains(keyword.split("/")[1])&&node.attribute("nameCN").getText().equals(keyword.split("/")[0])){
-                if(resultNode.get()==null||resultNode.get().attribute("value").getText().length()<node.attribute("value").getText().length()) {
+        if (node.attribute("value") != null && node.attribute("nameCN") != null) {
+            if (node.attribute("value").getText().contains(keyword.split("/")[1]) && node.attribute("nameCN").getText().equals(keyword.split("/")[0])) {
+                if (resultNode.get() == null || resultNode.get().attribute("value").getText().length() < node.attribute("value").getText().length()) {
                     resultNode.set(node);
                 }
             }
@@ -458,9 +448,4 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         }
 
     }
-
-
-
 }
-
-//FileContentException类已经移到freecoding.exception包里  --by zjy

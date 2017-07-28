@@ -31,7 +31,7 @@ public class CasesFromPython {
             e.printStackTrace();
         }
 
-        System.out.println(data);
+        System.out.println("data:"+data);
 
         List<Integer> result = new ArrayList<>();
         data = data.substring(1, data.length()-1);
