@@ -58,12 +58,6 @@ public class CaseRecommendDaoTest {
     }
 
 
-
-    @Test
-    public void testMongo(){
-        Assert.assertNotNull(mongodbUtil.getDatabase().getName(), "freecoding");
-    }
-
     @Test
     public void testRandom(){
         Assert.assertEquals(6, caseRecommendDao.getRandomCases().size());
