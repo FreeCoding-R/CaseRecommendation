@@ -10,6 +10,7 @@ public class Case {
     private String name;
     private String id;
     private List<Law> list;
+    private String time;
 
     public String getName() {
         return name;
@@ -34,5 +35,13 @@ public class Case {
     public void setId(String id) {
         this.id = id;
 
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

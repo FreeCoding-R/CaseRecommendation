@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by loick on 17/07/2017.
@@ -82,6 +84,7 @@ public class MongodbUtil {
         record.setUserName(userName);
         record.setFileId(a);
         record.setFileName(b);
+        record.setTime((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(Calendar.getInstance().getTime()));
         recordRepository.save(record);
     }
 }

@@ -97,6 +97,7 @@ public class UserServiceImpl implements UserService {
             Record record=l.get(i);
             c.setId(record.getFileId());
             c.setName(record.getFileName());
+            c.setTime(record.getTime());
             result.add(c);
         }
         return result;

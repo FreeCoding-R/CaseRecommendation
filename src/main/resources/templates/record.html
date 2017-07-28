@@ -26,7 +26,7 @@
                             <a th:href="'/user/case/'+${case.getId()}" style="font-size: 18px;">
                                 <b th:text="${case.getName()}">文件</b>
                             </a>
-                            <h6 class="text-muted time">2017/7/27</h6>
+                            <h6 class="text-muted time" th:text='${case.getTime()}'>2017/7/27</h6>
                         </div>
                     </div>
                 </div>

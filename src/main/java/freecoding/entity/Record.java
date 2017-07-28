@@ -1,5 +1,6 @@
 package freecoding.entity;
 
+
 /**
  * Created by zhujing on 2017/7/28.
  */
@@ -11,6 +12,8 @@ public class Record {
     private String fileName;
 
     private String fileId;
+
+    private String time;
 
     public String getUserName() {
         return userName;
@@ -34,5 +37,13 @@ public class Record {
 
     public void setFileId(String fileId) {
         this.fileId = fileId;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
