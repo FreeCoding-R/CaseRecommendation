@@ -67,8 +67,6 @@ def getCases(file):
 
     vec_bow = dictionary.doc2bow(getXmlData(file))
 
-    pprint(index)
-
     vec_lsi = lsi[vec_bow] # convert the query to LSI space
     sims = index[vec_lsi]
 
