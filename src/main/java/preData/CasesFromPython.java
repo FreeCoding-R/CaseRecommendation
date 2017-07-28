@@ -29,7 +29,7 @@ public class CasesFromPython {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        System.out.println(data);
         List<Integer> result = new ArrayList<>();
         data = data.substring(1, data.length()-1);
         String dataset[] = data.split(", ");

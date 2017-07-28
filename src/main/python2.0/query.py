@@ -70,6 +70,7 @@ def getCases(file):
     vec_lsi = lsi[vec_bow] # convert the query to LSI space
     sims = index[vec_lsi]
 
+
     sims = abs(sims)
     sims = sorted(enumerate(sims), key=lambda item: -item[1])
     #return sims[:6]
