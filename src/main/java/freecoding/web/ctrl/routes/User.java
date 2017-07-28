@@ -1,8 +1,10 @@
 package freecoding.web.ctrl.routes;
 
 import freecoding.exception.ServiceProcessException;
+import freecoding.service.CaseRecommendService;
 import freecoding.service.UserService;
 import freecoding.web.ctrl.security.WebSecurityConfig;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpSession;
 @EnableAutoConfiguration
 @Controller
 public class User {
+    @Autowired
+    private CaseRecommendService caseRecommendService;
     @Autowired
     private UserService userService;
 
@@ -41,6 +45,23 @@ public class User {
             e.printStackTrace();
         }
         return "record";
+    }
+
+    @RequestMapping(value = "/user/case/{ID}", method= RequestMethod.GET)
+    public String userFile(@SessionAttribute(WebSecurityConfig.SESSION_KEY) String username, @PathVariable String ID, Model model) {
+        try {
+            if(caseRecommendService.initFromU(ID)){
+                model.addAttribute("content",(JSONObject)caseRecommendService.handle());
+                model.addAttribute("caseRecommendation",caseRecommendService.getCaseRecommendation());
+                model.addAttribute("lawDistribution",caseRecommendService.getLawDistribution());
+            }else {
+                //如果没有这个ID的文书返回404页面
+                return "error/error-404";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "case";
     }
 
     @GetMapping("/login")
