@@ -92,4 +92,26 @@ public class CaseRecommendDaoTest {
         Assert.assertNotNull(CasesFromPython.getIndex(file));
     }
 
+
+    @Test
+    public void testProcess(){
+        String cp = "src/main/python2.0/query.py";
+        String data = "";
+        String file = "userFiles/test.xml";
+        try {
+            System.out.println();
+
+            Process process = Runtime.getRuntime().exec("python3"+" " + cp+" "+file);
+            InputStream is = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while((line = reader.readLine()) != null){
+                data+=line;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Assert.assertNotNull(data);
+    }
+
 }

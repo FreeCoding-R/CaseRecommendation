@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.or;
 
 /**
  * Created by loick on 17/07/2017.
@@ -105,10 +106,20 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
         List<Integer> indexs = CasesFromPython.getIndex(xmlfile);
         List<Document> documents = new ArrayList<>();
-        for(Integer integer:indexs){
-            Document document = collection.find(eq("documentID", integer)).first();
-            documents.add(document);
-        }
+//        for(Integer integer:indexs){
+//            //collection.findOneAndDelete(eq("documentID", integer))
+//            Document document = collection.find(eq("documentID", integer)).first();
+//            documents.add(document);
+//        }
+        FindIterable<Document> document = collection.find(or(eq("documentID", indexs.get(0))
+                ,eq("documentID", indexs.get(1)),
+                eq("documentID", indexs.get(2)),
+                eq("documentID", indexs.get(3)),
+                eq("documentID", indexs.get(4)),
+                eq("documentID", indexs.get(5))));
+        document.forEach((Block<? super Document>) item->{
+            documents.add(item);
+        });
         return documents;
     }
 
