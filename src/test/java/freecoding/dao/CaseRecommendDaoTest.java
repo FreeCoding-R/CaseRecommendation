@@ -5,14 +5,13 @@ import freecoding.util.MongodbUtil;
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 /**
@@ -54,14 +53,6 @@ public class CaseRecommendDaoTest {
 
 
     @Test
-    @Ignore
-    public void testKmeans() throws URISyntaxException {
-        File file = new File(getClass().getClassLoader().getResource(
-                "xml/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_151160.xml").toURI().getPath());
-        Assert.assertEquals(6, caseRecommendDao.getKmeansCases(file).size());
-    }
-
-    @Test
     public void testSecondRecommend(){
         Assert.assertEquals(6, caseRecommendDao.getKmeansCases(1).size());
     }
@@ -78,28 +69,5 @@ public class CaseRecommendDaoTest {
         Assert.assertEquals(6, caseRecommendDao.getRandomCases().size());
     }
 
-    @Test
-    public void testProcess(){
-        String cp = "src/main/python2.0/query.py";
-        String data = "";
-        String file = "userFiles/test.xml";
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            System.out.println();
-
-            Process process = runtime.exec("python3"+" " + cp+" "+file);
-            //Process process2 = Runtime.getRuntime().exec("python3"+" " + cp+" "+file);
-            InputStream is = process.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String line;
-            while((line = reader.readLine()) != null){
-                data+=line;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Assert.assertNotNull(data);
-    }
 
 }
