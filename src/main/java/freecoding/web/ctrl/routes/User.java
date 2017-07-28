@@ -54,6 +54,7 @@ public class User {
                 model.addAttribute("content",(JSONObject)caseRecommendService.handle());
                 model.addAttribute("caseRecommendation",caseRecommendService.getCaseRecommendation());
                 model.addAttribute("lawDistribution",caseRecommendService.getLawDistribution());
+                model.addAttribute("detail",caseRecommendService.detail());
             }else {
                 //如果没有这个ID的文书返回404页面
                 return "error/error-404";
