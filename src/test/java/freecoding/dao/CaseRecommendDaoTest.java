@@ -11,12 +11,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import preData.CasesFromPython;
 
 import java.io.*;
 import java.net.URISyntaxException;
-
-import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Created by loick on 17/07/2017.
@@ -79,29 +76,18 @@ public class CaseRecommendDaoTest {
     public void testRandom(){
         Assert.assertEquals(6, caseRecommendDao.getRandomCases().size());
     }
-
-    @Test
-    public void testOnecase(){
-        File file = new File("userFiles/test.xml");
-        Assert.assertNotNull(mongodbUtil.getDatabase().getCollection("freecoding").find(eq("documentID", 0)));
-    }
-
-    @Test
-    public void getPythonData(){
-        File file = new File("userFiles/test.xml");
-        Assert.assertNotNull(CasesFromPython.getIndex(file));
-    }
-
-
+    
     @Test
     public void testProcess(){
         String cp = "src/main/python2.0/query.py";
         String data = "";
         String file = "userFiles/test.xml";
+        Runtime runtime = Runtime.getRuntime();
         try {
             System.out.println();
 
-            Process process = Runtime.getRuntime().exec("python3"+" " + cp+" "+file);
+            Process process = runtime.exec("python3"+" " + cp+" "+file);
+            //Process process2 = Runtime.getRuntime().exec("python3"+" " + cp+" "+file);
             InputStream is = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
@@ -111,6 +97,7 @@ public class CaseRecommendDaoTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         Assert.assertNotNull(data);
     }
 

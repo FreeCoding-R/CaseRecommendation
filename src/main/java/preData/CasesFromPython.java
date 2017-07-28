@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CasesFromPython {
+
+    static Runtime runtime = Runtime.getRuntime();
+
     public static List<Integer> getIndex(File file){
         String cp = "src/main/python2.0/query.py";
         String data = "";
@@ -16,7 +19,7 @@ public class CasesFromPython {
             }else{
                 pythonV = "python3";
             }
-            Process process = Runtime.getRuntime().exec(pythonV+" " + cp+" "+file);
+            Process process = runtime.exec(pythonV+" " + cp+" "+file);
             InputStream is = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;

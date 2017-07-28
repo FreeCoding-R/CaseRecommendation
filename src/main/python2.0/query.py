@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 import sys
 import jieba
 from constant import RECOMMEND_NUM,PYTHON_PATH,STOP_WORDS_FILE
+from pprint import pprint
 
 stop_words_file = STOP_WORDS_FILE
 
@@ -65,6 +66,8 @@ def getCases(file):
     index = similarities.MatrixSimilarity.load(PYTHON_PATH+ 'data/deerwester.index')
 
     vec_bow = dictionary.doc2bow(getXmlData(file))
+
+    pprint(index)
 
     vec_lsi = lsi[vec_bow] # convert the query to LSI space
     sims = index[vec_lsi]
