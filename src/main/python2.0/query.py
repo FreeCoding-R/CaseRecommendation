@@ -71,9 +71,11 @@ def getCases(file):
     sims = index[vec_lsi]
 
 
+
     sims = abs(sims)
     sims = sorted(enumerate(sims), key=lambda item: -item[1])
     #return sims[:6]
     return [index[0] for index in sims[:RECOMMEND_NUM]]
 
 print(getCases(sys.argv[1]))
+

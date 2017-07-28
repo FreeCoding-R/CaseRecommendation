@@ -5,21 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CasesFromPython {
+    static String pythonV;
 
-    static Runtime runtime = Runtime.getRuntime();
+    static{
+        if (System.getProperty("os.name").startsWith("Windows")){
+            pythonV = "python";
+        }else{
+            pythonV = "python3";
+        }
+    }
 
-    public static List<Integer> getIndex(File file){
-        String cp = "src/main/python2.0/query.py";
+    public static List<Integer> getSecondIndex(int location){
+        String cp = "src/main/python2.0/query2.py";
         String data = "";
-        String pythonV = "";
-
+        Process process;
         try {
-            if (System.getProperty("os.name").startsWith("Windows")){
-                pythonV = "python";
-            }else{
-                pythonV = "python3";
-            }
-            Process process = runtime.exec(pythonV+" " + cp+" "+file);
+            process = Runtime.getRuntime().exec(pythonV+" " + cp+" "+location);
             InputStream is = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
@@ -29,7 +30,34 @@ public class CasesFromPython {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         System.out.println(data);
+
+        List<Integer> result = new ArrayList<>();
+        data = data.substring(1, data.length()-1);
+        String dataset[] = data.split(", ");
+        for(String item:dataset){
+            int num = Integer.parseInt(item);
+            result.add(num);
+        }
+
+        return result;
+    }
+
+    public static List<Integer> getIndex(File file){
+        String cp = "src/main/python2.0/query.py";
+        String data = "";
+        try {
+            Process process = Runtime.getRuntime().exec(pythonV+" " + cp+" "+file);
+            InputStream is = process.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while((line = reader.readLine()) != null){
+                data+=line;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         List<Integer> result = new ArrayList<>();
         data = data.substring(1, data.length()-1);
         String dataset[] = data.split(", ");

@@ -62,6 +62,13 @@ public class CaseRecommendDaoTest {
     }
 
     @Test
+    public void testSecondRecommend(){
+        Assert.assertEquals(6, caseRecommendDao.getKmeansCases(1).size());
+    }
+
+
+
+    @Test
     public void testMongo(){
         Assert.assertNotNull(mongodbUtil.getDatabase().getName(), "freecoding");
     }

@@ -98,15 +98,14 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
     }
 
     @Override
-    public List<Document> getKmeansCases(File xmlfile) {
+    public List<Document> getKmeansCases(int location) {
+        List<Integer> indexs = CasesFromPython.getSecondIndex(location);
+        return getCasesFromIndex(indexs);
+    }
 
-        List<Integer> indexs = CasesFromPython.getIndex(xmlfile);
+    private List<Document> getCasesFromIndex(List<Integer> indexs){
         List<Document> documents = new ArrayList<>();
-//        for(Integer integer:indexs){
-//            //collection.findOneAndDelete(eq("documentID", integer))
-//            Document document = collection.find(eq("documentID", integer)).first();
-//            documents.add(document);
-//        }
+
         FindIterable<Document> document = collection.find(or(eq("documentID", indexs.get(0))
                 ,eq("documentID", indexs.get(1)),
                 eq("documentID", indexs.get(2)),
@@ -118,6 +117,16 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
         });
         return documents;
     }
+
+
+    @Override
+    public List<Document> getKmeansCases(File xmlfile) {
+        List<Integer> indexs = CasesFromPython.getIndex(xmlfile);
+
+        return getCasesFromIndex(indexs);
+    }
+
+
 
     private List<Document> getCases(Document document){
 

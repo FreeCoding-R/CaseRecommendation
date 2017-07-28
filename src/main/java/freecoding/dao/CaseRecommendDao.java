@@ -19,5 +19,7 @@ public interface CaseRecommendDao {
 
     List<Document> getKeyCases(Document document);
 
+    List<Document> getKmeansCases(int location);
+
     List<Document> getKmeansCases(File file);
 }

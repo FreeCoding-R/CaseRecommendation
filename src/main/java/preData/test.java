@@ -7,11 +7,10 @@ import java.io.InputStreamReader;
 
 public class test {
     public static void main(String args[]){
-        String cp = "src/main/python2.0/query.py";
+        String cp = "src/main/python2.0/query2.py";
         String data = "";
-        String file = "userFiles/test.xml";
         try {
-            Process process = Runtime.getRuntime().exec("python3"+" " + cp+" "+file);
+            Process process = Runtime.getRuntime().exec("python3"+" " + cp+" "+1);
             InputStream is = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
