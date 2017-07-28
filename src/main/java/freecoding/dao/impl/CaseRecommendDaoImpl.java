@@ -53,6 +53,7 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
         query.put("_id", new ObjectId(id));
         FindIterable<Document> cursor = collection.find(query);
         Document document=cursor.iterator().next();
+        collection = this.mongodbUtil.getDatabase().getCollection(collectionName);
         return document;
     }
 
