@@ -24,7 +24,6 @@ public class MongodbUtil {
     @Autowired
     private RecordRepository recordRepository;
 
-    private static MongoDatabase mongoDatabase;
     MongoClient mongoClient;
 
     MongoDatabase database;

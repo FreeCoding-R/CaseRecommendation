@@ -11,10 +11,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import preData.CasesFromPython;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Created by loick on 17/07/2017.
@@ -65,6 +67,29 @@ public class CaseRecommendDaoTest {
     @Test
     public void testMongo(){
         Assert.assertNotNull(mongodbUtil.getDatabase().getName(), "freecoding");
+    }
+
+    @Test
+    public void testGetKeams(){
+        File file = new File("userFiles/test.xml");
+        Assert.assertEquals(6, caseRecommendDao.getKmeansCases(file).size());
+    }
+
+    @Test
+    public void testRandom(){
+        Assert.assertEquals(6, caseRecommendDao.getRandomCases().size());
+    }
+
+    @Test
+    public void testOnecase(){
+        File file = new File("userFiles/test.xml");
+        Assert.assertNotNull(mongodbUtil.getDatabase().getCollection("freecoding").find(eq("documentID", 0)));
+    }
+
+    @Test
+    public void getPythonData(){
+        File file = new File("userFiles/test.xml");
+        Assert.assertNotNull(CasesFromPython.getIndex(file));
     }
 
 }

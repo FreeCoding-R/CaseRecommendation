@@ -4,7 +4,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import freecoding.dao.CaseRecommendDao;
 import freecoding.util.MongodbUtil;
 import org.bson.Document;
@@ -28,17 +27,16 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
     private static String collectionName = "cases";
 
-    private MongoDatabase database;
+    private MongoCollection<Document> collection;
 
     @Autowired
     public CaseRecommendDaoImpl(MongodbUtil mongodbUtil){
         this.mongodbUtil = mongodbUtil;
-        database = this.mongodbUtil.getDatabase();
+        collection = this.mongodbUtil.getDatabase().getCollection(collectionName);
     }
 
     @Override
     public Document find(String id) {
-        MongoCollection<Document> collection = database.getCollection(collectionName);
         BasicDBObject query = new BasicDBObject();
         query.put("_id", new ObjectId(id));
         FindIterable<Document> cursor = collection.find(query);
@@ -50,7 +48,6 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
     @Override
     public List<Document> findByUser(String email) {
-        MongoCollection<Document> collection = database.getCollection(collectionName);
         BasicDBObject query = new BasicDBObject();
         query.put("user", "email");
         List<Document> result = new ArrayList<>();
@@ -65,7 +62,6 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
 
     @Override
     public List<Document> getRandomCases() {
-        MongoCollection<Document> collection = database.getCollection(collectionName);
         List<Document> randomList = new ArrayList<>();
         collection.find().limit(6).forEach((Block<? super Document>) item->{
             randomList.add(item);
@@ -108,7 +104,6 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
     public List<Document> getKmeansCases(File xmlfile) {
 
         List<Integer> indexs = CasesFromPython.getIndex(xmlfile);
-        MongoCollection<Document> collection = database.getCollection(collectionName);
         List<Document> documents = new ArrayList<>();
         for(Integer integer:indexs){
             Document document = collection.find(eq("documentID", integer)).first();
@@ -118,8 +113,6 @@ public class CaseRecommendDaoImpl implements CaseRecommendDao {
     }
 
     private List<Document> getCases(Document document){
-
-        MongoCollection<Document> collection = database.getCollection(collectionName);
 
         List<Document> cases = new ArrayList<>();
 

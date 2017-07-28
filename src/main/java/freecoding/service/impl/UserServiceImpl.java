@@ -7,6 +7,7 @@ import freecoding.entity.Record;
 import freecoding.entity.User;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.UserService;
+import freecoding.util.MD5;
 import freecoding.util.MongodbUtil;
 import freecoding.vo.Case;
 import org.dom4j.DocumentException;
@@ -42,7 +43,8 @@ public class UserServiceImpl implements UserService {
         if(u==null){
             return false;
         }
-        if(!u.getPassword().equals(password)){
+        String md5Password = MD5.getMD5Str(password);
+        if(!u.getPassword().equals(md5Password)){
             return false;
         }
         return true;
@@ -57,6 +59,8 @@ public class UserServiceImpl implements UserService {
         if(u!=null){
             return false;
         }
+        String md5Password = MD5.getMD5Str(user.getPassword());
+        user.setPassword(md5Password);
         userRepository.save(user);
         return true;
     }

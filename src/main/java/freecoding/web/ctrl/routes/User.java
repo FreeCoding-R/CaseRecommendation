@@ -3,7 +3,6 @@ package freecoding.web.ctrl.routes;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.UserService;
 import freecoding.web.ctrl.security.WebSecurityConfig;
-import org.python.antlr.ast.Str;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
 
 /**
  * Created by zjy on 2017/7/16.
