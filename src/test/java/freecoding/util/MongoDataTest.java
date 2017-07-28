@@ -16,8 +16,6 @@ public class MongoDataTest {
     @Autowired
     private MongodbUtil mongoData;
 
-
-
     @Test
     public void getDataBaseTest(){
         Assert.assertNotNull(mongoData.getDatabase());

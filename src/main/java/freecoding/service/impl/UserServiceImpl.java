@@ -1,13 +1,14 @@
 package freecoding.service.impl;
 
 import freecoding.dao.CaseRecommendDao;
+import freecoding.dao.RecordRepository;
 import freecoding.dao.UserRepository;
+import freecoding.entity.Record;
 import freecoding.entity.User;
 import freecoding.exception.ServiceProcessException;
 import freecoding.service.UserService;
 import freecoding.util.MongodbUtil;
 import freecoding.vo.Case;
-import org.bson.Document;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CaseRecommendDao caseRecommendDao;
+
+    @Autowired
+    private RecordRepository recordRepository;
 
 
     @Override
@@ -82,12 +86,13 @@ public class UserServiceImpl implements UserService {
         }
 
         List<Case> result=new ArrayList<>();
-        List<Document> l=caseRecommendDao.findByUser(userName);
+        List<Record> l=recordRepository.findByUserName(userName);
+
         for (int i = 0; i < l.size(); i++) {
             Case c=new Case();
-            Document document=l.get(i);
-            c.setId(document.get("_id").toString());
-            c.setName(document.get("name").toString());
+            Record record=l.get(i);
+            c.setId(record.getFileId());
+            c.setName(record.getFileName());
             result.add(c);
         }
         return result;

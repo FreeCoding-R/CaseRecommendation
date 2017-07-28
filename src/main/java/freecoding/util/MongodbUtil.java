@@ -5,6 +5,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
+import freecoding.dao.RecordRepository;
+import freecoding.entity.Record;
 import net.sf.json.xml.XMLSerializer;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -19,6 +21,9 @@ import java.io.File;
  */
 @Service
 public class MongodbUtil {
+    @Autowired
+    private RecordRepository recordRepository;
+
     private static MongoDatabase mongoDatabase;
     MongoClient mongoClient;
 
@@ -67,12 +72,17 @@ public class MongodbUtil {
         String jsonStr = jsonObj.toString();
         DBObject object = (DBObject) JSON.parse(jsonStr);
 
-//        object.put("documentID", i);
 
         //by zj
         object.put("name",name);
-        object.put("user",userName);
         collection.insertOne(object);
+        String a=object.get("_id").toString();
+        String b=object.get("name").toString();
 
+        Record record=new Record();
+        record.setUserName(userName);
+        record.setFileId(a);
+        record.setFileName(b);
+        recordRepository.save(record);
     }
 }

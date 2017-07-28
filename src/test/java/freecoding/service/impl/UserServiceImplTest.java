@@ -22,9 +22,13 @@ public class UserServiceImplTest {
     @Test
     public void login() throws Exception {
 
-//        File file=new File("/Users/zhujin/Downloads/3组/训练集/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_1084.xml");
+//        File file=new File("/Users/zhujin/Downloads/3组/训练集/C__Users_Administrator_Desktop_刑事二审案件_刑事二审案件_9913.xml");
 //        userService.insert(file,"test");
-//        System.out.println(userService.getCaseListByUser("test").get(0).getName());
+////        System.out.println(userService.getCaseListByUser("test").get(0).getName());
+//        List l=userService.getCaseListByUser("test");
+//        System.out.println(l.size());
+//        Case record= (Case) l.get(0);
+//        System.out.println(record.getId()+record.getName());
     }
 
 }
