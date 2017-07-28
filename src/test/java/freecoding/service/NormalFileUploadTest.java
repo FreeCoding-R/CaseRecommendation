@@ -56,18 +56,6 @@ public class NormalFileUploadTest {
         System.out.println(result.toString());
     }
 
-    @Test(expected=DocumentException.class)
-    @Ignore
-    public void nullKeywordDetailTest() throws DocumentException, FileContentException, ServiceProcessException {
-        caseRecommendService.detail(null);
-    }
-
-    @Test
-    @Ignore
-    public void normalKeywordDetailTest() throws FileContentException, DocumentException, ServiceProcessException {
-        JSON result = caseRecommendService.detail("employee");
-        Assert.assertEquals(result.toString(), "");
-    }
 
     @Test
     @Ignore

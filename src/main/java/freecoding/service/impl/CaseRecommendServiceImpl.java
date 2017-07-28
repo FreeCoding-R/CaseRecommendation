@@ -75,7 +75,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             write.flush();
             write.close();
             this.file.set(file);
-            
         }catch (Exception e){
             return false;
         }
@@ -91,6 +90,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
     public JSON handle() throws DocumentException, FileContentException, ServiceProcessException {
         //xml指定节点遍历，获取信息，转为string，再转为json
         String result="{";
+        String detail="";
         org.dom4j.Document document = null;
 
 
@@ -122,6 +122,10 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             result += "\"" + root.element("WS").element("WSMC").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("WSMC").attribute("value").getText().replace(" ","\\r\\n") + "\",";
             result += "\"" + root.element("WS").element("AH").attribute("nameCN").getText() + "\"" + ":" + "\"" + root.element("WS").element("AH").attribute("value").getText().replace(" ","\\r\\n") ;
             result += "\"},";
+
+            String jbfy=root.element("WS").element("JBFY").attribute("value").getText();
+            detail+="\""+jbfy+"\":"+detail("经办法院/"+jbfy)+",";
+
             //关键词详细第三部分获取
 
 
@@ -136,6 +140,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     continue;
                 }
                 result += "\"" + "公诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
+                String gsf=i.element("SSCYR").attribute("value").getText();
+                detail+="\""+gsf+"\":"+detail("公诉方/"+gsf)+",";
 
             }
 
@@ -147,6 +153,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     continue;
                 }
                 result += "\"" + "起诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
+                String qsf=i.element("SSCYR").attribute("value").getText();
+                detail+="\""+qsf+"\":"+detail("起诉方/"+qsf)+",";
+
 
             }
 
@@ -158,6 +167,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     continue;
                 }
                 result += "\"" + "应诉方" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
+                String ysf=i.element("SSCYR").attribute("value").getText();
+                detail+="\""+ysf+"\":"+detail("应诉方/"+ysf)+",";
 
             }
 
@@ -169,6 +180,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
                     continue;
                 }
                 result += "\"" + "代理人" + "\"" + ":" + "\"" + i.element("SSCYR").attribute("value").getText() + "@\",";
+                String dlr=i.element("SSCYR").attribute("value").getText();
+                detail+="\""+dlr+"\":"+detail("代理人/"+dlr)+",";
 
             }
             result=result.substring(0,result.length()-1)+"},";
@@ -187,6 +200,7 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
             String yw = root.attribute("value").getText();
             yw=yw.replace(" ","\\r\\n");
             result += "\"" + "原文" + "\"" + ":" + "\"" + yw + "\",";
+            result+=detail;
 
 
         }catch (NullPointerException e){
@@ -196,10 +210,6 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
 
         result = result.substring(0, result.length() - 1) + "}";
 
-//        if(result.length()==2){
-//            throw new FileContentException("文件内容不符合要求");
-//        }
-
         result = result.replace("\n", "\\n");
         result = result.replace("\r", "\\r");
 
@@ -208,8 +218,8 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         return (JSON) jsonObject;
     }
 
-    @Override
-    public JSON detail(String keyword) throws DocumentException, FileContentException, ServiceProcessException {
+
+    private String detail(String keyword) throws DocumentException, FileContentException, ServiceProcessException {
 
         if(keyword==null){
             throw new FileContentException("关键字为空");
@@ -247,9 +257,9 @@ public class CaseRecommendServiceImpl implements CaseRecommendService {
         }
 
         result=result.substring(0,result.length()-1)+"}";
-        JSONObject jsonObject=JSONObject.fromObject(result);
 
-        return (JSON) jsonObject;
+
+        return result;
     }
 
     @Override

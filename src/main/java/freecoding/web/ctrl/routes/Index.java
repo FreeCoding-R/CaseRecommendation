@@ -138,15 +138,15 @@ public class Index {
     @RequestMapping(value="/getMemberInfo", method= RequestMethod.GET)
     public @ResponseBody
     JSON getMemberInfo(@RequestParam(value = "memberName", required = true) String memberName) {
-        try {
-            return caseRecommendService.detail(memberName);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (FileContentException e) {
-            e.printStackTrace();
-        } catch (ServiceProcessException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            return caseRecommendService.detail(memberName);
+//        } catch (DocumentException e) {
+//            e.printStackTrace();
+//        } catch (FileContentException e) {
+//            e.printStackTrace();
+//        } catch (ServiceProcessException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 
