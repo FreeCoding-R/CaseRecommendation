@@ -41,7 +41,7 @@ public class CaseFileUploadTest {
 //        Assert.assertEquals(caseRecommendService.upload(caseFile), true);
 
 
-        Assert.assertEquals(caseRecommendService.init("5977d7e25979ae79d0aed2da"), true);
+//        Assert.assertEquals(caseRecommendService.init("5977d7e25979ae79d0aed2da"), true);
 //        caseRecommendService.getCaseRecommendation();
 
 
